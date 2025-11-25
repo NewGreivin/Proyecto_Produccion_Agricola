@@ -49,4 +49,8 @@ public class Usuario {
         this.rol = rol;
         this.idTrabajador = idTrabajador;
     }
+    
+    public Usuario(String id, String username, String passwordHash, Rol rol) {
+        this(id, username, passwordHash, rol, null);
+    }
 }
