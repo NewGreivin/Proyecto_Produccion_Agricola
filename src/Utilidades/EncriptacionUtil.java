@@ -4,7 +4,7 @@ import java.security.MessageDigest;
 
 /**
  *
- * @author CREADOR
+ * @author Ricardo Chaves
  */
 
 public class EncriptacionUtil {
