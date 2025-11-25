@@ -1,9 +1,15 @@
 package Modelo.Interfaces;
 
+import java.util.List;
+
 /**
  *
- * @author CREADOR
+ * @author Ricardo Chaves
  */
 
-public interface ICRUD {
+public interface ICRUD <T> {
+    void crear(T t);
+    List<T> listar();
+    void actualizar(T t);
+    void eliminar(String t);
 }
