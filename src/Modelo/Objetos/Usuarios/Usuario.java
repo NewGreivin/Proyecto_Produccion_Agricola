@@ -1,5 +1,7 @@
 package Modelo.Objetos.Usuarios;
 
+import Modelo.Objetos.Trabajadores.Trabajador;
+
 /**
  *
  * @author Ricardo Chaves
@@ -10,7 +12,7 @@ public class Usuario {
     private String username; 
     private String passwordHash;
     private Rol rol;
-    private int idTrabajador;
+    private Trabajador idTrabajador;
 
     public String getId() {
         return id;
@@ -28,7 +30,7 @@ public class Usuario {
         return rol;
     }
 
-    public int getIdTrabajador() {
+    public Trabajador getIdTrabajador() {
         return idTrabajador;
     }
 
@@ -40,7 +42,7 @@ public class Usuario {
         this.rol = rol;
     }
 
-    public Usuario(String id, String username, String passwordHash, Rol rol, int idTrabajador) {
+    public Usuario(String id, String username, String passwordHash, Rol rol, Trabajador idTrabajador) {
         this.id = id;
         this.username = username;
         this.passwordHash = passwordHash;
