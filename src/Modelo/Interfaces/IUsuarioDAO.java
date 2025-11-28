@@ -8,7 +8,7 @@ import java.util.List;
  * @author Ricardo Chaves 
  */
 
-public interface IUsuarioDAO {
+public interface IUsuarioDAO extends ICRUD<Usuario> {
     Usuario buscarPorUsername(String username);
     boolean validarCredenciales(String username, String passwordHash);
     boolean existeUsername(String username);
