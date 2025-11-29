@@ -8,7 +8,7 @@ import java.time.LocalDate;
  */
 
 public class Cosecha {
-    private int id; //Se genera de forma Autocremental en DB
+    private String id; //Se genera de forma Autocremental en DB
     private LocalDate fecha;
     private double cantidadRecolectada;
     private CalidadCosecha calidad;
@@ -16,7 +16,7 @@ public class Cosecha {
     private Cultivo idCultivo;
     private double porcentajeProductividad; //NO se almacena en la DB
 
-    public int getId() { return id; }
+    public String getId() { return id; }
     public LocalDate getFecha() { return fecha; }
     public double getCantidadRecolectada() { return cantidadRecolectada; }
     public CalidadCosecha getCalidad() { return calidad; }
