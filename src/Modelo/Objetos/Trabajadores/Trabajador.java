@@ -10,8 +10,7 @@ import java.util.Objects;
 
 public class Trabajador {
     private static final double salarioMinimo = 350000;
-    
-    private String id;               
+                
     private String cedula;
     private String nombre;
     private String telefono;
@@ -19,17 +18,6 @@ public class Trabajador {
     private String puesto;
     private String horario;
     private double salario;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id)throws Exception {
-        if (id == null || id.isBlank()) {
-            throw new Exception("El ID del trabajador no puede estar vacio");
-        }
-        this.id = id.trim();
-    }
 
     public String getCedula() {
         return cedula;
@@ -114,8 +102,7 @@ public class Trabajador {
         this.salario = salario;
     }
 
-    public Trabajador(String id,String cedula,String nombre,String telefono,String correo, String puesto,String horario,double salario) {
-        this.id = id;
+    public Trabajador(String cedula,String nombre,String telefono,String correo, String puesto,String horario,double salario) {
         this.cedula = cedula;
         this.nombre = nombre;
         this.telefono = telefono;
@@ -125,18 +112,4 @@ public class Trabajador {
         this.salario = salario;
     }
     
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) 
-            return true;
-        if (!(o instanceof Trabajador)) 
-            return false;
-        Trabajador that = (Trabajador) o;
-        return Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }

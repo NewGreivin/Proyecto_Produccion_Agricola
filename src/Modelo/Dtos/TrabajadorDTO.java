@@ -6,7 +6,6 @@ package Modelo.Dtos;
  */
 
 public class TrabajadorDTO {
-    private String id;
     private String cedula;
     private String nombre;
     private String telefono;
@@ -14,10 +13,6 @@ public class TrabajadorDTO {
     private String puesto;
     private String horario;
     private double salario;
-
-    public String getId() {
-        return id;
-    }
 
     public String getCedula() {
         return cedula;
@@ -47,8 +42,7 @@ public class TrabajadorDTO {
         return salario;
     }
     
-    public TrabajadorDTO(String id,String cedula,String nombre,String telefono,String correo,String puesto,String horario,double salario) {
-        this.id = id;
+    public TrabajadorDTO(String cedula,String nombre,String telefono,String correo,String puesto,String horario,double salario) {
         this.cedula = cedula;
         this.nombre = nombre;
         this.telefono = telefono;
