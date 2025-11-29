@@ -8,11 +8,11 @@ import java.time.LocalDate;
  */
 
 public class AlmacenamientoDTO {
-    private String id;
-    private String producto;
-    private double cantidad;
-    private LocalDate fechaIngreso;
-    private LocalDate fechaSalida;
+    private final String id;
+    private final String producto;
+    private final double cantidad;
+    private final LocalDate fechaIngreso;
+    private final LocalDate fechaSalida;
 
     public String getId() {
         return id;

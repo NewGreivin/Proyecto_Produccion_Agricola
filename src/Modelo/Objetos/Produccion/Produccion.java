@@ -1,4 +1,4 @@
-package Modelo.Objetos.Cosechas;
+package Modelo.Objetos.Produccion;
 
 import Modelo.Objetos.Cultivos.Cultivo;
 import java.time.LocalDate;
@@ -7,27 +7,27 @@ import java.time.LocalDate;
  * @author Greivin
  */
 
-public class Cosecha {
-    private int id; //Se genera de forma Autocremental en DB
+public class Produccion {
+    private String id; //Se genera de forma Autocremental en DB
     private LocalDate fecha;
     private double cantidadRecolectada;
-    private CalidadCosecha calidad;
-    private DestinoCosecha destino;
+    private CalidadProduccion calidad;
+    private DestinoProduccion destino;
     private Cultivo idCultivo;
     private double porcentajeProductividad; //NO se almacena en la DB
 
-    public int getId() { return id; }
+    public String getId() { return id; }
     public LocalDate getFecha() { return fecha; }
     public double getCantidadRecolectada() { return cantidadRecolectada; }
-    public CalidadCosecha getCalidad() { return calidad; }
-    public DestinoCosecha getDestino() { return destino; }
+    public CalidadProduccion getCalidad() { return calidad; }
+    public DestinoProduccion getDestino() { return destino; }
     public Cultivo getIdCultivo() { return idCultivo; }
     public double getPorcentajeProductividad() { return porcentajeProductividad; }
 
-    public void setCalidad(CalidadCosecha calidad) { this.calidad = calidad; }
-    public void setDestino(DestinoCosecha destino) { this.destino = destino; }
+    public void setCalidad(CalidadProduccion calidad) { this.calidad = calidad; }
+    public void setDestino(DestinoProduccion destino) { this.destino = destino; }
     
-    public Cosecha(LocalDate fecha, double cantidadRecolectada, CalidadCosecha calidad, DestinoCosecha destino, Cultivo idCultivo) {
+    public Produccion(LocalDate fecha, double cantidadRecolectada, CalidadProduccion calidad, DestinoProduccion destino, Cultivo idCultivo) {
         this.fecha = fecha;
         this.cantidadRecolectada = cantidadRecolectada;
         this.calidad = calidad;
