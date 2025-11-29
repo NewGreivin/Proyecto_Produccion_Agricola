@@ -35,22 +35,62 @@ public class Usuario {
     }
 
     public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
+        if (passwordHash != null && !passwordHash.isBlank()) {
+            this.passwordHash = passwordHash;
+        } else {
+            throw new IllegalArgumentException("Password no puede ser null");
+        }
+
     }
 
     public void setRol(Rol rol) {
-        this.rol = rol;
+        if (rol != null) {
+            this.rol = rol;
+        } else {
+            throw new IllegalArgumentException("Rol no puede ser null");
+        }
+
+    }
+    
+    public void setIdTrabajador(Trabajador idTrabajador) {
+        if (idTrabajador != null) {
+            this.idTrabajador = idTrabajador;
+        } else {
+            throw new IllegalArgumentException("Trabajador no puede ser null");
+        }
     }
 
     public Usuario(String id, String username, String passwordHash, Rol rol, Trabajador idTrabajador) {
-        this.id = id;
-        this.username = username;
-        this.passwordHash = passwordHash;
-        this.rol = rol;
+        if (id != null && !id.isBlank()) {
+            this.id = id;
+        } else {
+            throw new IllegalArgumentException("Id no puede ser null");
+        }
+        
+        if (username != null && !username.isBlank()) {
+            this.username = username;
+        } else {
+            throw new IllegalArgumentException("Usuario no puede ser vacio");
+        }
+        
+        if (passwordHash != null && !passwordHash.isBlank()) {
+            this.passwordHash = passwordHash;
+        } else {
+            throw new IllegalArgumentException("Password no puede ser null");
+        }
+        
+        if (rol != null) {
+            this.rol = rol;
+        } else {
+            throw new IllegalArgumentException("Rol no puede ser null");
+        }
+      
         this.idTrabajador = idTrabajador;
     }
     
     public Usuario(String id, String username, String passwordHash, Rol rol) {
         this(id, username, passwordHash, rol, null);
     }
+    
+    //NOTA: Asignar el trabajador al usuario desde Servicio, Usuario.setIdTrabajador(idTrabajador);
 }
