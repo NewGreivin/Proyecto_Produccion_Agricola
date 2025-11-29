@@ -10,7 +10,7 @@ import Modelo.Objetos.Usuarios.Usuario;
 
 public class UsuarioMapper {
     public UsuarioDTO toDTO(Usuario usuario){
-        UsuarioDTO UsuDTO = new UsuarioDTO(usuario.getId(), usuario.getUsername(), usuario.getPasswordHash(), usuario.getRol());
+        UsuarioDTO UsuDTO = new UsuarioDTO(usuario.getId(), usuario.getUsername(), usuario.getPasswordHash(), usuario.getRol(), usuario.getIdTrabajador());
         return UsuDTO;
     }
     
