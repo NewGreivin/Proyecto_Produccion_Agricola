@@ -1,5 +1,6 @@
 package Modelo.Objetos.Trabajadores;
 
+import Utilidades.ValidacionUtil;
 import java.util.Objects;
 
 /**
@@ -8,6 +9,8 @@ import java.util.Objects;
  */
 
 public class Trabajador {
+    private static final double salarioMinimo = 350000;
+    
     private String id;               
     private String cedula;
     private String nombre;
@@ -16,17 +19,6 @@ public class Trabajador {
     private String puesto;
     private String horario;
     private double salario;
-    
-    public Trabajador(String id,String cedula,String nombre,String telefono,String correo, String puesto,String horario,double salario) {
-        this.id = id;
-        this.cedula = cedula;
-        this.nombre = nombre;
-        this.telefono = telefono;
-        this.correo = correo;
-        this.puesto = puesto;
-        this.horario = horario;
-        this.salario = salario;
-    }
 
     public String getId() {
         return id;
@@ -69,6 +61,9 @@ public class Trabajador {
         if (telefono == null || telefono.isBlank()) {
             throw new Exception("El telefono es obligatorio");
         }
+        if(!ValidacionUtil.TelefonoValido(telefono)){
+         throw new Exception("El telefono no tiene formato valido");   
+        }
         this.telefono = telefono.trim();
     }
 
@@ -80,8 +75,8 @@ public class Trabajador {
         if (correo == null || correo.isBlank()) {
             throw new Exception("El correo es obligatorio");
         }
-        if (!correo.contains("@")) {
-            throw new Exception("Formato de correo invalido");
+        if(!ValidacionUtil.CorreoValido(correo)){
+         throw new Exception("El correo no tiene formato valido");   
         }
         this.correo = correo.trim();
     }
@@ -113,12 +108,23 @@ public class Trabajador {
     }
 
     public void setSalario(double salario)throws Exception {
-        if (salario < 0) {
-            throw new Exception("El salario no puede ser menor a 0");
+        if (salario < salarioMinimo) {
+            throw new Exception("El salario no puede ser menor al salario minimo");
         }
         this.salario = salario;
     }
 
+    public Trabajador(String id,String cedula,String nombre,String telefono,String correo, String puesto,String horario,double salario) {
+        this.id = id;
+        this.cedula = cedula;
+        this.nombre = nombre;
+        this.telefono = telefono;
+        this.correo = correo;
+        this.puesto = puesto;
+        this.horario = horario;
+        this.salario = salario;
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) 
