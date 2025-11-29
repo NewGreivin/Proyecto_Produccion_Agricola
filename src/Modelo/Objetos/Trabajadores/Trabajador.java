@@ -16,7 +16,7 @@ public class Trabajador {
     private String puesto;
     private String horario;
     private double salario;
-
+    
     public Trabajador(String id,String cedula,String nombre,String telefono,String correo, String puesto,String horario,double salario) {
         this.id = id;
         this.cedula = cedula;
