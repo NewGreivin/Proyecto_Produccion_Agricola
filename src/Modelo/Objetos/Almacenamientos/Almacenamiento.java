@@ -8,13 +8,13 @@ import java.time.LocalDate;
  */
 
 public class Almacenamiento {
-    private int id;
+    private String id;
     private String producto;
     private double cantidad;
     private LocalDate fechaIngreso;
     private LocalDate fechaSalida;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -35,7 +35,11 @@ public class Almacenamiento {
     }
 
     public void setFechaSalida(LocalDate fechaSalida) {
-        this.fechaSalida = fechaSalida;
+        if (fechaSalida != null && !fechaSalida.isBefore(fechaIngreso)) {
+            this.fechaSalida = fechaSalida;
+        } else {
+            throw new IllegalArgumentException("Fecha salida no puede ser null ni anterior a la fecha de ingreso");
+        }
     }
     
     
@@ -44,11 +48,35 @@ public class Almacenamiento {
         return true;
     }
 
-    public Almacenamiento(int id, String producto, double cantidad, LocalDate fechaIngreso, LocalDate fechaSalida) {
-        this.id = id;
-        this.producto = producto;
-        this.cantidad = cantidad;
-        this.fechaIngreso = fechaIngreso;
-        this.fechaSalida = fechaSalida;
+    public Almacenamiento(String id, String producto, double cantidad, LocalDate fechaIngreso, LocalDate fechaSalida) {
+        if (id != null && !id.isBlank()) {
+            this.id = id;
+        } else {
+            throw new IllegalArgumentException("Id no puede ser null");
+        }
+        
+        if (producto != null && !producto.isBlank()) {
+            this.producto = producto;
+        } else {
+            throw new IllegalArgumentException("Producto no puede ser null");
+        }
+        
+        if (cantidad > 0) {
+            this.cantidad = cantidad;
+        } else {
+            throw new IllegalArgumentException("Cantidad no puede ser menor a 0");
+        }
+        
+        if (fechaIngreso != null) {
+            this.fechaIngreso = fechaIngreso;
+        } else {
+            throw new IllegalArgumentException("Fecha Ingreso no puede ser null");
+        }
+        
+        if (fechaSalida != null && !fechaSalida.isBefore(fechaIngreso)) {
+            this.fechaSalida = fechaSalida;
+        } else {
+            throw new IllegalArgumentException("Fecha salida no puede ser null ni anterior a la fecha de ingreso");
+        }  
     }
 }
