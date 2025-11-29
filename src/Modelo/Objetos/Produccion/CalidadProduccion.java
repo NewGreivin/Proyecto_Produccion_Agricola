@@ -1,9 +1,9 @@
-package Modelo.Objetos.Cosechas;
+package Modelo.Objetos.Produccion;
 
 /**
  * @author Greivin
  */
-public enum CalidadCosecha {
+public enum CalidadProduccion {
     EXTRA("Extra"),
     PRIMERA("Primera"),
     SEGUNDA("Segunda"),
@@ -13,5 +13,5 @@ public enum CalidadCosecha {
     
     private String calidad;
     public String getCalidad() { return calidad; }
-    private CalidadCosecha(String calidad) { this.calidad = calidad; }
+    private CalidadProduccion(String calidad) { this.calidad = calidad; }
 }

@@ -1,13 +1,13 @@
-package Modelo.Objetos.Cosechas;
+package Modelo.Objetos.Produccion;
 
 /**
  * @author Greivin
  */
-public enum DestinoCosecha {
+public enum DestinoProduccion {
     VENTA("Venta"),
     ALMACENAMIENTO("Almacenamiento");
     
     private String destino;
     public String getDestino() { return destino; }
-    private DestinoCosecha(String destino) { this.destino = destino;  }
+    private DestinoProduccion(String destino) { this.destino = destino;  }
 }
