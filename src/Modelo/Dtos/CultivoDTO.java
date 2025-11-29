@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 /**
  *
- * @author MARISOL
+ * @author MARISOL ALFARO
  */
 
 public class CultivoDTO {
