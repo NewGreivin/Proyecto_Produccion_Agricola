@@ -2,8 +2,8 @@ package Modelo.Mappers;
 
 /**
  *
- * @author CREADOR
+ * @author Greivin
  */
 
-public class ProduccionMapper {
+public class CosechaMapper {
 }
