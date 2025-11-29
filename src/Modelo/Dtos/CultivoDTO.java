@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 /**
  *
- * @author MARISOL
+ * @author MARISOL ALFARO
  */
 
 public class CultivoDTO {
@@ -83,5 +83,4 @@ public class CultivoDTO {
     public void setFechaEstimCosecha(LocalDate fechaEstimCosecha) {
         this.fechaEstimCosecha = fechaEstimCosecha;
     }
-
 }
