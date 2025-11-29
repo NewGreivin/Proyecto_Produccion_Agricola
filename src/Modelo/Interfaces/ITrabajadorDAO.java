@@ -1,9 +1,12 @@
 package Modelo.Interfaces;
 
+import Modelo.Objetos.Trabajadores.Trabajador;
+
 /**
  *
- * @author CREADOR
+ * @author MARISOL
  */
 
-public interface ITrabajadorDAO {
+public interface ITrabajadorDAO extends ICRUD<Trabajador> {
+    
 }

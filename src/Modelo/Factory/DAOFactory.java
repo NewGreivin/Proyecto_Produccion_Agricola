@@ -1,8 +1,10 @@
 package Modelo.Factory;
 
 import Modelo.Daos.AlmacenamientoMysqlDAO;
+import Modelo.Daos.CultivoMysqlDAO;
 import Modelo.Daos.UsuarioMysqlDAO;
 import Modelo.Interfaces.IAlmacenamientoDAO;
+import Modelo.Interfaces.ICultivoDAO;
 import Modelo.Interfaces.IUsuarioDAO;
 
 /**
@@ -17,5 +19,9 @@ public class DAOFactory {
     
     public static IAlmacenamientoDAO getAlmacenamientoDAO(){
         return new AlmacenamientoMysqlDAO();
+    }
+    
+    public static ICultivoDAO getCultivoDAO(){
+        return new CultivoMysqlDAO();
     }
 }
