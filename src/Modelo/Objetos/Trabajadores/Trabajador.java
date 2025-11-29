@@ -121,8 +121,10 @@ public class Trabajador {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Trabajador)) return false;
+        if (this == o) 
+            return true;
+        if (!(o instanceof Trabajador)) 
+            return false;
         Trabajador that = (Trabajador) o;
         return Objects.equals(id, that.id);
     }
