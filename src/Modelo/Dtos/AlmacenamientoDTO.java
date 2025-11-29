@@ -8,13 +8,13 @@ import java.time.LocalDate;
  */
 
 public class AlmacenamientoDTO {
-    private int id;
+    private String id;
     private String producto;
     private double cantidad;
     private LocalDate fechaIngreso;
     private LocalDate fechaSalida;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -34,7 +34,7 @@ public class AlmacenamientoDTO {
         return fechaSalida;
     }
 
-    public AlmacenamientoDTO(int id, String producto, double cantidad, LocalDate fechaIngreso, LocalDate fechaSalida) {
+    public AlmacenamientoDTO(String id, String producto, double cantidad, LocalDate fechaIngreso, LocalDate fechaSalida) {
         this.id = id;
         this.producto = producto;
         this.cantidad = cantidad;
