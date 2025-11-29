@@ -11,21 +11,21 @@ import java.time.LocalDate;
  */
 
 public class CosechaDTO {
-    private final int id; //Se genera de forma Autocremental en DB
+    private final String id; //Se genera de forma Autocremental en DB
     private final LocalDate fecha;
     private final double cantidadRecolectada;
     private final CalidadCosecha calidad;
     private final DestinoCosecha destino;
     private final Cultivo idCultivo;
 
-    public int getId() { return id; }
+    public String getId() { return id; }
     public LocalDate getFecha() { return fecha; }
     public double getCantidadRecolectada() { return cantidadRecolectada; }
     public CalidadCosecha getCalidad() { return calidad; }
     public DestinoCosecha getDestino() { return destino; }
     public Cultivo getIdCultivo() { return idCultivo; }
 
-    public CosechaDTO(int id, LocalDate fecha, double cantidadRecolectada, CalidadCosecha calidad, DestinoCosecha destino, Cultivo idCultivo) {
+    public CosechaDTO(String id, LocalDate fecha, double cantidadRecolectada, CalidadCosecha calidad, DestinoCosecha destino, Cultivo idCultivo) {
         this.id = id;
         this.fecha = fecha;
         this.cantidadRecolectada = cantidadRecolectada;
