@@ -1,7 +1,7 @@
 package Modelo.Daos;
 
+import Modelo.Dtos.AlmacenamientoDTO;
 import Modelo.Interfaces.IAlmacenamientoDAO;
-import Modelo.Objetos.Almacenamientos.Almacenamiento;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -13,37 +13,37 @@ import java.util.List;
 public class AlmacenamientoMysqlDAO implements IAlmacenamientoDAO {
 
     @Override
-    public List<Almacenamiento> buscarPorProducto(String nombre) {
+    public List<AlmacenamientoDTO> buscarPorProducto(String nombre) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public List<Almacenamiento> buscarPorFechaIngreso(LocalDate fecha) {
+    public List<AlmacenamientoDTO> buscarPorFechaIngreso(LocalDate fecha) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public List<Almacenamiento> productoVencidos() {
+    public List<AlmacenamientoDTO> productoVencidos() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public List<Almacenamiento> productosSinSalida() {
+    public List<AlmacenamientoDTO> productosSinSalida() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void crear(Almacenamiento t) {
+    public void crear(AlmacenamientoDTO t) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public List<Almacenamiento> listar() {
+    public List<AlmacenamientoDTO> listar() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void actualizar(Almacenamiento t) {
+    public void actualizar(AlmacenamientoDTO t) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -51,4 +51,5 @@ public class AlmacenamientoMysqlDAO implements IAlmacenamientoDAO {
     public void eliminar(String t) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
 }

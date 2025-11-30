@@ -1,6 +1,6 @@
 package Modelo.Interfaces;
 
-import Modelo.Objetos.Almacenamientos.Almacenamiento;
+import Modelo.Dtos.AlmacenamientoDTO;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -9,9 +9,9 @@ import java.util.List;
  * @author Ricardo Chaves
  */
 
-public interface IAlmacenamientoDAO extends ICRUD<Almacenamiento> {
-    List<Almacenamiento> buscarPorProducto(String nombre);
-    List<Almacenamiento> buscarPorFechaIngreso(LocalDate fecha);
-    List<Almacenamiento> productoVencidos();
-    List<Almacenamiento> productosSinSalida();
+public interface IAlmacenamientoDAO extends ICRUD<AlmacenamientoDTO> {
+    List<AlmacenamientoDTO> buscarPorProducto(String nombre);
+    List<AlmacenamientoDTO> buscarPorFechaIngreso(LocalDate fecha);
+    List<AlmacenamientoDTO> productoVencidos();
+    List<AlmacenamientoDTO> productosSinSalida();
 }
