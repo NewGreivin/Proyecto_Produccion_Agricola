@@ -14,7 +14,7 @@ public class TrabajadorMapper {
         return trab;
     }
 
-    public Trabajador toEntity(TrabajadorDTO mpdto) {
+    public Trabajador toEntity(TrabajadorDTO mpdto) throws Exception {
         Trabajador trab = new Trabajador(mpdto.getCedula(),mpdto.getNombre(),mpdto.getTelefono(),mpdto.getCorreo(),mpdto.getPuesto(),mpdto.getHorario(),mpdto.getSalario());
         return trab;
     }

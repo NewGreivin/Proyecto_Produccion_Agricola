@@ -23,22 +23,8 @@ public class Trabajador {
         return cedula;
     }
 
-    public void setCedula(String cedula)throws Exception {
-        if (cedula == null || cedula.isBlank()) {
-            throw new Exception("La cédula es obligatoria");
-        }
-        this.cedula = cedula.trim();
-    }
-
     public String getNombre() {
         return nombre;
-    }
-
-    public void setNombre(String nombre)throws Exception {
-        if (nombre == null || nombre.isBlank()) {
-            throw new Exception("El nombre es obligatorio");
-        }
-        this.nombre = nombre.trim();
     }
 
     public String getTelefono() {
@@ -46,9 +32,7 @@ public class Trabajador {
     }
 
     public void setTelefono(String telefono)throws Exception {
-        if (telefono == null || telefono.isBlank()) {
-            throw new Exception("El telefono es obligatorio");
-        }
+        validarTextoObligatorio(telefono, "El telefono es obligatorio");
         if(!ValidacionUtil.TelefonoValido(telefono)){
          throw new Exception("El telefono no tiene formato valido");   
         }
@@ -60,9 +44,7 @@ public class Trabajador {
     }
 
     public void setCorreo(String correo)throws Exception {
-        if (correo == null || correo.isBlank()) {
-            throw new Exception("El correo es obligatorio");
-        }
+        validarTextoObligatorio(correo, "El correo es obligatorio");
         if(!ValidacionUtil.CorreoValido(correo)){
          throw new Exception("El correo no tiene formato valido");   
         }
@@ -74,9 +56,7 @@ public class Trabajador {
     }
 
     public void setPuesto(String puesto)throws Exception {
-        if (puesto == null || puesto.isBlank()) {
-            throw new Exception("El puesto es obligatorio");
-        }
+        validarTextoObligatorio(puesto, "El puesto es obligatorio");
         this.puesto = puesto.trim();
     }
 
@@ -85,9 +65,7 @@ public class Trabajador {
     }
 
     public void setHorario(String horario)throws Exception {
-        if (horario == null || horario.isBlank()) {
-            throw new Exception("El horario es obligatorio");
-        }
+        validarTextoObligatorio(horario, "El horario es obligatorio");
         this.horario = horario.trim();
     }
 
@@ -102,14 +80,35 @@ public class Trabajador {
         this.salario = salario;
     }
 
-    public Trabajador(String cedula,String nombre,String telefono,String correo, String puesto,String horario,double salario) {
+    public Trabajador(String cedula,String nombre,String telefono,String correo, String puesto,String horario,double salario) throws Exception {
+        validarTextoObligatorio(cedula, "La cedula es obligatoria");
+        validarTextoObligatorio(nombre, "El nombre es obligatorio");
+        
         this.cedula = cedula;
         this.nombre = nombre;
-        this.telefono = telefono;
-        this.correo = correo;
-        this.puesto = puesto;
-        this.horario = horario;
-        this.salario = salario;
+        
+        setTelefono(telefono);
+        setCorreo(correo);
+        setPuesto(puesto);
+        setHorario(horario);
+        setSalario(salario);
     }
+    
+    public void validar() throws Exception {
+        validarTextoObligatorio(this.cedula, "La cédula es obligatoria.");
+        validarTextoObligatorio(this.nombre, "El nombre es obligatorio.");
+        setTelefono(this.telefono);
+        setCorreo(this.correo);
+        setPuesto(this.puesto);
+        setHorario(this.horario);
+        setSalario(this.salario);
+    }
+    
+    private void validarTextoObligatorio(String valor, String mensajeError)throws Exception{
+        if(valor == null || valor.isBlank()){
+            throw new Exception(mensajeError);
+        }
+    }
+    
     
 }

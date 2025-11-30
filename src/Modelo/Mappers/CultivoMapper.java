@@ -14,7 +14,7 @@ public class CultivoMapper {
         return cult;
     }
 
-    public Cultivo toEntity(CultivoDTO mpdto) {
+    public Cultivo toEntity(CultivoDTO mpdto) throws Exception {
         Cultivo cult = new Cultivo(mpdto.getId(),mpdto.getNombre(),mpdto.getTipo(),mpdto.getAreaSembrada(),mpdto.getEstado(),mpdto.getFechaSiembra(),mpdto.getFechaEstimCosecha());
 
         return cult;
