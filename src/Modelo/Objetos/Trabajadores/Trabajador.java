@@ -86,22 +86,11 @@ public class Trabajador {
         
         this.cedula = cedula;
         this.nombre = nombre;
-        
-        setTelefono(telefono);
-        setCorreo(correo);
-        setPuesto(puesto);
-        setHorario(horario);
-        setSalario(salario);
-    }
-    
-    public void validar() throws Exception {
-        validarTextoObligatorio(this.cedula, "La cédula es obligatoria.");
-        validarTextoObligatorio(this.nombre, "El nombre es obligatorio.");
-        setTelefono(this.telefono);
-        setCorreo(this.correo);
-        setPuesto(this.puesto);
-        setHorario(this.horario);
-        setSalario(this.salario);
+        this.telefono = telefono;
+        this.correo = correo;
+        this.puesto = puesto;
+        this.horario = horario;
+        this.salario = salario;
     }
     
     private void validarTextoObligatorio(String valor, String mensajeError)throws Exception{

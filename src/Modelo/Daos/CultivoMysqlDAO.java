@@ -1,5 +1,6 @@
 package Modelo.Daos;
 
+import Modelo.Dtos.CultivoDTO;
 import Modelo.Interfaces.ICultivoDAO;
 import Modelo.Objetos.Cultivos.Cultivo;
 import java.util.List;
@@ -37,17 +38,17 @@ public class CultivoMysqlDAO implements ICultivoDAO{
     }
 
     @Override
-    public void crear(Cultivo t) {
+    public void crear(CultivoDTO t) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public List<Cultivo> listar() {
+    public List<CultivoDTO> listar() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void actualizar(Cultivo t) {
+    public void actualizar(CultivoDTO t) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -55,4 +56,5 @@ public class CultivoMysqlDAO implements ICultivoDAO{
     public void eliminar(String t) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
 }

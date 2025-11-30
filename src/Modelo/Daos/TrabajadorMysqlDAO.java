@@ -1,5 +1,6 @@
 package Modelo.Daos;
 
+import Modelo.Dtos.TrabajadorDTO;
 import Modelo.Interfaces.ITrabajadorDAO;
 import Modelo.Objetos.Trabajadores.Trabajador;
 import java.util.List;
@@ -32,17 +33,17 @@ public class TrabajadorMysqlDAO implements ITrabajadorDAO {
     }
 
     @Override
-    public void crear(Trabajador t) {
+    public void crear(TrabajadorDTO t) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public List<Trabajador> listar() {
+    public List<TrabajadorDTO> listar() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void actualizar(Trabajador t) {
+    public void actualizar(TrabajadorDTO t) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

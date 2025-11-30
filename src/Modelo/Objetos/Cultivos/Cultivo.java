@@ -70,11 +70,10 @@ public class Cultivo {
         this.id = id;
         this.nombre = nombre;
         this.tipo = tipo;
+        this.areaSembrada = areaSembrada;
+        this.estado = estado;
         this.fechaSiembra = fechaSiembra;
-    
-        setAreaSembrada(areaSembrada);
-        setEstado(estado);
-        setFechaEstimCosecha(fechaEstimCosecha);
+        this.fechaEstimCosecha = fechaEstimCosecha;
     }
    
     
@@ -115,20 +114,5 @@ public class Cultivo {
         if(!fechaEstimCosecha.isAfter(this.fechaSiembra)){
             throw new Exception("La fecha de estimada cosecha debe ser despues a la fecha de siembra");
         }
-    }
-   
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (!(o instanceof Cultivo)) 
-            return false;
-        Cultivo cultivo = (Cultivo) o;
-        return Objects.equals(id, cultivo.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
     }
 }
