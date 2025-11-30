@@ -12,6 +12,6 @@ import java.util.List;
 public interface ITrabajadorDAO extends ICRUD<TrabajadorDTO> {
     Trabajador buscarPorCedula(String cedula);
     boolean existeCedula(String cedula);
-    List<Trabajador> buscarPorNombre(String nombre);
-    List<Trabajador> buscarPorPuesto(String puesto);
+    List<TrabajadorDTO> buscarPorNombre(String nombre);
+    List<TrabajadorDTO> buscarPorPuesto(String puesto);
 }

@@ -23,12 +23,12 @@ public class TrabajadorMysqlDAO implements ITrabajadorDAO {
     }
 
     @Override
-    public List<Trabajador> buscarPorNombre(String nombre) {
+    public List<TrabajadorDTO> buscarPorNombre(String nombre) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public List<Trabajador> buscarPorPuesto(String puesto) {
+    public List<TrabajadorDTO> buscarPorPuesto(String puesto) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -51,5 +51,4 @@ public class TrabajadorMysqlDAO implements ITrabajadorDAO {
     public void eliminar(String t) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
 }

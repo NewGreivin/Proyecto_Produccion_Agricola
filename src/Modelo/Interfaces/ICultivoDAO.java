@@ -1,7 +1,6 @@
 package Modelo.Interfaces;
 
 import Modelo.Dtos.CultivoDTO;
-import Modelo.Objetos.Cultivos.Cultivo;
 import java.util.List;
 
 /**
@@ -10,9 +9,9 @@ import java.util.List;
  */
 
 public interface ICultivoDAO extends ICRUD<CultivoDTO> {
-    List<Cultivo> buscarPorTipo(String tipo);
-    List<Cultivo> buscarPorEstado(String estado);
-    List<Cultivo> buscarPorNombre(String nombre);
-    List<Cultivo> buscarPorFechaSiembra(String fecha);
-    List<Cultivo> cultivosProximosACosechar();
+    List<CultivoDTO> buscarPorTipo(String tipo);
+    List<CultivoDTO> buscarPorEstado(String estado);
+    List<CultivoDTO> buscarPorNombre(String nombre);
+    List<CultivoDTO> buscarPorFechaSiembra(String fecha);
+    List<CultivoDTO> cultivosProximosACosechar();
 }

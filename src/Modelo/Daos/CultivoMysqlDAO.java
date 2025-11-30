@@ -2,7 +2,6 @@ package Modelo.Daos;
 
 import Modelo.Dtos.CultivoDTO;
 import Modelo.Interfaces.ICultivoDAO;
-import Modelo.Objetos.Cultivos.Cultivo;
 import java.util.List;
 
 /**
@@ -13,27 +12,27 @@ import java.util.List;
 public class CultivoMysqlDAO implements ICultivoDAO{
 
     @Override
-    public List<Cultivo> buscarPorTipo(String tipo) {
+    public List<CultivoDTO> buscarPorTipo(String tipo) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public List<Cultivo> buscarPorEstado(String estado) {
+    public List<CultivoDTO> buscarPorEstado(String estado) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public List<Cultivo> buscarPorNombre(String nombre) {
+    public List<CultivoDTO> buscarPorNombre(String nombre) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public List<Cultivo> buscarPorFechaSiembra(String fecha) {
+    public List<CultivoDTO> buscarPorFechaSiembra(String fecha) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public List<Cultivo> cultivosProximosACosechar() {
+    public List<CultivoDTO> cultivosProximosACosechar() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
