@@ -1,6 +1,6 @@
 package Modelo.Interfaces;
 
-import Modelo.Objetos.Usuarios.Usuario;
+import Modelo.Dtos.UsuarioDTO;
 import java.util.List;
 
 /**
@@ -8,9 +8,9 @@ import java.util.List;
  * @author Ricardo Chaves 
  */
 
-public interface IUsuarioDAO extends ICRUD<Usuario> {
-    Usuario buscarPorUsername(String username);
+public interface IUsuarioDAO extends ICRUD<UsuarioDTO> {
+    UsuarioDTO buscarPorUsername(String username);
     boolean validarCredenciales(String username, String passwordHash);
     boolean existeUsername(String username);
-    List<Usuario> listarPorRol(String rol);
+    List<UsuarioDTO> listarPorRol(String rol);
 }
