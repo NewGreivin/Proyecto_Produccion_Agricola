@@ -51,14 +51,6 @@ public class Usuario {
         }
 
     }
-    
-    public void setIdTrabajador(Trabajador idTrabajador) {
-        if (idTrabajador != null) {
-            this.idTrabajador = idTrabajador;
-        } else {
-            throw new IllegalArgumentException("Trabajador no puede ser null");
-        }
-    }
 
     public Usuario(String id, String username, String passwordHash, Rol rol, Trabajador idTrabajador) {
         if (id != null && !id.isBlank()) {
@@ -92,5 +84,4 @@ public class Usuario {
         this(id, username, passwordHash, rol, null);
     }
     
-    //NOTA: Asignar el trabajador al usuario desde Servicio, Usuario.setIdTrabajador(idTrabajador);
 }
