@@ -28,32 +28,97 @@ public class UsuarioMysqlDAO implements IUsuarioDAO{
   
     @Override
     public UsuarioDTO buscarPorUsername(String username) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try{
+            Connection cn = conexionBD.getConnection();
+            PreparedStatement ps = cn.prepareStatement("SELECT id, username, password_hash, rol, id_trabajador FROM usuarios where username = ?");
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+            
+            TrabajadorMysqlDAO trabmysql = new TrabajadorMysqlDAO();
+            TrabajadorMapper trabmapper = new TrabajadorMapper();
+            
+            if (rs.next()) {
+                String trap = rs.getString(5);
+                TrabajadorDTO trabjdto = trabmysql.buscarPorCedula(trap);
+                Trabajador trabajador = trabmapper.toEntity(trabjdto);
+                
+                return new UsuarioDTO(rs.getString(1), rs.getString(2), rs.getString(3), Rol.valueOf(rs.getString(4)), trabajador);
+            }
+        } catch(Exception e) {
+            throw new IllegalArgumentException("Sucedio un error: ", e);
+        }
+        return null;
     }
 
     @Override
     public boolean validarCredenciales(String username, String passwordHash) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try{
+            Connection cn = conexionBD.getConnection();
+            PreparedStatement ps = cn.prepareStatement("SELECT id FROM usuarios WHERE username = ? AND password_hash = ?");
+            
+            ps.setString(1, username);
+            ps.setString(2, passwordHash);
+            
+            ResultSet rs = ps.executeQuery();
+            
+            return rs.next();
+            
+        } catch(SQLException e) {
+            throw new IllegalArgumentException("Sucedio un errro", e);
+        }
     }
 
     @Override
     public boolean existeUsername(String username) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try{
+            Connection cn = conexionBD.getConnection();
+            PreparedStatement ps = cn.prepareStatement("SELECT id FROM usuarios WHERE username = ? ");
+            
+            ps.setString(1, username);
+            
+            ResultSet rs = ps.executeQuery();
+            
+            return rs.next();
+        } catch(SQLException e){
+            throw new IllegalArgumentException("Sucedio un error: ", e);
+        }
     }
 
     @Override
     public List<UsuarioDTO> listarPorRol(String rol) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<UsuarioDTO> lista = new ArrayList<>();
+        
+        try{
+            Connection cn = conexionBD.getConnection();
+            PreparedStatement ps = cn.prepareStatement("SELECT id, username, password_hash, rol, id_trabajador FROM usuarios where rol = ?");
+            ps.setString(1, rol);
+            ResultSet rs = ps.executeQuery();
+            
+            TrabajadorMysqlDAO trabmysql = new TrabajadorMysqlDAO();
+            TrabajadorMapper trabmapper = new TrabajadorMapper();
+            
+            while(rs.next()) {
+                String idt = rs.getString(5);
+                TrabajadorDTO trabdto = trabmysql.buscarPorCedula(idt);
+                Trabajador trabajador = trabmapper.toEntity(trabdto);
+                
+                UsuarioDTO udto = new UsuarioDTO(rs.getString(1), rs.getString(2), rs.getString(3), Rol.valueOf(rs.getString(4)), trabajador);
+                lista.add(udto);
+            }
+        } catch(Exception e){
+            throw new IllegalArgumentException("Sucedio un error: ", e);
+        }
+        return lista;
     }
 
     @Override
     public void crear(UsuarioDTO t) {
         try {
             Connection cn = conexionBD.getConnection();
-            PreparedStatement ps = cn.prepareStatement("INSERT INTO usuarios VALUES (?, ?, ?, ?, ?)");
+            PreparedStatement ps = cn.prepareStatement("INSERT INTO usuarios (id, username, password_hash, rol, id_trabajador) VALUES (?, ?, ?, ?, ?)");
             ps.setString(1, t.getId());
-            ps.setString(2, t.getPasswordHash());
-            ps.setString(3, t.getUsername());
+            ps.setString(2, t.getUsername());
+            ps.setString(3, t.getPasswordHash());
             ps.setString(4, t.getRol().name());
             ps.setString(5, t.idTrabajador().getCedula());
             
@@ -98,7 +163,7 @@ public class UsuarioMysqlDAO implements IUsuarioDAO{
             ps.setString(1, t.getPasswordHash());
             ps.setString(2, t.getRol().name());
             
-            ps.setString(5, t.getId());
+            ps.setString(3, t.getId());
             
             int filas = ps.executeUpdate();
             
