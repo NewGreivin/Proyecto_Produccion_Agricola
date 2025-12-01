@@ -56,4 +56,9 @@ public class CultivoDTO {
         this.fechaSiembra = fechaSiembra;
         this.fechaEstimCosecha = fechaEstimCosecha;
     }
+
+    @Override
+    public String toString() {
+        return nombre+ "("+ id + ")";
+    }
 }
