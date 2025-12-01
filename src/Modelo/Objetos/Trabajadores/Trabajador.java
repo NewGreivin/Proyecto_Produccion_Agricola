@@ -98,6 +98,9 @@ public class Trabajador {
             throw new Exception(mensajeError);
         }
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return nombre + "("+cedula+")";
+    }
 }
