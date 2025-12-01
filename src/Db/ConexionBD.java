@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 public class ConexionBD {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/produccion_agricola";
+    private static final String URL = "jdbc:mysql://localhost:3306/ProduccionAgricola";
     private static final String USER = "root";
     private static final String PASSWORD = "Root123@";
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
