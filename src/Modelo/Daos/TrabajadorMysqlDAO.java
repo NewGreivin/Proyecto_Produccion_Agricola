@@ -2,7 +2,6 @@ package Modelo.Daos;
 
 import Modelo.Dtos.TrabajadorDTO;
 import Modelo.Interfaces.ITrabajadorDAO;
-import Modelo.Objetos.Trabajadores.Trabajador;
 import java.util.List;
 
 /**
@@ -13,7 +12,7 @@ import java.util.List;
 public class TrabajadorMysqlDAO implements ITrabajadorDAO {
 
     @Override
-    public Trabajador buscarPorCedula(String cedula) {
+    public TrabajadorDTO buscarPorCedula(String cedula) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -51,4 +50,5 @@ public class TrabajadorMysqlDAO implements ITrabajadorDAO {
     public void eliminar(String t) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
 }
