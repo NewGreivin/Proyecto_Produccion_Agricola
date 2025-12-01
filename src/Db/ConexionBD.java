@@ -16,7 +16,7 @@ public class ConexionBD {
     private static final String PASSWORD = "Root123@";
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
 
-    private ConexionBD instance;
+    private static ConexionBD instance;
     private Connection connection;
 
     private ConexionBD() {
@@ -28,7 +28,7 @@ public class ConexionBD {
         }
     }
 
-    public ConexionBD getInstance() {
+    public static ConexionBD getInstance() {
         try {
             if (instance == null || instance.getConnection().isClosed()) {
                 instance = new ConexionBD();
