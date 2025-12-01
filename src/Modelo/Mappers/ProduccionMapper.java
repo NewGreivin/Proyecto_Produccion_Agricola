@@ -15,7 +15,7 @@ public class ProduccionMapper {
         return coseDTO;
     }
     
-    public Produccion toEntity(ProduccionDTO dto){
+    public Produccion toEntity(ProduccionDTO dto) throws Exception{
         Produccion cose = new Produccion(dto.getFecha(),dto.getCantidadRecolectada(),dto.getCalidad(),
                 dto.getDestino(),dto.getIdCultivo());
         return cose;
