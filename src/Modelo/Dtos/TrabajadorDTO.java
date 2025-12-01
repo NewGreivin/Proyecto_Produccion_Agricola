@@ -6,13 +6,13 @@ package Modelo.Dtos;
  */
 
 public class TrabajadorDTO {
-    private String cedula;
-    private String nombre;
-    private String telefono;
-    private String correo;
-    private String puesto;
-    private String horario;
-    private double salario;
+    private final String cedula;
+    private final String nombre;
+    private final String telefono;
+    private final String correo;
+    private final String puesto;
+    private final String horario;
+    private final double salario;
 
     public String getCedula() {
         return cedula;
