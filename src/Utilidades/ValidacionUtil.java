@@ -25,4 +25,8 @@ public class ValidacionUtil {
     public static boolean TelefonoValido(String telefono){
         return telefono != null && telefono.matches("^[5678][0-9]{7}$");
     }
+    
+    public static boolean PasswordValido(String password){
+        return password != null && password.matches("^(?=.*[A-Za-z])(?=.*\\d).{6,}$");
+    }
 }
