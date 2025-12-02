@@ -45,7 +45,8 @@ public class ServicioUsuario {
     }
     
     public boolean validarCredenciales(String username, String passwordHash){
-        return usuarioDao.validarCredenciales(username, passwordHash);
+        String passwordhash = EncriptacionUtil.hashSHA256(passwordHash);
+        return usuarioDao.validarCredenciales(username, passwordhash);
     }
     
     public boolean existeUsername(String username){
