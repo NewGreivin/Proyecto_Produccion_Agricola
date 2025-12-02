@@ -39,8 +39,8 @@ public class ServicioAlmacenamiento {
         return almacenamientoDao.productosSinSalida();
     }
     
-    public void crear(String id, String producto, double cantidad, LocalDate fechaIngreso, LocalDate fechaSalida) throws Exception {
-        Almacenamiento almacenamiento = new Almacenamiento(id, producto, cantidad, fechaIngreso, fechaSalida);
+    public void crear(String producto, double cantidad, LocalDate fechaIngreso, LocalDate fechaSalida) throws Exception {
+        Almacenamiento almacenamiento = new Almacenamiento(producto, cantidad, fechaIngreso, fechaSalida);
         AlmacenamientoDTO adto = almacenamientoMapper.toDTO(almacenamiento);
         almacenamientoDao.crear(adto);
     }
@@ -49,7 +49,7 @@ public class ServicioAlmacenamiento {
         return almacenamientoDao.listar();
     }
     
-    public void actualizar(String id, LocalDate fechaSalida) throws Exception {
+    public void actualizar(int id, LocalDate fechaSalida) throws Exception {
         List<AlmacenamientoDTO> almacenamiento = listar();
         AlmacenamientoDTO almacenamientoExistente = null;
         for (int i = 0; i < almacenamiento.size(); i++) {
@@ -64,7 +64,7 @@ public class ServicioAlmacenamiento {
         almacenamientoDao.actualizar(adto);
     }
     
-    public void eliminar(String id) throws Exception{
+    public void eliminar(int id) throws Exception{
         almacenamientoDao.eliminar(id);
     }
 }

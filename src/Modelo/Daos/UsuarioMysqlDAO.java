@@ -42,7 +42,7 @@ public class UsuarioMysqlDAO implements IUsuarioDAO{
                 TrabajadorDTO trabjdto = trabmysql.buscarPorCedula(trap);
                 Trabajador trabajador = trabmapper.toEntity(trabjdto);
                 
-                return new UsuarioDTO(rs.getString(1), rs.getString(2), rs.getString(3), Rol.valueOf(rs.getString(4)), trabajador);
+                return new UsuarioDTO(rs.getInt(1), rs.getString(2), rs.getString(3), Rol.valueOf(rs.getString(4)), trabajador);
             }
         } catch(Exception e) {
             throw new IllegalArgumentException("Sucedio un error: ", e);
@@ -102,7 +102,7 @@ public class UsuarioMysqlDAO implements IUsuarioDAO{
                 TrabajadorDTO trabdto = trabmysql.buscarPorCedula(idt);
                 Trabajador trabajador = trabmapper.toEntity(trabdto);
                 
-                UsuarioDTO udto = new UsuarioDTO(rs.getString(1), rs.getString(2), rs.getString(3), Rol.valueOf(rs.getString(4)), trabajador);
+                UsuarioDTO udto = new UsuarioDTO(rs.getInt(1), rs.getString(2), rs.getString(3), Rol.valueOf(rs.getString(4)), trabajador);
                 lista.add(udto);
             }
         } catch(Exception e){
@@ -115,12 +115,12 @@ public class UsuarioMysqlDAO implements IUsuarioDAO{
     public void crear(UsuarioDTO t) {
         try {
             Connection cn = conexionBD.getConnection();
-            PreparedStatement ps = cn.prepareStatement("INSERT INTO usuarios (id, username, password_hash, rol, id_trabajador) VALUES (?, ?, ?, ?, ?)");
-            ps.setString(1, t.getId());
-            ps.setString(2, t.getUsername());
-            ps.setString(3, t.getPasswordHash());
-            ps.setString(4, t.getRol().name());
-            ps.setString(5, t.getIdTrabajador().getCedula());
+            PreparedStatement ps = cn.prepareStatement("INSERT INTO usuarios (username, password_hash, rol, id_trabajador) VALUES (?, ?, ?, ?)");
+            
+            ps.setString(1, t.getUsername());
+            ps.setString(2, t.getPasswordHash());
+            ps.setString(3, t.getRol().name());
+            ps.setString(4, t.getIdTrabajador().getCedula());
             
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -145,7 +145,7 @@ public class UsuarioMysqlDAO implements IUsuarioDAO{
                 TrabajadorDTO trabajadorDTO = trabDAO.buscarPorCedula(idtrap);
                 Trabajador trabajador = mapper.toEntity(trabajadorDTO);     
                 
-                UsuarioDTO udto = new UsuarioDTO(rs.getString(1), rs.getString(2), rs.getString(3), Rol.valueOf(rs.getString(4)), trabajador);
+                UsuarioDTO udto = new UsuarioDTO(rs.getInt(1), rs.getString(2), rs.getString(3), Rol.valueOf(rs.getString(4)), trabajador);
                 lista.add(udto);
             }
         } catch (Exception ex) {
@@ -163,7 +163,7 @@ public class UsuarioMysqlDAO implements IUsuarioDAO{
             ps.setString(1, t.getPasswordHash());
             ps.setString(2, t.getRol().name());
             
-            ps.setString(3, t.getId());
+            ps.setInt(3, t.getId());
             
             int filas = ps.executeUpdate();
             
@@ -176,12 +176,12 @@ public class UsuarioMysqlDAO implements IUsuarioDAO{
     }
 
     @Override
-    public void eliminar(String id) {
+    public void eliminar(int id) {
         try {
             Connection cn = conexionBD.getConnection();
             PreparedStatement ps = cn.prepareStatement("DELETE FROM usuarios WHERE id = ?");
             
-            ps.setString(1, id);
+            ps.setInt(1, id);
             
             int filas = ps.executeUpdate();
             

@@ -49,9 +49,9 @@ public class ControladorAlmacenamiento {
         }
     }
     
-    public boolean crear(String id, String producto, double cantidad, LocalDate fechaIngreso, LocalDate fechaSalida) {
+    public boolean crear(String producto, double cantidad, LocalDate fechaIngreso, LocalDate fechaSalida) {
         try {
-            serviciofacade.getServicioAlmacenamiento().crear(id, producto, cantidad, fechaIngreso, fechaSalida);
+            serviciofacade.getServicioAlmacenamiento().crear(producto, cantidad, fechaIngreso, fechaSalida);
             return true;
         } catch(Exception e) {
             throw new IllegalArgumentException(e.getMessage(), e);
@@ -66,7 +66,7 @@ public class ControladorAlmacenamiento {
         }
     }
     
-    public boolean actualizar(String id, LocalDate fechaSalida) {
+    public boolean actualizar(int id, LocalDate fechaSalida) {
         try {
             serviciofacade.getServicioAlmacenamiento().actualizar(id, fechaSalida);
             return true;
@@ -75,7 +75,7 @@ public class ControladorAlmacenamiento {
         }
     }
     
-    public boolean eliminar(String id) {
+    public boolean eliminar(int id) {
         try {
             serviciofacade.getServicioAlmacenamiento().eliminar(id);
             return true;

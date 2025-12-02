@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.sql.Date;
 
 /**
  *
@@ -35,7 +36,7 @@ public class AlmacenamientoMysqlDAO implements IAlmacenamientoDAO {
             ResultSet rs = ps.executeQuery();
             
             while (rs.next()){
-                AlmacenamientoDTO adto = new AlmacenamientoDTO(rs.getString(1), rs.getString(2), rs.getDouble(3), rs.getDate(4).toLocalDate(), rs.getDate(5).toLocalDate());
+                AlmacenamientoDTO adto = new AlmacenamientoDTO(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getDate(4).toLocalDate(), rs.getDate(5).toLocalDate());
                 lista.add(adto);
             }
         } catch (SQLException e){
@@ -55,7 +56,7 @@ public class AlmacenamientoMysqlDAO implements IAlmacenamientoDAO {
             ResultSet rs = ps.executeQuery();
             
             while(rs.next()) {
-                AlmacenamientoDTO adto = new AlmacenamientoDTO(rs.getString(1), rs.getString(2), rs.getDouble(3), rs.getDate(4).toLocalDate(), rs.getDate(5).toLocalDate());
+                AlmacenamientoDTO adto = new AlmacenamientoDTO(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getDate(4).toLocalDate(), rs.getDate(5).toLocalDate());
                 lista.add(adto);
             } 
         } catch(SQLException e) {
@@ -73,7 +74,7 @@ public class AlmacenamientoMysqlDAO implements IAlmacenamientoDAO {
             PreparedStatement ps = cn.prepareStatement("SELECT id, producto, cantidad, fecha_ingreso, fecha_salida FROM almacenamiento WHERE fecha_salida < CURDATE()");
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
-                AlmacenamientoDTO adto = new AlmacenamientoDTO(rs.getString(1), rs.getString(2), rs.getDouble(3), rs.getDate(4).toLocalDate(), rs.getDate(5).toLocalDate());
+                AlmacenamientoDTO adto = new AlmacenamientoDTO(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getDate(4).toLocalDate(), rs.getDate(5).toLocalDate());
                 lista.add(adto);
             }
         } catch(SQLException e){
@@ -92,7 +93,7 @@ public class AlmacenamientoMysqlDAO implements IAlmacenamientoDAO {
             ResultSet rs = ps.executeQuery();
             
             while(rs.next()) {
-                AlmacenamientoDTO adto = new AlmacenamientoDTO(rs.getString(1), rs.getString(2), rs.getDouble(3), rs.getDate(4).toLocalDate(), rs.getDate(5).toLocalDate());
+                AlmacenamientoDTO adto = new AlmacenamientoDTO(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getDate(4).toLocalDate(), rs.getDate(5).toLocalDate());
                 lista.add(adto);
             }
         } catch(SQLException e){
@@ -105,17 +106,17 @@ public class AlmacenamientoMysqlDAO implements IAlmacenamientoDAO {
     public void crear(AlmacenamientoDTO t) {
         try {
             Connection cn = conexionBD.getConnection();
-            PreparedStatement ps = cn.prepareStatement("INSERT INTO almacenamiento(id, producto, cantidad, fecha_ingreso, fecha_salida) VALUES (?, ?, ?, ?, ?)");
+            PreparedStatement ps = cn.prepareStatement("INSERT INTO almacenamiento(producto, cantidad, fecha_ingreso, fecha_salida) VALUES (?, ?, ?, ?)");
             
-            ps.setString(1, t.getId());
-            ps.setString(2, t.getProducto());
-            ps.setDouble(3, t.getCantidad());
-            ps.setString(4, t.getFechaIngreso().toString());
-            ps.setString(5, t.getFechaSalida().toString());
             
-            ps.executeQuery();
+            ps.setString(1, t.getProducto());
+            ps.setDouble(2, t.getCantidad());
+            ps.setDate(3, Date.valueOf(t.getFechaIngreso()));
+            ps.setDate(4, Date.valueOf(t.getFechaSalida()));
+            
+            ps.executeUpdate();
         } catch(SQLException e) {
-            
+            throw new IllegalArgumentException("Se produjo un error: ", e);
         }
     }
 
@@ -129,7 +130,7 @@ public class AlmacenamientoMysqlDAO implements IAlmacenamientoDAO {
             ResultSet rs = ps.executeQuery();
             
             while(rs.next()) {
-                AlmacenamientoDTO adto = new AlmacenamientoDTO(rs.getString(1), rs.getString(2), rs.getDouble(3), rs.getDate(4).toLocalDate(), rs.getDate(5).toLocalDate());
+                AlmacenamientoDTO adto = new AlmacenamientoDTO(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getDate(4).toLocalDate(), rs.getDate(5).toLocalDate());
                 lista.add(adto);
             }
         } catch(SQLException e) {
@@ -144,8 +145,8 @@ public class AlmacenamientoMysqlDAO implements IAlmacenamientoDAO {
             Connection cn = conexionBD.getConnection();
             PreparedStatement ps = cn.prepareStatement("UPDATE almacenamiento SET fecha_salida = ? where id = ?");
             
-            ps.setString(1, t.getFechaSalida().toString());
-            ps.setString(2, t.getId());
+            ps.setDate(1, Date.valueOf(t.getFechaSalida()));
+            ps.setInt(2, t.getId());
             
             int fila = ps.executeUpdate();
             
@@ -159,11 +160,11 @@ public class AlmacenamientoMysqlDAO implements IAlmacenamientoDAO {
     }
 
     @Override
-    public void eliminar(String id) {
+    public void eliminar(int id) {
         try{
             Connection cn = conexionBD.getConnection();
             PreparedStatement ps = cn.prepareStatement("DELETE FROM almacenamiento WHERE id = ?");
-            ps.setString(1, id);
+            ps.setInt(1, id);
             
             int fila = ps.executeUpdate();
             if (fila == 0) {

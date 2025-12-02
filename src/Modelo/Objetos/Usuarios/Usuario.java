@@ -8,13 +8,13 @@ import Modelo.Objetos.Trabajadores.Trabajador;
  */
 
 public class Usuario {
-    private String id;   
+    private int id;   
     private String username; 
     private String passwordHash;
     private Rol rol;
     private Trabajador idTrabajador;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -52,12 +52,8 @@ public class Usuario {
 
     }
 
-    public Usuario(String id, String username, String passwordHash, Rol rol, Trabajador idTrabajador) {
-        if (id != null && !id.isBlank()) {
-            this.id = id;
-        } else {
-            throw new IllegalArgumentException("Id no puede ser null");
-        }
+    public Usuario(int id, String username, String passwordHash, Rol rol, Trabajador idTrabajador) {
+        this.id = id;
         
         if (username != null && !username.isBlank()) {
             this.username = username;

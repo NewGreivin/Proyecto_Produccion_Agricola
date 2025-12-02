@@ -11,5 +11,5 @@ public interface ICRUD <T> {
     void crear(T t);
     List<T> listar();
     void actualizar(T t);
-    void eliminar(String t);
+    void eliminar(int t);
 }
