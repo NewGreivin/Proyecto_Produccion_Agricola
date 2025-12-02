@@ -120,7 +120,7 @@ public class UsuarioMysqlDAO implements IUsuarioDAO{
             ps.setString(2, t.getUsername());
             ps.setString(3, t.getPasswordHash());
             ps.setString(4, t.getRol().name());
-            ps.setString(5, t.idTrabajador().getCedula());
+            ps.setString(5, t.getIdTrabajador().getCedula());
             
             ps.executeUpdate();
         } catch (SQLException e) {
