@@ -159,15 +159,15 @@ public class AlmacenamientoMysqlDAO implements IAlmacenamientoDAO {
     }
 
     @Override
-    public void eliminar(String t) {
+    public void eliminar(String id) {
         try{
             Connection cn = conexionBD.getConnection();
             PreparedStatement ps = cn.prepareStatement("DELETE FROM almacenamiento WHERE id = ?");
-            ps.setString(1, t);
+            ps.setString(1, id);
             
             int fila = ps.executeUpdate();
             if (fila == 0) {
-                throw new IllegalArgumentException("No se encontro que eliminar con el ID: " + t);
+                throw new IllegalArgumentException("No se encontro que eliminar con el ID: " + id);
             }
         } catch(SQLException e){
             throw new IllegalArgumentException("Sucedio un error: ", e);
