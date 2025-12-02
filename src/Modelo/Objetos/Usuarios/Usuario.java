@@ -76,12 +76,38 @@ public class Usuario {
         } else {
             throw new IllegalArgumentException("Rol no puede ser null");
         }
-      
-        this.idTrabajador = idTrabajador;
+        
+        if (idTrabajador != null) {
+            this.idTrabajador = idTrabajador;
+        } else {
+            throw new IllegalArgumentException("Rol no puede ser null");
+        }
     }
     
-    public Usuario(String id, String username, String passwordHash, Rol rol) {
-        this(id, username, passwordHash, rol, null);
+    public Usuario(String username, String passwordHash, Rol rol, Trabajador idTrabajador) {
+        if (username != null && !username.isBlank()) {
+            this.username = username;
+        } else {
+            throw new IllegalArgumentException("Usuario no puede ser vacio");
+        }
+        
+        if (passwordHash != null && !passwordHash.isBlank()) {
+            this.passwordHash = passwordHash;
+        } else {
+            throw new IllegalArgumentException("Password no puede ser null");
+        }
+        
+        if (rol != null) {
+            this.rol = rol;
+        } else {
+            throw new IllegalArgumentException("Rol no puede ser null");
+        }
+      
+        if (idTrabajador != null) {
+            this.idTrabajador = idTrabajador;
+        } else {
+            throw new IllegalArgumentException("Rol no puede ser null");
+        }
     }
     
 }
