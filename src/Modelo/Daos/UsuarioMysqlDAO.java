@@ -176,17 +176,17 @@ public class UsuarioMysqlDAO implements IUsuarioDAO{
     }
 
     @Override
-    public void eliminar(String t) {
+    public void eliminar(String id) {
         try {
             Connection cn = conexionBD.getConnection();
             PreparedStatement ps = cn.prepareStatement("DELETE FROM usuarios WHERE id = ?");
             
-            ps.setString(1, t);
+            ps.setString(1, id);
             
             int filas = ps.executeUpdate();
             
             if (filas == 0) {
-                throw new IllegalArgumentException("No existe un Usuario con este ID: " + t);
+                throw new IllegalArgumentException("No existe un Usuario con este ID: " + id);
             }
         } catch (SQLException e) {
             throw new IllegalArgumentException("No se pudo eliminar: ", e);
