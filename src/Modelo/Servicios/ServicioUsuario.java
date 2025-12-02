@@ -25,9 +25,9 @@ public class ServicioUsuario {
         this.usuarioMapper = new UsuarioMapper();
     }
     
-    public void crearUsuario(String id, String username, String passwordHash, Rol rol, Trabajador id_trabajador) throws Exception{
+    public void crearUsuario(String id, String username, String passwordHash, Rol rol, Trabajador idTrabajador) throws Exception{
         String password = EncriptacionUtil.hashSHA256(passwordHash);
-        Usuario usuario = new Usuario(id, username, password, rol, id_trabajador);
+        Usuario usuario = new Usuario(id, username, password, rol, idTrabajador);
         UsuarioDTO udto = usuarioMapper.toDTO(usuario);
         usuarioDao.crear(udto);
     }
