@@ -28,8 +28,7 @@ public class ControladorUsuario {
     
     public boolean validarCredenciales(String username, String passwordHash){
         try{
-            serviciofacade.getServicioUsuario().validarCredenciales(username, passwordHash);
-            return true;
+            return serviciofacade.getServicioUsuario().validarCredenciales(username, passwordHash);
         } catch(Exception e){
             throw new IllegalArgumentException(e.getMessage(), e);
         }
@@ -37,8 +36,7 @@ public class ControladorUsuario {
     
     public boolean existeUsername(String username){
         try{
-            serviciofacade.getServicioUsuario().existeUsername(username);
-            return true;
+            return serviciofacade.getServicioUsuario().existeUsername(username); 
         } catch(Exception e){
             throw new IllegalArgumentException(e.getMessage(), e);
         }
@@ -52,9 +50,9 @@ public class ControladorUsuario {
         }
     }
     
-    public boolean crear(String id, String username, String passwordHash, Rol rol, Trabajador idTrabajdor) {
+    public boolean crear(String username, String passwordHash, Rol rol, Trabajador idTrabajador) {
         try {
-            serviciofacade.getServicioUsuario().crearUsuario(id, username, passwordHash, rol, idTrabajdor);
+            serviciofacade.getServicioUsuario().crearUsuario(username, passwordHash, rol, idTrabajador);
             return true;
         } catch(Exception e){
             throw new IllegalArgumentException(e.getMessage(), e);
@@ -69,7 +67,7 @@ public class ControladorUsuario {
         }
     }
     
-    public boolean actualizar(String id, String passwordHash, Rol rol){
+    public boolean actualizar(int id, String passwordHash, Rol rol){
         try {
             serviciofacade.getServicioUsuario().actualizar(id, passwordHash, rol);
             return true;
@@ -78,7 +76,7 @@ public class ControladorUsuario {
         }
     }
     
-    public boolean eliminar(String id) {
+    public boolean eliminar(int id) {
         try {
             serviciofacade.getServicioUsuario().eliminar(id);
             return true;

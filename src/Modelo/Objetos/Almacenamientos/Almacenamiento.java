@@ -8,13 +8,13 @@ import java.time.LocalDate;
  */
 
 public class Almacenamiento {
-    private String id;
+    private int id;
     private String producto;
     private double cantidad;
     private LocalDate fechaIngreso;
     private LocalDate fechaSalida;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -48,12 +48,8 @@ public class Almacenamiento {
         return true;
     }
 
-    public Almacenamiento(String id, String producto, double cantidad, LocalDate fechaIngreso, LocalDate fechaSalida) {
-        if (id != null && !id.isBlank()) {
-            this.id = id;
-        } else {
-            throw new IllegalArgumentException("Id no puede ser null");
-        }
+    public Almacenamiento(int id, String producto, double cantidad, LocalDate fechaIngreso, LocalDate fechaSalida) {
+        this.id = id;
         
         if (producto != null && !producto.isBlank()) {
             this.producto = producto;

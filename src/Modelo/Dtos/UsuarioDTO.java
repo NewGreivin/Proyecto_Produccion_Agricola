@@ -9,13 +9,13 @@ import Modelo.Objetos.Usuarios.Rol;
  */
 
 public class UsuarioDTO {
-    private final String id;   
+    private final Integer id;   
     private final String username; 
     private final String passwordHash;
     private final Rol rol;
     private final Trabajador idTrabajador;
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -35,7 +35,7 @@ public class UsuarioDTO {
         return idTrabajador;
     }
 
-    public UsuarioDTO(String id, String username, String passwordHash, Rol rol, Trabajador idTrabajador) {
+    public UsuarioDTO(Integer id, String username, String passwordHash, Rol rol, Trabajador idTrabajador) {
         this.id = id;
         this.username = username;
         this.passwordHash = passwordHash;

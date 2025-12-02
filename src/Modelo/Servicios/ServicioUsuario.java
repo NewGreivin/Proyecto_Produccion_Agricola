@@ -26,12 +26,12 @@ public class ServicioUsuario {
         this.usuarioMapper = new UsuarioMapper();
     }
     
-    public void crearUsuario(String id, String username, String passwordHash, Rol rol, Trabajador idTrabajador) throws Exception{
+    public void crearUsuario(String username, String passwordHash, Rol rol, Trabajador idTrabajador) throws Exception{
         if (!ValidacionUtil.PasswordValido(passwordHash)) {
             throw new IllegalArgumentException("La contraseña debe tener como minimo 6 caractares, contener numeros y letras.");
         }
         String password = EncriptacionUtil.hashSHA256(passwordHash);
-        Usuario usuario = new Usuario(id, username, password, rol, idTrabajador);
+        Usuario usuario = new Usuario(username, password, rol, idTrabajador);
         UsuarioDTO udto = usuarioMapper.toDTO(usuario);
         usuarioDao.crear(udto);
     }
@@ -57,7 +57,7 @@ public class ServicioUsuario {
         return usuarioDao.listarPorRol(rol);
     }
     
-    public void actualizar(String id, String passwordHash, Rol rol) throws Exception{
+    public void actualizar(int id, String passwordHash, Rol rol) throws Exception{
         List<UsuarioDTO> usuarios = listar();
         UsuarioDTO UsuariosExistentes = null;
         for (int i = 0; i < usuarios.size(); i++) {
@@ -79,7 +79,7 @@ public class ServicioUsuario {
         usuarioDao.actualizar(udto);
     }
     
-    public void eliminar(String id) throws Exception{
+    public void eliminar(int id) throws Exception{
         usuarioDao.eliminar(id);
     }
 }
