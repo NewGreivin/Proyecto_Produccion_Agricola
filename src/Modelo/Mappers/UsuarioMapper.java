@@ -15,7 +15,7 @@ public class UsuarioMapper {
     }
     
     public Usuario toEntity(UsuarioDTO UserDTO){
-        Usuario user = new Usuario(UserDTO.getId(), UserDTO.getUsername(), UserDTO.getPasswordHash(), UserDTO.getRol());
+        Usuario user = new Usuario(UserDTO.getId(), UserDTO.getUsername(), UserDTO.getPasswordHash(), UserDTO.getRol(), UserDTO.getIdTrabajador());
         return user;
     }
 }

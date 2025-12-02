@@ -30,8 +30,8 @@ public class UsuarioDTO {
     public Rol getRol() {
         return rol;
     }
-    
-    public Trabajador idTrabajador(){
+
+    public Trabajador getIdTrabajador() {
         return idTrabajador;
     }
 
