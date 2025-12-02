@@ -1,7 +1,7 @@
 package Modelo.Servicios;
 
-import Modelo.Daos.ProduccionMysqlDAO;
 import Modelo.Dtos.ProduccionDTO;
+import Modelo.Factory.DAOFactory;
 import Modelo.Mappers.ProduccionMapper;
 import Modelo.Objetos.Produccion.CalidadProduccion;
 import Modelo.Objetos.Produccion.DestinoProduccion;
@@ -21,7 +21,7 @@ public class ServicioProduccion {
     private final ProduccionMapper mapper;
 
     public ServicioProduccion() {
-        this.produccionDAO = new ProduccionMysqlDAO();
+        this.produccionDAO = DAOFactory.crearProduccionDAO();
         this.mapper = new ProduccionMapper();
     }
 
