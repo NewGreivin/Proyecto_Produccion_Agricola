@@ -256,13 +256,13 @@ public class ProduccionMysqlDAO implements IProduccionDAO {
     }
 
     @Override
-    public void eliminar(String id) {
+    public void eliminar(int id) {
         String sql = "DELETE FROM produccion WHERE id = ?";
         
         try (Connection conn = conexion.getConnection();
              PreparedStatement pst = conn.prepareStatement(sql)) {
             
-            pst.setString(1, id);
+            pst.setInt(1, id);
             pst.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

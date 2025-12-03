@@ -72,7 +72,7 @@ public class ServicioProduccion {
         produccionDAO.actualizar(dto);
     }
 
-    public void eliminar(String id) throws Exception {
+    public void eliminar(int id) throws Exception {
         produccionDAO.eliminar(id);
     }
 

@@ -86,7 +86,7 @@ public class ControladorProduccion {
         }
     }
     
-    public boolean eliminarProduccion(String id) {
+    public boolean eliminarProduccion(int id) {
         try {
             facade.getServicioProduccion().eliminar(id);
             return true;
