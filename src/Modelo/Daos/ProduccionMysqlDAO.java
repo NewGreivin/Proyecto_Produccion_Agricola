@@ -53,6 +53,8 @@ public class ProduccionMysqlDAO implements IProduccionDAO {
                     DestinoProduccion.valueOf(destinoStr), obtenerCultivoPorId(idCultivo));
                 producciones.add(dto);
             }
+            rs.close();
+            pst.close();
         } catch (Exception e) {
             throw new IllegalArgumentException("No se pudo buscar por rango de fecha", e);
          }
@@ -83,6 +85,8 @@ public class ProduccionMysqlDAO implements IProduccionDAO {
                     DestinoProduccion.valueOf(destinoStr), obtenerCultivoPorId(idCultivoStr));
                 producciones.add(dto);
             }
+            rs.close();
+            pst.close();
         } catch (Exception e) {
             throw new IllegalArgumentException("No se pudo buscar por cultivo", e);
         }
@@ -114,6 +118,8 @@ public class ProduccionMysqlDAO implements IProduccionDAO {
                     DestinoProduccion.valueOf(destinoStr), obtenerCultivoPorId(idCultivo));
                 producciones.add(dto);
             }
+            rs.close();
+            pst.close();
         } catch (Exception e) {
             throw new IllegalArgumentException("No se pudo buscar por destino", e);
         }
@@ -145,6 +151,8 @@ public class ProduccionMysqlDAO implements IProduccionDAO {
                     DestinoProduccion.valueOf(destinoStr), obtenerCultivoPorId(idCultivo));
                 producciones.add(dto);
             }
+            rs.close();
+            pst.close();
         } catch (Exception e) {
             throw new IllegalArgumentException("No se pudo buscar por fecha", e);
         }
@@ -176,6 +184,8 @@ public class ProduccionMysqlDAO implements IProduccionDAO {
                     DestinoProduccion.valueOf(destinoStr), obtenerCultivoPorId(idCultivo));
                 producciones.add(dto);
             }
+            rs.close();
+            pst.close();
         } catch (Exception e) {
             throw new IllegalArgumentException("No se pudo buscar por calidad", e);
         }
@@ -187,8 +197,9 @@ public class ProduccionMysqlDAO implements IProduccionDAO {
     public void crear(ProduccionDTO t) {
         String sql = "INSERT INTO produccion (fecha, cantidad_recolectada, calidad, destino, id_cultivo) VALUES (?, ?, ?, ?, ?)";
         
-        try (Connection conn = conexion.getConnection();
-             PreparedStatement pst = conn.prepareStatement(sql)) {
+        try {
+            Connection conn = conexion.getConnection();
+            PreparedStatement pst = conn.prepareStatement(sql);
             
             pst.setString(1, t.getFecha().toString());
             pst.setDouble(2, t.getCantidadRecolectada());
@@ -197,6 +208,7 @@ public class ProduccionMysqlDAO implements IProduccionDAO {
             pst.setString(5, t.getIdCultivo().getId());
             
             pst.executeUpdate();
+            pst.close();
             
         } catch (SQLException e) {
             e.printStackTrace();
@@ -227,6 +239,8 @@ public class ProduccionMysqlDAO implements IProduccionDAO {
                     DestinoProduccion.valueOf(destinoStr), obtenerCultivoPorId(idCultivo));
                 producciones.add(dto);
             }
+            rs.close();
+            pst.close();
         } catch (Exception e) {
             throw new IllegalArgumentException("No se pudo listar producciones", e);
         }
@@ -238,8 +252,9 @@ public class ProduccionMysqlDAO implements IProduccionDAO {
     public void actualizar(ProduccionDTO t) {
         String sql = "UPDATE produccion SET fecha = ?, cantidad_recolectada = ?, calidad = ?, destino = ?, id_cultivo = ? WHERE id = ?";
         
-        try (Connection conn = conexion.getConnection();
-             PreparedStatement pst = conn.prepareStatement(sql)) {
+        try {
+            Connection conn = conexion.getConnection();
+            PreparedStatement pst = conn.prepareStatement(sql);
             
             pst.setString(1, t.getFecha().toString());
             pst.setDouble(2, t.getCantidadRecolectada());
@@ -249,6 +264,7 @@ public class ProduccionMysqlDAO implements IProduccionDAO {
             pst.setString(6, t.getId());
             
             pst.executeUpdate();
+            pst.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -259,11 +275,13 @@ public class ProduccionMysqlDAO implements IProduccionDAO {
     public void eliminar(int id) {
         String sql = "DELETE FROM produccion WHERE id = ?";
         
-        try (Connection conn = conexion.getConnection();
-             PreparedStatement pst = conn.prepareStatement(sql)) {
+        try {
+            Connection conn = conexion.getConnection();
+            PreparedStatement pst = conn.prepareStatement(sql);
             
             pst.setInt(1, id);
             pst.executeUpdate();
+            pst.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -288,9 +306,15 @@ public class ProduccionMysqlDAO implements IProduccionDAO {
                 EstadoCrecimiento estado = EstadoCrecimiento.valueOf(rs.getString(5));
                 LocalDate fechaSiembra = rs.getDate(6).toLocalDate();
                 LocalDate fechaEstimCosecha = rs.getDate(7).toLocalDate();
+
+                Cultivo cultivo = new Cultivo(id, nombre, tipo, areaSembrada, estado, fechaSiembra, fechaEstimCosecha);
                 
-                return new Cultivo(id, nombre, tipo, areaSembrada, estado, fechaSiembra, fechaEstimCosecha);
+                rs.close();
+                pst.close();
+                return cultivo;
             }
+            rs.close();
+            pst.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
