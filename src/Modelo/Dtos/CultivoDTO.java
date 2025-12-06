@@ -58,6 +58,6 @@ public class CultivoDTO {
 
     @Override
     public String toString() {
-        return nombre+ "("+ id + ")";
+        return nombre + "(" + id + ")";
     }
 }

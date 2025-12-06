@@ -43,7 +43,7 @@ public class Cultivo {
     }
 
     public void setEstado(EstadoCrecimiento estado)throws Exception {
-        validarObjetoObligatorio(estado, "El estado es obligatorio");
+        validarObjetoO(estado, "El estado es obligatorio");
         this.estado = estado;
     }
 
@@ -63,7 +63,7 @@ public class Cultivo {
     public Cultivo(int id,String nombre,TipoCultivo tipo,double areaSembrada,EstadoCrecimiento estado,LocalDate fechaSiembra,LocalDate fechaEstimCosecha) throws Exception {
         validarId(id);
         validarTextoObligatorio(nombre, "El nombre de cultivo es obligatorio");
-        validarObjetoObligatorio(tipo, "El tipo de cultivo es obligatorio");
+        validarObjetoO(tipo, "El tipo de cultivo es obligatorio");
         validarFechaSiembra(fechaSiembra);
         
         this.id = id;
@@ -74,7 +74,7 @@ public class Cultivo {
         this.fechaSiembra = fechaSiembra;
         this.fechaEstimCosecha = fechaEstimCosecha;
     }
-   
+    
     private void validarId(int id)throws Exception{
         if(id <= 0){
             throw new Exception("El id debe ser un numero positivo");
@@ -87,7 +87,7 @@ public class Cultivo {
         }
     }
     
-    private void validarObjetoObligatorio(Object obj, String mensajeError)throws Exception {
+    private void validarObjetoO(Object obj, String mensajeError)throws Exception {
         if (obj == null) {
             throw new Exception(mensajeError);
         }
@@ -118,5 +118,10 @@ public class Cultivo {
         if(!fechaEstimCosecha.isAfter(this.fechaSiembra)){
             throw new Exception("La fecha de estimada cosecha debe ser despues a la fecha de siembra");
         }
+    }
+
+    @Override
+    public String toString() {
+        return nombre + " (ID: " + id + ")";
     }
 }
