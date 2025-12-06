@@ -2,7 +2,7 @@ package Modelo.Servicios;
 
 /**
  *
- * @author CREADOR
+ * @author MARISOL
  */
 
 public class ServicioCultivo {

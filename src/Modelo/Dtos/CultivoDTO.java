@@ -10,7 +10,7 @@ import java.time.LocalDate;
  */
 
 public class CultivoDTO {
-    private final String id;
+    private final Integer id;
     private final String nombre;
     private final TipoCultivo tipo;
     private final double areaSembrada;
@@ -18,8 +18,7 @@ public class CultivoDTO {
     private final LocalDate fechaSiembra;
     private final LocalDate fechaEstimCosecha;
 
-
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -47,7 +46,7 @@ public class CultivoDTO {
         return fechaEstimCosecha;
     }
     
-    public CultivoDTO(String id,String nombre,TipoCultivo tipo,double areaSembrada, EstadoCrecimiento estado,LocalDate fechaSiembra,LocalDate fechaEstimCosecha) {
+    public CultivoDTO(Integer id,String nombre,TipoCultivo tipo,double areaSembrada, EstadoCrecimiento estado,LocalDate fechaSiembra,LocalDate fechaEstimCosecha) {
         this.id = id;
         this.nombre = nombre;
         this.tipo = tipo;

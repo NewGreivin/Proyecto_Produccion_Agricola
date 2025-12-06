@@ -2,7 +2,7 @@ package Controlador;
 
 /**
  *
- * @author CREADOR
+ * @author MARISOL
  */
 
 public class ControladorCultivo {

@@ -1,7 +1,6 @@
 package Modelo.Objetos.Trabajadores;
 
 import Utilidades.ValidacionUtil;
-import java.util.Objects;
 
 /**
  *
@@ -11,7 +10,7 @@ import java.util.Objects;
 public class Trabajador {
     private static final double salarioMinimo = 350000;
                 
-    private String cedula;
+    private int cedula;
     private String nombre;
     private String telefono;
     private String correo;
@@ -19,7 +18,7 @@ public class Trabajador {
     private String horario;
     private double salario;
 
-    public String getCedula() {
+    public int getCedula() {
         return cedula;
     }
 
@@ -80,9 +79,9 @@ public class Trabajador {
         this.salario = salario;
     }
 
-    public Trabajador(String cedula,String nombre,String telefono,String correo, String puesto,String horario,double salario) throws Exception {
-        validarTextoObligatorio(cedula, "La cedula es obligatoria");
+    public Trabajador(int cedula,String nombre,String telefono,String correo, String puesto,String horario,double salario) throws Exception {
         validarTextoObligatorio(nombre, "El nombre es obligatorio");
+        validarCedula(cedula);
         
         this.cedula = cedula;
         this.nombre = nombre;
@@ -98,9 +97,15 @@ public class Trabajador {
             throw new Exception(mensajeError);
         }
     }
+    
+    private void validarCedula(int cedula)throws Exception{
+        if(cedula <= 0){
+            throw new Exception("La cedula debe ser un numero mayor a cero");
+        }
+    }
 
     @Override
     public String toString() {
-        return nombre + "("+cedula+")";
+        return nombre + "(" + cedula + ")";
     }
 }

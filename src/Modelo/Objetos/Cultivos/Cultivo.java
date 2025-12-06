@@ -2,7 +2,6 @@ package Modelo.Objetos.Cultivos;
 
 import Utilidades.ValidacionUtil;
 import java.time.LocalDate;
-import java.util.Objects;
 
 /**
  *
@@ -10,7 +9,7 @@ import java.util.Objects;
  */
 
 public class Cultivo {
-    private String id;                    
+    private int id;                    
     private String nombre;
     private TipoCultivo tipo;
     private double areaSembrada;
@@ -18,7 +17,7 @@ public class Cultivo {
     private LocalDate fechaSiembra;
     private LocalDate fechaEstimCosecha;
     
- public String getId() {
+ public int getId() {
         return id;
     }
 
@@ -61,8 +60,8 @@ public class Cultivo {
         this.fechaEstimCosecha = fechaEstimCosecha;
     }
     
-    public Cultivo(String id,String nombre,TipoCultivo tipo,double areaSembrada,EstadoCrecimiento estado,LocalDate fechaSiembra,LocalDate fechaEstimCosecha) throws Exception {
-        validarTextoObligatorio(id, "El ID de cultivo no puede estar vacio");
+    public Cultivo(int id,String nombre,TipoCultivo tipo,double areaSembrada,EstadoCrecimiento estado,LocalDate fechaSiembra,LocalDate fechaEstimCosecha) throws Exception {
+        validarId(id);
         validarTextoObligatorio(nombre, "El nombre de cultivo es obligatorio");
         validarObjetoObligatorio(tipo, "El tipo de cultivo es obligatorio");
         validarFechaSiembra(fechaSiembra);
@@ -76,6 +75,11 @@ public class Cultivo {
         this.fechaEstimCosecha = fechaEstimCosecha;
     }
    
+    private void validarId(int id)throws Exception{
+        if(id <= 0){
+            throw new Exception("El id debe ser un numero positivo");
+        }
+    }
     
     private void validarTextoObligatorio(String valor, String msj)throws Exception{
         if(valor == null || valor.isBlank()){
