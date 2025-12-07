@@ -1,58 +1,61 @@
-/**
- * @author Greivin
- */
+
 package Gui.Busquedas;
 
-import Contratos.Contrato;
-import Contratos.GestionContrato;
+import GUI.Utilidades.UtilGui;
+import Modelo.Dtos.ProduccionDTO;
 import Utilidades.UtilDate;
-import Utilidades.UtilGui;
+import java.util.List;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
+/**
+ * @author Greivin
+ */
+
 public class dlgBuscarProduccion extends javax.swing.JDialog {
-    private GestionContrato list;
-    private Contrato contrato;
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(dlgBuscarProduccion.class.getName());
+    private List<ProduccionDTO> producciones;
+    private ProduccionDTO produccionSeleccionada;
     
     private DefaultTableModel model;
     private TableRowSorter<DefaultTableModel> sorter;
     private RowFilter<DefaultTableModel, Object> rowFilter;
 
-    public void setList(GestionContrato list) {
-        this.list = list;
+    public void setProduciones(List<ProduccionDTO> producciones) {
+        this.producciones = producciones;
         loadTable();
     }
 
-    public Contrato getContrato() {
-        return contrato;
+    public ProduccionDTO getProduccion() {
+        return produccionSeleccionada;
     }
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(dlgBuscarProduccion.class.getName());
-
     public dlgBuscarProduccion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        model = (DefaultTableModel) tblContratos.getModel();
+        model = (DefaultTableModel) tblProduccion.getModel();
         sorter = new TableRowSorter<>(model);
-        tblContratos.setRowSorter(sorter);
+        tblProduccion.setRowSorter(sorter);
     }
 
     private void loadTable() {
-    model.setRowCount(0); // Limpiar tabla
-    for (Contrato c : list.getContratos().values()) {
-        Object[] data = {
-            c.getNumContrato(),
-            c.getCliente().getCedula(),
-            c.getVehiculo().getPlaca(),
-            UtilDate.toString(c.getFechaInicio()),
-            UtilDate.toString(c.getFechaFin()),
-            c.getMonto(),
-            c.getEstado()
-        };
-        model.addRow(data);
+        model.setRowCount(0); // Limpiar tabla
+        if (producciones == null) return;
+        
+        for (ProduccionDTO p : producciones) {
+            Object[] data = {
+                p.getId(),
+                UtilDate.toString(p.getFecha()),
+                String.format("%.2f", p.getCantidadRecolectada()),
+                p.getCalidad().getCalidad(),
+                p.getDestino().getDestino(),
+                p.getIdCultivo().getNombre()
+            };
+            model.addRow(data);
+        }
     }
-}
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -60,7 +63,7 @@ public class dlgBuscarProduccion extends javax.swing.JDialog {
         lblTitulo = new javax.swing.JLabel();
         pnlIntroducir = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblContratos = new javax.swing.JTable();
+        tblProduccion = new javax.swing.JTable();
         txtFiltro = new javax.swing.JTextField();
         pnlBotones = new javax.swing.JPanel();
         btnEliminar = new javax.swing.JButton();
@@ -73,7 +76,7 @@ public class dlgBuscarProduccion extends javax.swing.JDialog {
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitulo.setText("Buscar Produccion");
 
-        tblContratos.setModel(new javax.swing.table.DefaultTableModel(
+        tblProduccion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -96,7 +99,7 @@ public class dlgBuscarProduccion extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tblContratos);
+        jScrollPane1.setViewportView(tblProduccion);
 
         txtFiltro.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         txtFiltro.setHorizontalAlignment(javax.swing.JTextField.LEFT);
@@ -198,22 +201,29 @@ public class dlgBuscarProduccion extends javax.swing.JDialog {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        int row =tblContratos.getSelectedRow();
-    if (row == -1) {
-        UtilGui.showErrorMessage(this, "Debe seleccionar un contrato", "Error");
-        return;
-    }
-    
-    int modelRow = tblContratos.convertRowIndexToModel(row);
-    String numContrato = String.valueOf(model.getValueAt(modelRow, 0));
-    contrato = list.buscar(numContrato);
-    if (contrato == null) {
-        UtilGui.showErrorMessage(this, "Contrato no encontrado", "Error");
-        return;
-    }
+        int row = tblProduccion.getSelectedRow();
+        if (row == -1) {
+            UtilGui.showErrorMessage(this, "Debe seleccionar una produccion", "Error");
+            return;
+        }
+        
+        int modelRow = tblProduccion.convertRowIndexToModel(row);
+        String idProduccion = String.valueOf(model.getValueAt(modelRow, 0));
+        
+        for (ProduccionDTO p : producciones) {
+            if (p.getId().equals(idProduccion)) {
+                produccionSeleccionada = p;
+                break;
+            }
+        }
+        
+        if (produccionSeleccionada == null) {
+            UtilGui.showErrorMessage(this, "Producción no encontrada", "Error");
+            return;
+        }
 
-    setVisible(false);
-    dispose();
+        setVisible(false);
+        dispose();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void txtFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFiltroActionPerformed
@@ -222,10 +232,6 @@ public class dlgBuscarProduccion extends javax.swing.JDialog {
     }//GEN-LAST:event_txtFiltroActionPerformed
 
     public static void main(String args[]) {
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -236,7 +242,6 @@ public class dlgBuscarProduccion extends javax.swing.JDialog {
         } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
@@ -260,7 +265,7 @@ public class dlgBuscarProduccion extends javax.swing.JDialog {
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JPanel pnlBotones;
     private javax.swing.JPanel pnlIntroducir;
-    private javax.swing.JTable tblContratos;
+    private javax.swing.JTable tblProduccion;
     private javax.swing.JTextField txtFiltro;
     // End of variables declaration//GEN-END:variables
 }
