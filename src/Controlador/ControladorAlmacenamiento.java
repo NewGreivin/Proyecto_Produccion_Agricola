@@ -17,70 +17,38 @@ public class ControladorAlmacenamiento {
         this.serviciofacade = ServicioFacade.getInstancia();
     }
     
-    public List<AlmacenamientoDTO> buscarPorProducto(String nombre) {
-        try {
+    public List<AlmacenamientoDTO> buscarPorProducto(String nombre) throws Exception {
             return serviciofacade.getServicioAlmacenamiento().buscarPorProducto(nombre);
-        } catch(Exception e) {
-            throw new IllegalArgumentException(e.getMessage(), e);
-        }
     }
     
-    public List<AlmacenamientoDTO> buscarPorFechaIngreso(LocalDate fecha) {
-        try {
+    public List<AlmacenamientoDTO> buscarPorFechaIngreso(LocalDate fecha) throws Exception {
             return serviciofacade.getServicioAlmacenamiento().buscarPorFechaIngreso(fecha);
-        } catch(Exception e) {
-            throw new IllegalArgumentException(e.getMessage(), e);
-        }
     }
     
-    public List<AlmacenamientoDTO> productoVencidos() {
-        try {
+    public List<AlmacenamientoDTO> productoVencidos() throws Exception {
             return serviciofacade.getServicioAlmacenamiento().buscarPorProductosVencidos();
-        } catch(Exception e) {
-            throw new IllegalArgumentException(e.getMessage(), e);
-        }
     }
     
-    public List<AlmacenamientoDTO> productosSinSalida() {
-        try {
+    public List<AlmacenamientoDTO> productosSinSalida() throws Exception {
             return serviciofacade.getServicioAlmacenamiento().productosSinSalida();
-        } catch(Exception e) {
-            throw new IllegalArgumentException(e.getMessage(), e);
-        }
     }
     
-    public boolean crear(String producto, double cantidad, LocalDate fechaIngreso, LocalDate fechaSalida) {
-        try {
+    public boolean crear(String producto, double cantidad, LocalDate fechaIngreso, LocalDate fechaSalida) throws Exception {
             serviciofacade.getServicioAlmacenamiento().crear(producto, cantidad, fechaIngreso, fechaSalida);
             return true;
-        } catch(Exception e) {
-            throw new IllegalArgumentException(e.getMessage(), e);
-        }
     }
     
-    public List<AlmacenamientoDTO> listar() {
-        try {
+    public List<AlmacenamientoDTO> listar() throws Exception {
             return serviciofacade.getServicioAlmacenamiento().listar();
-        } catch(Exception e) {
-            throw new IllegalArgumentException(e.getMessage(), e);
-        }
     }
     
-    public boolean actualizar(int id, LocalDate fechaSalida) {
-        try {
+    public boolean actualizar(int id, LocalDate fechaSalida) throws Exception {
             serviciofacade.getServicioAlmacenamiento().actualizar(id, fechaSalida);
             return true;
-        } catch(Exception e) {
-            throw new IllegalArgumentException(e.getMessage(), e);
-        }
     }
     
-    public boolean eliminar(int id) {
-        try {
+    public boolean eliminar(int id) throws Exception {
             serviciofacade.getServicioAlmacenamiento().eliminar(id);
             return true;
-        } catch(Exception e) {
-            throw new IllegalArgumentException(e.getMessage(), e);
-        }
     }
 }
