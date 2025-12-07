@@ -218,8 +218,8 @@ public class ProduccionMysqlDAO implements IProduccionDAO {
 
     @Override
     public List<ProduccionDTO> listar() {
-         List<ProduccionDTO> producciones = new ArrayList<>();
-         String sql = "SELECT id, fecha, cantidad_recolectada, calidad, destino, id_cultivo FROM produccion";
+        List<ProduccionDTO> producciones = new ArrayList<>();
+        String sql = "SELECT id, fecha, cantidad_recolectada, calidad, destino, id_cultivo FROM produccion";
          
         try {
             Connection conn = conexion.getConnection();

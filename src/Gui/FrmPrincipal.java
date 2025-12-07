@@ -22,9 +22,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
     public FrmPrincipal() {
         initComponents();
         //pnlUsuarios = new PnlUsuarios();
-        pnlTrabajadores = new PnlTrabajadores();
+        //pnlTrabajadores = new PnlTrabajadores();
         //pnlCultivos = new PnlCultivos();
-        //pnlProduccion = new PnlProduccion();
+        pnlProduccion = new PnlProduccion();
         //pnlAlmacenamiento = new PnlAlmacenamiento();
 
     }
@@ -60,11 +60,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         lblTitulo.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo.setText("Sistema de Gestion y Alquiler de vehiculos");
+        lblTitulo.setText("Sistema de Produccion Agricola");
 
         lpbCreditos.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lpbCreditos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lpbCreditos.setText("Software creado por TechTeamAlpha @ 2025");
+        lpbCreditos.setText("Software creado por Código Blindado @ 2025");
 
         javax.swing.GroupLayout pnlCreditosLayout = new javax.swing.GroupLayout(pnlCreditos);
         pnlCreditos.setLayout(pnlCreditosLayout);
