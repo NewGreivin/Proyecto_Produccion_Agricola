@@ -5,8 +5,7 @@ package Gui.Vistas;
 
 import Controlador.ControladorTrabajador;
 import GUI.Utilidades.UtilGui;
-import Gui.Busquedas.dlgBuscarEmpleado;
-import Interfaces.IGui;
+import Gui.Interfaces.IGui;
 import Modelo.Objetos.Trabajadores.Trabajador;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
