@@ -18,70 +18,38 @@ public class ControladorUsuario {
         this.serviciofacade = ServicioFacade.getInstancia();
     }
     
-    public UsuarioDTO buscarPorUsername(String username){
-        try{
+    public UsuarioDTO buscarPorUsername(String username) throws Exception{
             return serviciofacade.getServicioUsuario().buscarPorUsername(username);
-        } catch(Exception e){
-            throw new IllegalArgumentException(e.getMessage(), e);
-        }
     }
     
-    public boolean validarCredenciales(String username, String passwordHash){
-        try{
+    public boolean validarCredenciales(String username, String passwordHash) throws Exception{
             return serviciofacade.getServicioUsuario().validarCredenciales(username, passwordHash);
-        } catch(Exception e){
-            throw new IllegalArgumentException(e.getMessage(), e);
-        }
     }
     
-    public boolean existeUsername(String username){
-        try{
-            return serviciofacade.getServicioUsuario().existeUsername(username); 
-        } catch(Exception e){
-            throw new IllegalArgumentException(e.getMessage(), e);
-        }
+    public boolean existeUsername(String username) throws Exception {
+            return serviciofacade.getServicioUsuario().existeUsername(username);
     }
     
-    public List<UsuarioDTO> listarPorRol(String rol) {
-        try {
+    public List<UsuarioDTO> listarPorRol(String rol) throws Exception {
             return serviciofacade.getServicioUsuario().listarPorRol(rol);
-        } catch(Exception e) {
-            throw new IllegalArgumentException(e.getMessage(), e);
-        }
     }
     
-    public boolean crear(String username, String passwordHash, Rol rol, Trabajador idTrabajador) {
-        try {
+    public boolean crear(String username, String passwordHash, Rol rol, Trabajador idTrabajador) throws Exception {
             serviciofacade.getServicioUsuario().crearUsuario(username, passwordHash, rol, idTrabajador);
-            return true;
-        } catch(Exception e){
-            throw new IllegalArgumentException(e.getMessage(), e);
-        } 
+            return true; 
     }
     
-    public List<UsuarioDTO> listar() {
-        try {
+    public List<UsuarioDTO> listar() throws Exception {
             return serviciofacade.getServicioUsuario().listar();
-        } catch(Exception e){
-            throw new IllegalArgumentException(e.getMessage(), e);
-        }
     }
     
-    public boolean actualizar(int id, String passwordHash, Rol rol){
-        try {
+    public boolean actualizar(int id, String passwordHash, Rol rol) throws Exception {
             serviciofacade.getServicioUsuario().actualizar(id, passwordHash, rol);
             return true;
-        } catch(Exception e){
-            throw new IllegalArgumentException(e.getMessage(), e);
-        }
     }
     
-    public boolean eliminar(int id) {
-        try {
+    public boolean eliminar(int id) throws Exception {
             serviciofacade.getServicioUsuario().eliminar(id);
             return true;
-        } catch(Exception e){
-            throw new IllegalArgumentException(e.getMessage(), e);
-        }
     }
 }
