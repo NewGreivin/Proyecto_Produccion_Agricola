@@ -4,7 +4,7 @@
 package Gui.Vistas;
 
 import GUI.Utilidades.UtilGui;
-import Interfaces.IGui;
+import Gui.Interfaces.IGui;
 
 
 public class PnlUsuarios extends javax.swing.JPanel implements IGui {

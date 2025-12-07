@@ -5,7 +5,7 @@ package Gui.Vistas;
 
 import GUI.Utilidades.UtilGui;
 import java.time.LocalDate;
-import Interfaces.IGui;
+import Gui.Interfaces.IGui;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
