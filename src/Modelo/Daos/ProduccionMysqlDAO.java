@@ -205,7 +205,7 @@ public class ProduccionMysqlDAO implements IProduccionDAO {
             pst.setDouble(2, t.getCantidadRecolectada());
             pst.setString(3, t.getCalidad().name());
             pst.setString(4, t.getDestino().name());
-            pst.setString(5, t.getIdCultivo().getId());
+            pst.setInt(5, t.getIdCultivo().getId());
             
             pst.executeUpdate();
             pst.close();
@@ -260,7 +260,7 @@ public class ProduccionMysqlDAO implements IProduccionDAO {
             pst.setDouble(2, t.getCantidadRecolectada());
             pst.setString(3, t.getCalidad().name());
             pst.setString(4, t.getDestino().name());
-            pst.setString(5, t.getIdCultivo().getId());
+            pst.setInt(5, t.getIdCultivo().getId());
             pst.setString(6, t.getId());
             
             pst.executeUpdate();
@@ -299,7 +299,7 @@ public class ProduccionMysqlDAO implements IProduccionDAO {
             ResultSet rs = pst.executeQuery();
             
             if (rs.next()) {
-                String id = rs.getString(1);
+                int id = rs.getInt(1);
                 String nombre = rs.getString(2);
                 TipoCultivo tipo = TipoCultivo.valueOf(rs.getString(3));
                 double areaSembrada = rs.getDouble(4);
