@@ -14,4 +14,5 @@ public interface ICultivoDAO extends ICRUD<CultivoDTO> {
     List<CultivoDTO> buscarPorNombre(String nombre);
     List<CultivoDTO> buscarPorFechaSiembra(String fecha);
     List<CultivoDTO> cultivosProximosACosechar();
+    CultivoDTO buscarPorId(Integer id);
 }
