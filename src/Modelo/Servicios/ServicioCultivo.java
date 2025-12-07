@@ -1,7 +1,8 @@
 package Modelo.Servicios;
 
-import Modelo.Daos.CultivoMysqlDAO;
 import Modelo.Dtos.CultivoDTO;
+import Modelo.Factory.DAOFactory;
+import Modelo.Interfaces.ICultivoDAO;
 import Modelo.Mappers.CultivoMapper;
 import Modelo.Objetos.Cultivos.Cultivo;
 import Modelo.Objetos.Cultivos.EstadoCrecimiento;
@@ -13,17 +14,16 @@ import java.util.List;
  *
  * @author MARISOL
  */
-
 public class ServicioCultivo {
-    private final CultivoMysqlDAO cultivoDAO;
+    private final ICultivoDAO cultivoDAO;
     private final CultivoMapper mapper;
 
     public ServicioCultivo() {
-        this.cultivoDAO = new CultivoMysqlDAO();
+        this.cultivoDAO = DAOFactory.crearCultivoDAO();
         this.mapper = new CultivoMapper();
     }
 
-    public void crear(int id, String nombre, TipoCultivo tipo,double area, EstadoCrecimiento estado,LocalDate siembra, LocalDate cosecha) throws Exception {
+    public void crear(int id, String nombre, TipoCultivo tipo, double area, EstadoCrecimiento estado, LocalDate siembra, LocalDate cosecha) throws Exception {
         List<CultivoDTO> existentes = cultivoDAO.listar();
         for (CultivoDTO c : existentes) {
             if (c.getNombre().equalsIgnoreCase(nombre)) {
@@ -53,4 +53,9 @@ public class ServicioCultivo {
     public void eliminar(int id) {
         cultivoDAO.eliminar(id);
     }
+
+    public CultivoDTO buscarPorId(Integer id) {
+        return cultivoDAO.buscarPorId(id);
+    }
 }
+

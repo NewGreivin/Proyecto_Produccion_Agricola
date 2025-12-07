@@ -19,25 +19,33 @@ public class ControladorCultivo {
         this.facade = ServicioFacade.getInstancia();
     }
 
-    public boolean crearCultivo(int id, String nombre, TipoCultivo tipo,double area, EstadoCrecimiento estado,LocalDate siembra, LocalDate cosecha) {
-        try {
-            facade.getServicioCultivo().crear(id, nombre, tipo, area, estado, siembra, cosecha);
-            return true;
-        } catch (Exception e) {
-            throw new IllegalArgumentException(e.getMessage(), e);
-        }
+    public boolean crearCultivo(int id, String nombre, TipoCultivo tipo,double area, EstadoCrecimiento estado,LocalDate siembra, LocalDate cosecha) throws Exception {
+        facade.getServicioCultivo().crear(id, nombre, tipo, area, estado, siembra, cosecha);
+        return true;
     }
 
-    public List<CultivoDTO> listar() {
+    public List<CultivoDTO> listar() throws Exception {
         return facade.getServicioCultivo().listar();
     }
 
-    public boolean eliminar(int id) {
-        try {
-            facade.getServicioCultivo().eliminar(id);
-            return true;
-        } catch (Exception e) {
-            throw new IllegalArgumentException(e.getMessage(), e);
-        }
+    public boolean eliminar(int id) throws Exception {
+        facade.getServicioCultivo().eliminar(id);
+        return true;
+    }
+
+    public List<CultivoDTO> buscarPorTipo(TipoCultivo tipo) throws Exception {
+        if (tipo == null) return List.of();
+        return facade.getServicioCultivo().buscarPorTipo(tipo.name());
+    }
+
+    public List<CultivoDTO> buscarPorEstado(EstadoCrecimiento estado) throws Exception {
+        if (estado == null) return List.of();
+        return facade.getServicioCultivo().buscarPorEstado(estado.name());
+    }
+
+    public boolean actualizarCultivo(CultivoDTO dto) throws Exception {
+        facade.getServicioCultivo().actualizar(dto);
+        return true;
     }
 }
+
