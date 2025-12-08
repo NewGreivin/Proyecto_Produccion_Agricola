@@ -5,11 +5,9 @@
 package Gui.Busquedas;
 
 import GUI.Utilidades.UtilGui;
-import Personas.Clientes.Cliente;
-import Personas.Clientes.GestionCliente;
-import Utilidades.UtilDate;
-import Utilidades.UtilGui;
-import java.util.ArrayList;
+import Modelo.Dtos.TrabajadorDTO;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -19,24 +17,23 @@ import javax.swing.table.TableRowSorter;
  * @author Ricardo Chaves
  */
 public class dlgBuscarTrabajador extends javax.swing.JDialog {
-    private GestionCliente list;
-    private Cliente cliente;
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(dlgBuscarUsuario.class.getName());
+    private List<TrabajadorDTO> trabajador;
+    private TrabajadorDTO trabajadorSeleccionado;
     
     private DefaultTableModel model;
     private TableRowSorter<DefaultTableModel> sorter;
     private RowFilter<DefaultTableModel, Object> rowFilter;
     
-    public void setList(GestionCliente list) {
-        this.list = list;
+    public void setList(List<TrabajadorDTO> trabajador) {
+        this.trabajador = trabajador;
         loadTable();
     }
     
-    public Cliente getCliente() {
-        return cliente;
+    public TrabajadorDTO getTrabajador() {
+        return trabajadorSeleccionado;
     }
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(dlgBuscarTrabajador.class.getName());
-
     public dlgBuscarTrabajador(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -46,17 +43,18 @@ public class dlgBuscarTrabajador extends javax.swing.JDialog {
     }
     
     private void loadTable() {
-    ArrayList<Cliente> lista = list.getClientes(); // suponiendo que list devuelve un ArrayList
     model.setRowCount(0); // limpia la tabla
+    if (trabajador == null) return;
 
-    for (Cliente cliente : lista) {
+    for (TrabajadorDTO t : trabajador) {
         Object[] data = {
-            cliente.getCedula(),
-            cliente.getNombre(),
-            UtilDate.toString(cliente.getFechaNacimiento()),
-            cliente.getTelefono(),
-            cliente.getCorreo(),
-            cliente.getLicencia()
+            t.getCedula(),
+            t.getNombre(),
+            t.getTelefono(),
+            t.getCorreo(),
+            t.getPuesto(),
+            t.getHorario(),
+            t.getSalario()
         };
         model.addRow(data);
     }
@@ -233,10 +231,23 @@ public class dlgBuscarTrabajador extends javax.swing.JDialog {
             UtilGui.showErrorMessage(this, "Debe seleccionar un cliente", "Error");
             return;
         }
-        String id=String.valueOf(TBLlist.getValueAt(row,0));
-        cliente=list.buscar(id);
+        int modelRow = TBLlist.convertRowIndexToModel(row);
+        String idTrabajador = String.valueOf(TBLlist.getValueAt(modelRow,0));
+        
+        for (TrabajadorDTO trabdto : trabajador) {
+            if (trabdto.getCedula().equals(idTrabajador)) {
+                trabajadorSeleccionado = trabdto; 
+                break;
+            }
+        }
+        
+        if (trabajadorSeleccionado == null) {
+            UtilGui.showErrorMessage(this, "Trabajador no encontrada", "Error");
+            return;
+        }
+         
         setVisible(false);
-        this.dispose();
+        dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void txtFiltradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFiltradorActionPerformed

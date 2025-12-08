@@ -5,8 +5,10 @@ package Gui.Vistas;
 
 import Controlador.ControladorTrabajador;
 import GUI.Utilidades.UtilGui;
+import Gui.Busquedas.dlgBuscarTrabajador;
 import Gui.Interfaces.IGui;
-import Modelo.Objetos.Trabajadores.Trabajador;
+import Modelo.Dtos.TrabajadorDTO;
+import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -14,20 +16,13 @@ import javax.swing.SwingUtilities;
 public class PnlTrabajadores extends javax.swing.JPanel implements IGui {
 
     private ControladorTrabajador controlador;
-    private Trabajador trabajador;
+    private TrabajadorDTO trabajadordto;
 
     public PnlTrabajadores() {
+        this.controlador = new ControladorTrabajador();
         initComponents();
-        //showPuesto();
+        showPuesto();
     }
-
-    //private void showPuesto() {
-        //DefaultComboBoxModel model = new DefaultComboBoxModel();
-        //for (String puesto : list.getPuesto()) {
-        //    model.addElement(puesto);
-        //}
-        //txtPuesto.setModel(model);
-    //}
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -328,7 +323,6 @@ public class PnlTrabajadores extends javax.swing.JPanel implements IGui {
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         clear();
-
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -375,11 +369,32 @@ public class PnlTrabajadores extends javax.swing.JPanel implements IGui {
 
     @Override
     public void save() {
+        if (!validateRequiere()) {
+            UtilGui.showErrorMessage(this, "Faltan datos requeridos", "Error");
+        }
+        
+        try {
+        int cedula = Integer.parseInt(txtCedula.getText());
+        String nombre = txtNombre.getText();
+        String telefono = txtTelefono.getText();
+        String correo = txtCorreo.getText();
+        String puesto = (String) txtPuesto.getSelectedItem();
+        String horario = txtHorario.getText();
+        double salario = Double.parseDouble(txtSalario.getText());
+        
+        if (controlador.crearTrabajador(cedula, nombre, telefono, correo, puesto, horario, salario)) {
+            UtilGui.showMessage(this, "Se agrego correctamente", "Exito");
+        }
+        } catch (NumberFormatException e) {
+            UtilGui.showErrorMessage(this, "Error en el formato de los datos", "Error");
+        } catch (Exception e) {
+            UtilGui.showErrorMessage(this, "Error al guardar: " + e.getMessage(), "Error");
+        }
     }
 
     @Override
     public boolean validateRequiere() {
-        return UtilGui.validateRequiere(txtCedula, txtNombre, txtHorario, txtTelefono, txtCorreo, txtPuesto, txtSalario);
+        return UtilGui.validateRequiere(txtCedula, txtNombre, txtTelefono, txtCorreo, txtPuesto, txtSalario, txtHorario);
     }
 
     @Override
@@ -404,10 +419,67 @@ public class PnlTrabajadores extends javax.swing.JPanel implements IGui {
 
     @Override
     public void search() {
+        JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        dlgBuscarTrabajador dlg = new dlgBuscarTrabajador(parentFrame, true);
+        
+        try {
+            List<TrabajadorDTO> trabajadores = controlador.obtenerTodosTrabajadores();
+            
+            if (trabajadores == null) {
+                UtilGui.showErrorMessage(this, "Error: controladorProduccion retornó null", "Error");
+                return;
+            }
+            
+            if (trabajadores.isEmpty()) {
+                UtilGui.showMessage(this, "No hay producciones registradas", "Información");
+                return;
+            }
+            
+            dlg.setList(trabajadores);
+            dlg.setLocationRelativeTo(this);
+            dlg.setVisible(true);
+            
+            trabajadordto = dlg.getTrabajador();
+            if (trabajadordto != null) {
+                showdata();
+            }
+        } catch (NullPointerException e) {
+            UtilGui.showErrorMessage(this, "Error: NullPointerException - " + e.getMessage(), "Error");
+            e.printStackTrace();
+        } catch (Exception e) {
+            UtilGui.showErrorMessage(this, "Error al buscar: " + e.getMessage(), "Error");
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void showdata() {
+        if (trabajadordto == null) {
+            return;
+        }
+        
+        try {
+            txtCedula.setText(String.valueOf(trabajadordto.getCedula()));
+            txtNombre.setText(trabajadordto.getNombre());
+            txtTelefono.setText(trabajadordto.getTelefono());
+            txtCorreo.setText(trabajadordto.getCorreo());
+            txtPuesto.setSelectedItem(trabajadordto.getPuesto());
+            txtHorario.setText(trabajadordto.getHorario());
+            txtSalario.setText(String.valueOf(trabajadordto.getSalario()));
+        } catch (Exception e) {
+            UtilGui.showErrorMessage(this, "Error al mostrar trabajador: " + e.getMessage(), "Error");
+        }
     }
+    
+    private void showPuesto() {
+    DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+
+    model.addElement("A1 - Moto");
+    model.addElement("B1 - Carro");
+    model.addElement("B2 - Camión");
+
+    txtPuesto.setModel(model);
+    txtPuesto.setEditable(true); // 👈 CLAVE
+}
 
 }

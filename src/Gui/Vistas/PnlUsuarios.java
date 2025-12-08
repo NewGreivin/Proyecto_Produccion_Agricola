@@ -3,14 +3,35 @@
  */
 package Gui.Vistas;
 
+import Controlador.ControladorTrabajador;
+import Controlador.ControladorUsuario;
 import GUI.Utilidades.UtilGui;
+import Gui.Busquedas.dlgBuscarUsuario;
 import Gui.Interfaces.IGui;
+import Modelo.Dtos.TrabajadorDTO;
+import Modelo.Dtos.UsuarioDTO;
+import Modelo.Objetos.Trabajadores.Trabajador;
+import Modelo.Objetos.Usuarios.Rol;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 
 public class PnlUsuarios extends javax.swing.JPanel implements IGui {
     
+    private ControladorUsuario controladorusuario;
+    private UsuarioDTO userdto;
+    private ControladorTrabajador controladortrabajador; 
+    
+    
     public PnlUsuarios() {
         initComponents();
+        this.controladorusuario = new ControladorUsuario();
+        this.controladortrabajador = new ControladorTrabajador();
+        showRol();
+        cargarTrabajadores();
     }
     
     @SuppressWarnings("unchecked")
@@ -25,9 +46,9 @@ public class PnlUsuarios extends javax.swing.JPanel implements IGui {
         lblFechaInicio = new javax.swing.JLabel();
         lblFechaFinalizacion = new javax.swing.JLabel();
         txtCedula = new javax.swing.JComboBox<>();
-        txtPlaca = new javax.swing.JComboBox<>();
-        txtNombre = new javax.swing.JTextField();
-        txtNombre1 = new javax.swing.JTextField();
+        txtRol = new javax.swing.JComboBox<>();
+        txtContraseña = new javax.swing.JTextField();
+        txtUsuario = new javax.swing.JTextField();
         pnlBotones = new javax.swing.JPanel();
         btnAgregar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
@@ -57,11 +78,11 @@ public class PnlUsuarios extends javax.swing.JPanel implements IGui {
 
         txtCedula.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
-        txtPlaca.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtRol.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
-        txtNombre.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtContraseña.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
-        txtNombre1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtUsuario.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout pnlDatosLayout = new javax.swing.GroupLayout(pnlDatos);
         pnlDatos.setLayout(pnlDatosLayout);
@@ -76,10 +97,10 @@ public class PnlUsuarios extends javax.swing.JPanel implements IGui {
                     .addComponent(lblFechaFinalizacion))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtNombre1)
+                    .addComponent(txtUsuario)
                     .addComponent(txtCedula, 0, 200, Short.MAX_VALUE)
-                    .addComponent(txtNombre)
-                    .addComponent(txtPlaca, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtContraseña)
+                    .addComponent(txtRol, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlDatosLayout.setVerticalGroup(
@@ -92,15 +113,15 @@ public class PnlUsuarios extends javax.swing.JPanel implements IGui {
                 .addGap(30, 30, 30)
                 .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblPlaca)
-                    .addComponent(txtNombre1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31)
                 .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblFechaInicio)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblFechaFinalizacion)
-                    .addComponent(txtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(121, Short.MAX_VALUE))
         );
 
@@ -282,16 +303,33 @@ public class PnlUsuarios extends javax.swing.JPanel implements IGui {
     private javax.swing.JPanel pnlDatos;
     private javax.swing.JPanel pnlPrincipal;
     private javax.swing.JComboBox<String> txtCedula;
-    private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtNombre1;
-    private javax.swing.JComboBox<String> txtPlaca;
+    private javax.swing.JTextField txtContraseña;
+    private javax.swing.JComboBox<String> txtRol;
+    private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void save() {
         if (!validateRequiere()) {
-            UtilGui.showErrorMessage(this,"Faltan datos requeridos", "Error");
+            UtilGui.showErrorMessage(this, "Faltan datos requeridos", "Error");
             return;
+        }
+
+        try {
+        Trabajador trabajador = (Trabajador) txtCedula.getSelectedItem(); 
+        String usuario = txtUsuario.getText();
+        String contraseña = txtContraseña.getText();
+        Rol rol = (Rol) txtRol.getSelectedItem();
+
+        if (controladorusuario.crear(usuario, contraseña, rol, trabajador)) {
+            UtilGui.showMessage(this, "Se agregó correctamente", "Éxito");
+            clear();
+        }
+
+        } catch (NumberFormatException e) {
+            UtilGui.showErrorMessage(this, "Error en el formato de los datos", "Error");
+        } catch (Exception e) {
+            UtilGui.showErrorMessage(this, "Error al guardar: " + e.getMessage(), "Error");
         }
 
     }
@@ -299,14 +337,30 @@ public class PnlUsuarios extends javax.swing.JPanel implements IGui {
     @Override
     public void clear() {
         txtCedula.setSelectedIndex(-1);
-        txtPlaca.setSelectedIndex(-1);
+        txtRol.setSelectedIndex(-1);
     }
 
     @Override
     public void delete() {
-        if (!validateRequiere()) {
-            UtilGui.showErrorMessage(this,"Faltan datos requeridos", "Error");
-            return;
+        try {
+            List<UsuarioDTO> usarios = controladorusuario.listar();
+            if (usarios.isEmpty()) {
+                UtilGui.showErrorMessage(this, "No hay producciones para eliminar", "Información");
+                return;
+            }
+
+            int confirmacion = JOptionPane.showConfirmDialog(this, "¿Está seguro de que desea eliminar? ", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                dlgBuscarUsuario dlg = new dlgBuscarUsuario(
+                        (JFrame) SwingUtilities.getWindowAncestor(this), true);
+                dlg.setLocationRelativeTo(this);
+                dlg.setVisible(true);
+            }
+            
+            
+        } catch (Exception e) {
+            UtilGui.showErrorMessage(this, "Error al eliminar: " + e.getMessage(), "Error");
         }
     }
 
@@ -316,12 +370,43 @@ public class PnlUsuarios extends javax.swing.JPanel implements IGui {
             UtilGui.showErrorMessage(this,"Faltan datos requeridos", "Error");
             return;
         }
-
+        
+        
     }
 
     @Override
     public void search() {
- 
+        JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        dlgBuscarUsuario dlg = new dlgBuscarUsuario(parentFrame, true);
+        
+        try {
+            List<UsuarioDTO> usuarios = controladorusuario.listar();
+            
+            if (usuarios == null) {
+                UtilGui.showErrorMessage(this, "Error: controladorProduccion retornó null", "Error");
+                return;
+            }
+            
+            if (usuarios.isEmpty()) {
+                UtilGui.showMessage(this, "No hay producciones registradas", "Información");
+                return;
+            }
+            
+            dlg.setList(usuarios);
+            dlg.setLocationRelativeTo(this);
+            dlg.setVisible(true);
+            
+            userdto = dlg.getUsuario();
+            if (userdto != null) {
+                showdata();
+            }
+        } catch (NullPointerException e) {
+            UtilGui.showErrorMessage(this, "Error: NullPointerException - " + e.getMessage(), "Error");
+            e.printStackTrace();
+        } catch (Exception e) {
+            UtilGui.showErrorMessage(this, "Error al buscar: " + e.getMessage(), "Error");
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -331,7 +416,18 @@ public class PnlUsuarios extends javax.swing.JPanel implements IGui {
 
     @Override
     public void showdata() {
-
+        if (userdto == null) {
+            return;
+        }
+        
+        try {
+            txtCedula.setSelectedIndex(userdto.getIdTrabajador().getCedula());
+            txtUsuario.setText(userdto.getUsername());
+            txtContraseña.setText(userdto.getPasswordHash());
+            txtRol.setSelectedItem(userdto.getRol());
+        } catch (Exception e) {
+            UtilGui.showErrorMessage(this, "Error al mostrar producción: " + e.getMessage(), "Error");
+        }
     }
 
     public void ConfirmarReserva() {
@@ -340,4 +436,29 @@ public class PnlUsuarios extends javax.swing.JPanel implements IGui {
         return;
     }
     }
+    
+    private void showRol() {
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        for (Rol rol : Rol.values()) {
+            model.addElement(rol);
+        }
+        txtRol.setModel(model);
+    }
+    
+    private void cargarTrabajadores() {
+        try {
+            List<TrabajadorDTO> trabajadores = controladortrabajador.obtenerTodosTrabajadores();
+            DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+
+            for (TrabajadorDTO trabajador : trabajadores) {
+                model.addElement(String.valueOf(trabajador.getCedula()));
+            }
+
+            txtCedula.setModel(model);
+
+        } catch (Exception e) {
+            UtilGui.showErrorMessage(this, "Error al cargar trabajadores: " + e.getMessage(), "Error");
+        }
+    }
+
 }
