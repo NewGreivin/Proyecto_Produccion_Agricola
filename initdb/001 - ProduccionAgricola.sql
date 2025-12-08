@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: mariadb:3306
--- Tiempo de generación: 02-12-2025 a las 21:14:41
+-- Tiempo de generación: 08-12-2025 a las 21:20:52
 -- Versión del servidor: 11.8.3-MariaDB-ubu2404
 -- Versión de PHP: 8.3.27
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `almacenamiento` (
   `id` int(11) NOT NULL,
-  `producto` varchar(20) NOT NULL,
+  `id_cultivo` int(11) NOT NULL,
   `cantidad` double NOT NULL,
   `fecha_ingreso` date NOT NULL,
   `fecha_salida` date DEFAULT NULL
@@ -51,13 +51,6 @@ CREATE TABLE `cultivos` (
   `fecha_estim_cosecha` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
---
--- Volcado de datos para la tabla `cultivos`
---
-
-INSERT INTO `cultivos` (`id`, `nombre`, `tipo`, `area_sembrada`, `estado_crecimiento`, `fecha_siembra`, `fecha_estim_cosecha`) VALUES
-(1, 'Maíz', 'Grano', 10.5, 'Activo', '2025-03-01', '2025-06-01');
-
 -- --------------------------------------------------------
 
 --
@@ -72,13 +65,6 @@ CREATE TABLE `produccion` (
   `destino` varchar(18) NOT NULL,
   `id_cultivo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
-
---
--- Volcado de datos para la tabla `produccion`
---
-
-INSERT INTO `produccion` (`id`, `fecha`, `cantidad_recolectada`, `calidad`, `destino`, `id_cultivo`) VALUES
-(1, '2025-12-02', 250, 'Alta', 'Bodega', 1);
 
 -- --------------------------------------------------------
 
@@ -96,13 +82,6 @@ CREATE TABLE `trabajadores` (
   `salario` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
---
--- Volcado de datos para la tabla `trabajadores`
---
-
-INSERT INTO `trabajadores` (`cedula`, `nombre`, `telefono`, `correo`, `puesto`, `horario`, `salario`) VALUES
-('118450236', 'Juan Perez', '88881234', 'juan@gmail.com', 'Supervisor', 'Diurno', 550000);
-
 -- --------------------------------------------------------
 
 --
@@ -118,13 +97,6 @@ CREATE TABLE `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
--- Volcado de datos para la tabla `usuarios`
---
-
-INSERT INTO `usuarios` (`id`, `username`, `password_hash`, `rol`, `id_trabajador`) VALUES
-(1, 'ricardo', 'hash123', 'ADMIN', '118450236');
-
---
 -- Índices para tablas volcadas
 --
 
@@ -132,7 +104,8 @@ INSERT INTO `usuarios` (`id`, `username`, `password_hash`, `rol`, `id_trabajador
 -- Indices de la tabla `almacenamiento`
 --
 ALTER TABLE `almacenamiento`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_almacenamiento_cultivo` (`id_cultivo`);
 
 --
 -- Indices de la tabla `cultivos`
@@ -192,6 +165,12 @@ ALTER TABLE `usuarios`
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `almacenamiento`
+--
+ALTER TABLE `almacenamiento`
+  ADD CONSTRAINT `fk_almacenamiento_cultivo` FOREIGN KEY (`id_cultivo`) REFERENCES `cultivos` (`id`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `produccion`
