@@ -102,7 +102,7 @@
                   <Table columnCount="7" rowCount="0">
                     <Column editable="false" title="Id" type="java.lang.String"/>
                     <Column editable="false" title="Fecha" type="java.lang.String"/>
-                    <Column editable="false" title="Cantidad Recolectada" type="java.lang.String"/>
+                    <Column editable="false" title="Cantidad Recolectada (kg)" type="java.lang.String"/>
                     <Column editable="false" title="Calidad" type="java.lang.String"/>
                     <Column editable="false" title="Destino" type="java.lang.String"/>
                     <Column editable="false" title="Cultivo" type="java.lang.String"/>

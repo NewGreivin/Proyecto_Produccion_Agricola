@@ -10,13 +10,19 @@ import Modelo.Dtos.ProduccionDTO;
 import Modelo.Objetos.Cultivos.Cultivo;
 import Modelo.Objetos.Produccion.CalidadProduccion;
 import Modelo.Objetos.Produccion.DestinoProduccion;
+import Reportes.ReporteProduccionPDF;
 import Utilidades.UtilDate;
+import java.awt.Desktop;
+import java.io.File;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  * @author Greivin
@@ -338,7 +344,54 @@ public class PnlProduccion extends javax.swing.JPanel implements IGui {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnGenerarReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteActionPerformed
-
+        try {
+            List<ProduccionDTO> producciones = controladorProduccion.obtenerTodasLasProducciones();
+            
+            if (producciones == null || producciones.isEmpty()) {
+                UtilGui.showErrorMessage(this, "No hay producciones registradas para generar el reporte", "Sin Datos");
+                return;
+            }
+            
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Guardar Reporte PDF");
+            fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos PDF", "pdf"));
+            
+            String nombreSugerido = "Reporte_Produccion_" + 
+                LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + ".pdf";
+            fileChooser.setSelectedFile(new java.io.File(nombreSugerido));
+            
+            int result = fileChooser.showSaveDialog(this);
+            
+            if (result == JFileChooser.APPROVE_OPTION) {
+                String rutaArchivo = fileChooser.getSelectedFile().getAbsolutePath();
+                
+                // Esto asegura que termine en .pdf
+                if (!rutaArchivo.toLowerCase().endsWith(".pdf")) {
+                    rutaArchivo += ".pdf";
+                }
+                
+                ReporteProduccionPDF reporte = new ReporteProduccionPDF();
+                reporte.generarReporte(producciones, rutaArchivo);
+                
+                int opcion = JOptionPane.showConfirmDialog(this,
+                    "Reporte PDF generado exitosamente en:\n" + rutaArchivo + "\n\n¿Desea abrir el archivo?",
+                    "Reporte Generado",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE);
+                
+                if (opcion == JOptionPane.YES_OPTION) {
+                    try {
+                        Desktop.getDesktop().open(new File(rutaArchivo));
+                    } catch (Exception ex) {
+                        UtilGui.showErrorMessage(this, "No se pudo abrir el archivo: " + ex.getMessage(), "Error");
+                    }
+                }
+            }
+            
+        } catch (Exception e) {
+            UtilGui.showErrorMessage(this, "Error al generar el reporte: " + e.getMessage(), "Error");
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_btnGenerarReporteActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
