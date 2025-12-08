@@ -1,6 +1,7 @@
 
 package Gui.Busquedas;
 
+import Controlador.ControladorProduccion;
 import GUI.Utilidades.UtilGui;
 import Modelo.Dtos.ProduccionDTO;
 import Utilidades.UtilDate;
@@ -17,6 +18,7 @@ public class dlgBuscarProduccion extends javax.swing.JDialog {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(dlgBuscarProduccion.class.getName());
     private List<ProduccionDTO> producciones;
     private ProduccionDTO produccionSeleccionada;
+    private ControladorProduccion controladorProduccion;
     
     private DefaultTableModel model;
     private TableRowSorter<DefaultTableModel> sorter;
@@ -34,6 +36,7 @@ public class dlgBuscarProduccion extends javax.swing.JDialog {
     public dlgBuscarProduccion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        controladorProduccion = new ControladorProduccion();
         model = (DefaultTableModel) tblProduccion.getModel();
         sorter = new TableRowSorter<>(model);
         tblProduccion.setRowSorter(sorter);
@@ -44,13 +47,21 @@ public class dlgBuscarProduccion extends javax.swing.JDialog {
         if (producciones == null) return;
         
         for (ProduccionDTO p : producciones) {
+            double porcentaje = 0.0;
+            try {
+                porcentaje = controladorProduccion.calcularProductividad(p);
+            } catch (Exception e) {
+                porcentaje = 0.0;
+            }
+            
             Object[] data = {
                 p.getId(),
                 UtilDate.toString(p.getFecha()),
                 String.format("%.2f", p.getCantidadRecolectada()),
                 p.getCalidad().getCalidad(),
                 p.getDestino().getDestino(),
-                p.getIdCultivo().getNombre()
+                p.getIdCultivo().getNombre(),
+                String.format("%.2f%%", porcentaje)
             };
             model.addRow(data);
         }
@@ -208,10 +219,10 @@ public class dlgBuscarProduccion extends javax.swing.JDialog {
         }
         
         int modelRow = tblProduccion.convertRowIndexToModel(row);
-        String idProduccion = String.valueOf(model.getValueAt(modelRow, 0));
+        int idProduccion = (int) model.getValueAt(modelRow, 0);
         
         for (ProduccionDTO p : producciones) {
-            if (p.getId().equals(idProduccion)) {
+            if (p.getId() == idProduccion) {
                 produccionSeleccionada = p;
                 break;
             }
