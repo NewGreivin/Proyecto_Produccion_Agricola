@@ -340,41 +340,96 @@ public class PnlUsuarios extends javax.swing.JPanel implements IGui {
     public void clear() {
         txtCedula.setSelectedIndex(-1);
         txtRol.setSelectedIndex(-1);
+        txtUsuario.setText("");
+        txtContraseña.setText("");
     }
 
     @Override
     public void delete() {
         try {
-            List<UsuarioDTO> usarios = controladorusuario.listar();
-            if (usarios.isEmpty()) {
-                UtilGui.showErrorMessage(this, "No hay producciones para eliminar", "Información");
+            if (userdto == null) {
+                UtilGui.showErrorMessage(this, "Debe seleccionar una producción primero", "Error");
                 return;
             }
 
-            int confirmacion = JOptionPane.showConfirmDialog(this, "¿Está seguro de que desea eliminar? ", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+            int confirmacion = JOptionPane.showConfirmDialog(this, "¿Está seguro de que quieres eliminar " + "?", 
+                    "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
 
             if (confirmacion == JOptionPane.YES_OPTION) {
-                dlgBuscarUsuario dlg = new dlgBuscarUsuario(
-                        (JFrame) SwingUtilities.getWindowAncestor(this), true);
-                dlg.setLocationRelativeTo(this);
-                dlg.setVisible(true);
+                try {
+                    if (controladorusuario.eliminar(userdto.getId())) {
+                        UtilGui.showMessage(this, "Usuario eliminado correctamente", "Éxito");
+                        clear();
+                        userdto = null;
+                    } else {
+                        UtilGui.showErrorMessage(this, "No se pudo eliminar el usuario", "Error");
+                    }
+                } catch (Exception ex) {
+                    UtilGui.showErrorMessage(this, "Error al eliminar: " + ex.getMessage(), "Error");
+                    ex.printStackTrace();
+                }
             }
-            
-            
         } catch (Exception e) {
             UtilGui.showErrorMessage(this, "Error al eliminar: " + e.getMessage(), "Error");
+            e.printStackTrace();
         }
     }
 
     @Override
     public void update() {
         if (!validateRequiere()) {
-            UtilGui.showErrorMessage(this,"Faltan datos requeridos", "Error");
+            UtilGui.showErrorMessage(this, "Faltan datos requeridos", "Error");
             return;
         }
+
+        try {
+            if (userdto == null) {
+                UtilGui.showErrorMessage(this, "Debe seleccionar un usuario primero", "Error");
+                return;
+            }
+
+            String password = txtContraseña.getText();
+            if (password == null || password.trim().isEmpty()) {
+                UtilGui.showErrorMessage(this, "Debe ingresar una contraseña", "Error");
+                return;
+            }
+
+            Object sel = txtRol.getSelectedItem();
+            Rol rol = null;
+            if (sel instanceof Rol) {
+                rol = (Rol) sel;
+            } else if (sel instanceof String) {
+                String rolTexto = ((String) sel).trim();
+                if (rolTexto.isEmpty()) {
+                    UtilGui.showErrorMessage(this, "Debe seleccionar un rol", "Error");
+                    return;
+                }
+                rol = Rol.valueOf(rolTexto);
+            } else {
+                UtilGui.showErrorMessage(this, "Debe seleccionar un rol", "Error");
+                return;
+            }
+
+            boolean actualizado = controladorusuario.actualizar(userdto.getId(), password, rol);
         
-        
-    }
+
+            if (actualizado) {
+                UtilGui.showMessage(this, "Usuario actualizado correctamente", "Éxito");
+                clear();
+                userdto = null;
+            } else {
+                UtilGui.showErrorMessage(this, "No se pudo actualizar el usuario", "Error");
+            }
+
+        } catch (IllegalArgumentException e) {
+            UtilGui.showErrorMessage(this, "Rol inválido: " + e.getMessage(), "Error");
+        } catch (Exception e) {
+            UtilGui.showErrorMessage(this, "Error al actualizar: " + e.getMessage(), "Error");
+            e.printStackTrace();
+        }
+}
+
+
 
     @Override
     public void search() {
