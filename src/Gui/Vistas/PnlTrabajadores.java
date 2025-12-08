@@ -389,7 +389,18 @@ public class PnlTrabajadores extends javax.swing.JPanel implements IGui {
                 puesto = (String) sel;
             }
         String horario = txtHorario.getText();
-        double salario = Double.parseDouble(txtSalario.getText());
+        String salarioText = txtSalario.getText();
+            if (salarioText == null) {
+                throw new NumberFormatException("Salario vacío");
+            }
+            salarioText = salarioText.trim();
+            if (salarioText.contains(",")) {
+                salarioText = salarioText.replace(".", "");
+                salarioText = salarioText.replace(",", ".");
+            } else {
+                salarioText = salarioText.replace(" ", "");
+            }
+            double salario = Double.parseDouble(salarioText);
         
         if (controlador.crearTrabajador(cedula, nombre, telefono, correo, puesto, horario, salario)) {
             UtilGui.showMessage(this, "Se agrego correctamente", "Exito");
