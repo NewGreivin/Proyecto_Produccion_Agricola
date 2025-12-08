@@ -8,6 +8,7 @@ import GUI.Utilidades.UtilGui;
 import Gui.Busquedas.dlgBuscarTrabajador;
 import Gui.Interfaces.IGui;
 import Modelo.Dtos.TrabajadorDTO;
+import Modelo.Objetos.Trabajadores.Puesto;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
@@ -21,7 +22,7 @@ public class PnlTrabajadores extends javax.swing.JPanel implements IGui {
     public PnlTrabajadores() {
         this.controlador = new ControladorTrabajador();
         initComponents();
-        showPuesto();
+        showPuesto(); 
     }
 
     @SuppressWarnings("unchecked")
@@ -472,14 +473,11 @@ public class PnlTrabajadores extends javax.swing.JPanel implements IGui {
     }
     
     private void showPuesto() {
-    DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
-
-    model.addElement("A1 - Moto");
-    model.addElement("B1 - Carro");
-    model.addElement("B2 - Camión");
-
-    txtPuesto.setModel(model);
-    txtPuesto.setEditable(true); // 👈 CLAVE
-}
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        for (Puesto rol : Puesto.values()) {
+            model.addElement(rol);
+        }
+        txtPuesto.setModel(model);
+    }
 
 }

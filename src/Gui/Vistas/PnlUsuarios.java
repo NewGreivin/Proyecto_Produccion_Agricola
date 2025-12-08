@@ -76,6 +76,11 @@ public class PnlUsuarios extends javax.swing.JPanel implements IGui {
         txtCedula.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         txtRol.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtRol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtRolActionPerformed(evt);
+            }
+        });
 
         txtContraseña.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
@@ -282,6 +287,10 @@ public class PnlUsuarios extends javax.swing.JPanel implements IGui {
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         clear();
     }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void txtRolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRolActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtRolActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
