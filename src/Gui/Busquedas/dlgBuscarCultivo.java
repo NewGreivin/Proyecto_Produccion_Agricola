@@ -2,9 +2,6 @@
 package Gui.Busquedas;
 
 import GUI.Utilidades.UtilGui;
-import Utilidades.UtilGui;
-import Vehiculos.GestionVehiculo;
-import Vehiculos.Vehiculo;
 import java.util.HashMap;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;

@@ -1,19 +1,27 @@
 /**
- * @author Greivin
+ * @author MARISOL
  */
 package Gui.Vistas;
 
+import Controlador.ControladorCultivo;
 import GUI.Utilidades.UtilGui;
 import java.time.LocalDate;
 import Gui.Interfaces.IGui;
+import Modelo.Dtos.CultivoDTO;
+import Modelo.Objetos.Cultivos.EstadoCrecimiento;
+import Modelo.Objetos.Cultivos.TipoCultivo;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 public class PnlCultivos extends javax.swing.JPanel implements IGui {
+    private ControladorCultivo controlador;
+    private CultivoDTO cultivoDTO;
     
     public PnlCultivos() {
+        this.controlador = new ControladorCultivo();
         initComponents();
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -385,22 +393,48 @@ public class PnlCultivos extends javax.swing.JPanel implements IGui {
 
     @Override
     public void clear() {
-
+        txtCedula.setText("");
+        txtEstado1.setSelectedIndex(-1);
+        txtCantidad.setValue(null);
+        txtEstado.setSelectedIndex(-1);
+        txtFechaFin1.setText("");
+        txtFechaFin.setText("");
+        cultivoDTO = null;
     }
 
     @Override
     public void delete() {
-        if (!validateRequiere()) {
-            UtilGui.showErrorMessage(this,"Faltan datos requeridos", "Error");
+        if (cultivoDTO == null) {
+            UtilGui.showErrorMessage(this,"Cargue y busque el cultivo que desea eliminar", "Error");
             return;
         }
-    
+        try {
+            Integer id = cultivoDTO.getId();
+            if (id == null) {
+                UtilGui.showErrorMessage(this, "El cultivo cargado no tiene id valido", "Error");
+                return;
+            }
+            controlador.eliminar(id);
+            UtilGui.showMessage(this, "Cultivo eliminado", "Exito");
+            clear();
+        } catch (Exception ex) {
+            UtilGui.showErrorMessage(this, ex.getMessage(), "Error");
+        }
     }
 
     @Override
     public void update() {
+        if (cultivoDTO == null) {
+            UtilGui.showErrorMessage(this, "busque y cargue el cultivo que desea actualizar", "Error");
+            return;
+        }
+        if (!validateRequiere()) {
+            UtilGui.showErrorMessage(this, "Faltan datos requeridos", "Error");
+            return;
+        }
 
     }
+    
 
     @Override
     public void search() {
