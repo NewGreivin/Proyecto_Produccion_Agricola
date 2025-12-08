@@ -74,7 +74,7 @@ public class TrabajadorMysqlDAO implements ITrabajadorDAO {
     @Override
     public List<TrabajadorDTO> buscarPorNombre(String nombre) {
         List<TrabajadorDTO> lista = new ArrayList<>();
-        String sql = "SELECT cedula, nombre, telefono, correo, puesto, horario, salario FROM trabajador WHERE nombre = ?";
+        String sql = "SELECT cedula, nombre, telefono, correo, puesto, horario, salario FROM trabajadores WHERE nombre = ?";
 
         try (Connection conn = conexion.getConnection();
              PreparedStatement pst = conn.prepareStatement(sql)) {

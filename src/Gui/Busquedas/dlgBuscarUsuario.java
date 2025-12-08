@@ -40,12 +40,16 @@ public class dlgBuscarUsuario extends javax.swing.JDialog {
     model.setRowCount(0); // Limpiar tabla
         if (usuario == null) return;
     for (UsuarioDTO u : usuario) {
+        Object trabajadorId = "";
+            if (u.getIdTrabajador() != null) {
+                trabajadorId = String.valueOf(u.getIdTrabajador().getCedula());
+            }
         Object[] data = {
             u.getId(),
             u.getUsername(),
             u.getPasswordHash(),
             u.getRol(),
-            u.getIdTrabajador().getCedula()
+            trabajadorId
         };
         model.addRow(data);
     }
@@ -205,7 +209,7 @@ public class dlgBuscarUsuario extends javax.swing.JDialog {
     String idUsuario = String.valueOf(model.getValueAt(modelRow, 0));
     
         for (UsuarioDTO user : usuario) {
-            if (user.getId().equals(idUsuario)) {
+            if (String.valueOf(user.getId()).equals(idUsuario)) {
                 usuarioSeleccionado = user;
                 break;
             }

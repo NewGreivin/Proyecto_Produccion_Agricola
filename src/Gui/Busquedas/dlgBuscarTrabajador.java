@@ -235,7 +235,7 @@ public class dlgBuscarTrabajador extends javax.swing.JDialog {
         String idTrabajador = String.valueOf(TBLlist.getValueAt(modelRow,0));
         
         for (TrabajadorDTO trabdto : trabajador) {
-            if (trabdto.getCedula().equals(idTrabajador)) {
+            if (String.valueOf(trabdto.getCedula()).equals(idTrabajador)) {
                 trabajadorSeleccionado = trabdto; 
                 break;
             }
