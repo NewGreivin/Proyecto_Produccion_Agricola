@@ -149,20 +149,20 @@ public class TrabajadorMysqlDAO implements ITrabajadorDAO {
     @Override
     public List<TrabajadorDTO> listar() {
         List<TrabajadorDTO> lista = new ArrayList<>();
-        String sql = "SELECT cedula, nombre, telefono, correo, puesto, horario, salario FROM trabajador";
+        String sql = "SELECT cedula, nombre, telefono, correo, puesto, horario, salario FROM trabajadores";
 
         try (Connection conn = conexion.getConnection();
              PreparedStatement pst = conn.prepareStatement(sql);
              ResultSet rs = pst.executeQuery()) {
 
             while (rs.next()) {
-                Integer cedula = rs.getInt("cedula");
-                String nombre = rs.getString("nombre");
-                String telefono = rs.getString("telefono");
-                String correo = rs.getString("correo");
-                String puesto = rs.getString("puesto");
-                String horario = rs.getString("horario");
-                Double salario = rs.getDouble("salario");
+                Integer cedula = rs.getInt(1);
+                String nombre = rs.getString(2);
+                String telefono = rs.getString(3);
+                String correo = rs.getString(4);
+                String puesto = rs.getString(5);
+                String horario = rs.getString(6);
+                Double salario = rs.getDouble(7);
 
                 TrabajadorDTO dto = new TrabajadorDTO(cedula, nombre, telefono, correo, puesto, horario, salario);
                 lista.add(dto);
