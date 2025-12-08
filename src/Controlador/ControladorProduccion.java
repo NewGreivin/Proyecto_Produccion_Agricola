@@ -49,8 +49,8 @@ public class ControladorProduccion {
         return facade.getServicioProduccion().buscarPorCalidad(calidad);
     }
 
-    public boolean actualizarProduccion(String id, CalidadProduccion calidad, DestinoProduccion destino) throws Exception {
-        facade.getServicioProduccion().actualizar(id, calidad, destino);
+    public boolean actualizarProduccion(String id, LocalDate fecha, double cantidad, CalidadProduccion calidad, DestinoProduccion destino) throws Exception {
+        facade.getServicioProduccion().actualizar(id, fecha, cantidad, calidad, destino);
         return true;
     }
 
