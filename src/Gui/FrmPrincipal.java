@@ -99,7 +99,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
             .addGroup(pnlContenedorLayout.createSequentialGroup()
                 .addGap(250, 250, 250)
                 .addComponent(pnlCreditos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(228, Short.MAX_VALUE))
+                .addContainerGap(340, Short.MAX_VALUE))
         );
         pnlContenedorLayout.setVerticalGroup(
             pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -111,11 +111,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         lblDashboard.setBackground(new java.awt.Color(0, 102, 102));
 
-        lblNombreEmpresa.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
+        lblNombreEmpresa.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         lblNombreEmpresa.setForeground(new java.awt.Color(255, 255, 255));
         lblNombreEmpresa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblNombreEmpresa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Logo.png"))); // NOI18N
-        lblNombreEmpresa.setText("DriveUp");
+        lblNombreEmpresa.setText("Gestion Agricola");
 
         bntCultivos.setBackground(new java.awt.Color(0, 153, 153));
         bntCultivos.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
