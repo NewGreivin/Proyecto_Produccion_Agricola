@@ -373,7 +373,8 @@ public class PnlProduccion extends javax.swing.JPanel implements IGui {
 
         try {
             LocalDate fecha = UtilDate.toLocalDate(txtFechaProduccion.getText());
-            double cantidad = Double.parseDouble(txtCantidadRecolectada.getText());
+            String cantidadText = txtCantidadRecolectada.getText().trim().replace(",", ".");
+            double cantidad = Double.parseDouble(cantidadText);
             String calidadNombre = (String) cmbCalidad.getSelectedItem();
             CalidadProduccion calidad = CalidadProduccion.valueOf(obtenerCalidadPorNombre(calidadNombre));
             String destinoNombre = (String) cmdDestino.getSelectedItem();
@@ -397,7 +398,7 @@ public class PnlProduccion extends javax.swing.JPanel implements IGui {
                 cargarCultivos();
             }
         } catch (NumberFormatException e) {
-            UtilGui.showErrorMessage(this, "Error en el formato de cantidad", "Error");
+            UtilGui.showErrorMessage(this, "Error en el formato de cantidad. Use formato: 00.0", "Error");
         } catch (Exception e) {
             UtilGui.showErrorMessage(this, "Error al guardar: " + e.getMessage(), "Error");
         }
@@ -410,72 +411,78 @@ public class PnlProduccion extends javax.swing.JPanel implements IGui {
 
     @Override
     public void clear() {
-        txtFechaProduccion.setText(" ");
-        txtCantidadRecolectada.setText(" ");
-        cmbCalidad.setSelectedIndex(0);
-        cmdCultivo.setSelectedIndex(0);
-        cmdDestino.setSelectedIndex(0);
+        txtFechaProduccion.setText("");
+        txtCantidadRecolectada.setText("");
+        cmbCalidad.setSelectedIndex(-1);
+        cmdCultivo.setSelectedIndex(-1);
+        cmdDestino.setSelectedIndex(-1);
     }
 
     @Override
     public void delete() {
-        validarCampos();
         try {
-            List<ProduccionDTO> producciones = controladorProduccion.obtenerTodasLasProducciones();
-            if (producciones.isEmpty()) {
-                UtilGui.showErrorMessage(this, "No hay producciones para eliminar", "Información");
+            if (produccion == null) {
+                UtilGui.showErrorMessage(this, "Debe seleccionar una producción primero", "Error");
                 return;
             }
 
             int confirmacion = JOptionPane.showConfirmDialog(this,
-                    "¿Está seguro de que desea eliminar? ", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+                    "¿Está seguro de que desea eliminar la producción del " + UtilDate.toString(produccion.getFecha()) + "?", 
+                    "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
 
             if (confirmacion == JOptionPane.YES_OPTION) {
-                dlgBuscarProduccion dlg = new dlgBuscarProduccion(
-                        (JFrame) SwingUtilities.getWindowAncestor(this), true);
-                dlg.setLocationRelativeTo(this);
-                dlg.setVisible(true);
+                try {
+                    if (controladorProduccion.eliminarProduccion(produccion.getId())) {
+                        UtilGui.showMessage(this, "Producción eliminada correctamente", "Éxito");
+                        clear();
+                        produccion = null;
+                    } else {
+                        UtilGui.showErrorMessage(this, "No se pudo eliminar la producción", "Error");
+                    }
+                } catch (Exception ex) {
+                    UtilGui.showErrorMessage(this, "Error al eliminar: " + ex.getMessage(), "Error");
+                    ex.printStackTrace();
+                }
             }
         } catch (Exception e) {
             UtilGui.showErrorMessage(this, "Error al eliminar: " + e.getMessage(), "Error");
+            e.printStackTrace();
         }
     }
 
     @Override
     public void update() {
-        validarCampos();
-
         try {
-            List<ProduccionDTO> producciones = controladorProduccion.obtenerTodasLasProducciones();
-            if (producciones.isEmpty()) {
-                UtilGui.showErrorMessage(this, "No hay producciones para actualizar", "Información");
-                return;
-            }
-
-            dlgBuscarProduccion dlg = new dlgBuscarProduccion(
-                (JFrame) SwingUtilities.getWindowAncestor(this), true);
-            dlg.setLocationRelativeTo(this);
-            dlg.setVisible(true);
-            
-            ProduccionDTO produccionSeleccionada = dlg.getProduccion();
-            
-            if (produccionSeleccionada == null) {
-                UtilGui.showErrorMessage(this, "Debe seleccionar una producción", "Error");
+            if (produccion == null) {
+                UtilGui.showErrorMessage(this, "Debe seleccionar una producción primero", "Error");
                 return;
             }
 
             String calidadNombre = (String) cmbCalidad.getSelectedItem();
-            CalidadProduccion calidad = CalidadProduccion.valueOf(obtenerCalidadPorNombre(calidadNombre));
+            if (calidadNombre == null) {
+                UtilGui.showErrorMessage(this, "Debe seleccionar una calidad", "Error");
+                return;
+            }
             
             String destinoNombre = (String) cmdDestino.getSelectedItem();
+            if (destinoNombre == null) {
+                UtilGui.showErrorMessage(this, "Debe seleccionar un destino", "Error");
+                return;
+            }
+            
+            CalidadProduccion calidad = CalidadProduccion.valueOf(obtenerCalidadPorNombre(calidadNombre));
             DestinoProduccion destino = DestinoProduccion.valueOf(obtenerDestinoPorNombre(destinoNombre));
 
-            if (controladorProduccion.actualizarProduccion(produccionSeleccionada.getId(), calidad, destino)) {
+            if (controladorProduccion.actualizarProduccion(String.valueOf(produccion.getId()), produccion.getFecha(), produccion.getCantidadRecolectada(), calidad, destino)) {
                 UtilGui.showMessage(this, "Producción actualizada correctamente", "Éxito");
                 clear();
+                produccion = null;
+            } else {
+                UtilGui.showErrorMessage(this, "No se pudo actualizar la producción", "Error");
             }
         } catch (Exception e) {
             UtilGui.showErrorMessage(this, "Error al actualizar: " + e.getMessage(), "Error");
+            e.printStackTrace();
         }
     }
 
@@ -488,7 +495,7 @@ public class PnlProduccion extends javax.swing.JPanel implements IGui {
             List<ProduccionDTO> producciones = controladorProduccion.obtenerTodasLasProducciones();
             
             if (producciones == null) {
-                UtilGui.showErrorMessage(this, "Error: controladorProduccion retornó null", "Error");
+                UtilGui.showErrorMessage(this, "Objeto null recibido", "Error");
                 return;
             }
             
@@ -527,7 +534,7 @@ public class PnlProduccion extends javax.swing.JPanel implements IGui {
             cmdDestino.setSelectedItem(produccion.getDestino().getDestino());
             cmdCultivo.setSelectedItem(produccion.getIdCultivo().getNombre());
         } catch (Exception e) {
-            UtilGui.showErrorMessage(this, "Error al mostrar producción: " + e.getMessage(), "Error");
+            UtilGui.showErrorMessage(this, "Error al mostrar produccion: " + e.getMessage(), "Error");
         }
     }
 
@@ -537,10 +544,7 @@ public class PnlProduccion extends javax.swing.JPanel implements IGui {
             return;
         }
     }
-
-/**
-     * Obtiene el nombre de la calidad en formato enum
-     */
+    
     private String obtenerCalidadPorNombre(String nombre) {
         for (CalidadProduccion c : CalidadProduccion.values()) {
             if (c.getCalidad().equalsIgnoreCase(nombre)) {
@@ -550,9 +554,6 @@ public class PnlProduccion extends javax.swing.JPanel implements IGui {
         return "EXTRA";
     }
 
-    /**
-     * Obtiene el nombre del destino en formato enum
-     */
     private String obtenerDestinoPorNombre(String nombre) {
         for (DestinoProduccion d : DestinoProduccion.values()) {
             if (d.getDestino().equalsIgnoreCase(nombre)) {
@@ -562,18 +563,12 @@ public class PnlProduccion extends javax.swing.JPanel implements IGui {
         return "VENTA";
     }
 
-    /**
-     * Carga los datos en los combos desde la base de datos
-     */
     private void cargarDatos() {
         cargarCalidades();
         cargarDestinos();
         cargarCultivos();
     }
 
-    /**
-     * Carga los valores de calidad en el combo
-     */
     private void cargarCalidades() {
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         for (CalidadProduccion calidad : CalidadProduccion.values()) {
@@ -582,9 +577,6 @@ public class PnlProduccion extends javax.swing.JPanel implements IGui {
         cmbCalidad.setModel(model);
     }
 
-    /**
-     * Carga los valores de destino en el combo
-     */
     private void cargarDestinos() {
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         for (DestinoProduccion destino : DestinoProduccion.values()) {
@@ -593,9 +585,6 @@ public class PnlProduccion extends javax.swing.JPanel implements IGui {
         cmdDestino.setModel(model);
     }
 
-    /**
-     * Carga los cultivos desde la base de datos
-     */
     private void cargarCultivos() {
         try {
             List<CultivoDTO> cultivos = controladorCultivo.listar();

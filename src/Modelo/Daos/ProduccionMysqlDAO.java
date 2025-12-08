@@ -22,11 +22,6 @@ import java.sql.ResultSet;
  */
 
 public class ProduccionMysqlDAO implements IProduccionDAO {
-    private final ConexionBD conexion;
-
-    public ProduccionMysqlDAO() {
-        conexion = ConexionBD.getInstance();
-    }
     
     @Override
     public List<ProduccionDTO> buscarPorRangoFecha(LocalDate fechaInicio, LocalDate fechaFin) {
@@ -34,14 +29,14 @@ public class ProduccionMysqlDAO implements IProduccionDAO {
         String sql = "SELECT id, fecha, cantidad_recolectada, calidad, destino, id_cultivo FROM produccion WHERE fecha BETWEEN ? AND ? ORDER BY fecha DESC";
         
         try {
-            Connection conn = conexion.getConnection();
+            Connection conn = ConexionBD.getInstance().getConnection();
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setString(1, fechaInicio.toString());
             pst.setString(2, fechaFin.toString());
             ResultSet rs = pst.executeQuery();
             
             while (rs.next()) {
-                String id = rs.getString(1);
+                int id = rs.getInt(1);
                 LocalDate fecha = rs.getDate(2).toLocalDate();
                 double cantidad = rs.getDouble(3);
                 String calidadStr = rs.getString(4);
@@ -67,13 +62,13 @@ public class ProduccionMysqlDAO implements IProduccionDAO {
         String sql = "SELECT id, fecha, cantidad_recolectada, calidad, destino, id_cultivo FROM produccion WHERE id_cultivo = ? ORDER BY fecha DESC";
         
         try {
-            Connection conn = conexion.getConnection();
+            Connection conn = ConexionBD.getInstance().getConnection();
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setString(1, idCultivo);
             ResultSet rs = pst.executeQuery();
             
             while (rs.next()) {
-                String id = rs.getString(1);
+                int id = rs.getInt(1);
                 LocalDate fecha = rs.getDate(2).toLocalDate();
                 double cantidad = rs.getDouble(3);
                 String calidadStr = rs.getString(4);
@@ -100,13 +95,13 @@ public class ProduccionMysqlDAO implements IProduccionDAO {
         String sql = "SELECT id, fecha, cantidad_recolectada, calidad, destino, id_cultivo FROM produccion WHERE destino = ? ORDER BY fecha DESC";
         
         try {
-            Connection conn = conexion.getConnection();
+            Connection conn = ConexionBD.getInstance().getConnection();
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setString(1, destino);
             ResultSet rs = pst.executeQuery();
             
             while (rs.next()) {
-                String id = rs.getString(1);
+                int id = rs.getInt(1);
                 LocalDate fecha = rs.getDate(2).toLocalDate();
                 double cantidad = rs.getDouble(3);
                 String calidadStr = rs.getString(4);
@@ -133,13 +128,13 @@ public class ProduccionMysqlDAO implements IProduccionDAO {
         String sql = "SELECT id, fecha, cantidad_recolectada, calidad, destino, id_cultivo FROM produccion WHERE DATE(fecha) = ?";
         
         try {
-            Connection conn = conexion.getConnection();
+            Connection conn = ConexionBD.getInstance().getConnection();
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setString(1, fecha);
             ResultSet rs = pst.executeQuery();
             
             while (rs.next()) {
-                String id = rs.getString(1);
+                int id = rs.getInt(1);
                 LocalDate fecha2 = rs.getDate(2).toLocalDate();
                 double cantidad = rs.getDouble(3);
                 String calidadStr = rs.getString(4);
@@ -166,13 +161,13 @@ public class ProduccionMysqlDAO implements IProduccionDAO {
         String sql = "SELECT id, fecha, cantidad_recolectada, calidad, destino, id_cultivo FROM produccion WHERE calidad = ? ORDER BY fecha DESC";
         
         try {
-            Connection conn = conexion.getConnection();
+            Connection conn = ConexionBD.getInstance().getConnection();
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setString(1, calidad);
             ResultSet rs = pst.executeQuery();
             
             while (rs.next()) {
-                String id = rs.getString(1);
+                int id = rs.getInt(1);
                 LocalDate fecha = rs.getDate(2).toLocalDate();
                 double cantidad = rs.getDouble(3);
                 String calidadStr = rs.getString(4);
@@ -198,7 +193,7 @@ public class ProduccionMysqlDAO implements IProduccionDAO {
         String sql = "INSERT INTO produccion (fecha, cantidad_recolectada, calidad, destino, id_cultivo) VALUES (?, ?, ?, ?, ?)";
         
         try {
-            Connection conn = conexion.getConnection();
+            Connection conn = ConexionBD.getInstance().getConnection();
             PreparedStatement pst = conn.prepareStatement(sql);
             
             pst.setString(1, t.getFecha().toString());
@@ -222,12 +217,12 @@ public class ProduccionMysqlDAO implements IProduccionDAO {
         String sql = "SELECT id, fecha, cantidad_recolectada, calidad, destino, id_cultivo FROM produccion";
          
         try {
-            Connection conn = conexion.getConnection();
+            Connection conn = ConexionBD.getInstance().getConnection();
             PreparedStatement pst = conn.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
             
             while (rs.next()) {
-                String id = rs.getString(1);
+                int id = rs.getInt(1);
                 LocalDate fecha = rs.getDate(2).toLocalDate();
                 double cantidad = rs.getDouble(3);
                 String calidadStr = rs.getString(4);
@@ -253,7 +248,7 @@ public class ProduccionMysqlDAO implements IProduccionDAO {
         String sql = "UPDATE produccion SET fecha = ?, cantidad_recolectada = ?, calidad = ?, destino = ?, id_cultivo = ? WHERE id = ?";
         
         try {
-            Connection conn = conexion.getConnection();
+            Connection conn = ConexionBD.getInstance().getConnection();
             PreparedStatement pst = conn.prepareStatement(sql);
             
             pst.setString(1, t.getFecha().toString());
@@ -261,7 +256,7 @@ public class ProduccionMysqlDAO implements IProduccionDAO {
             pst.setString(3, t.getCalidad().name());
             pst.setString(4, t.getDestino().name());
             pst.setInt(5, t.getIdCultivo().getId());
-            pst.setString(6, t.getId());
+            pst.setInt(6, t.getId());
             
             pst.executeUpdate();
             pst.close();
@@ -276,7 +271,7 @@ public class ProduccionMysqlDAO implements IProduccionDAO {
         String sql = "DELETE FROM produccion WHERE id = ?";
         
         try {
-            Connection conn = conexion.getConnection();
+            Connection conn = ConexionBD.getInstance().getConnection();
             PreparedStatement pst = conn.prepareStatement(sql);
             
             pst.setInt(1, id);
@@ -293,7 +288,7 @@ public class ProduccionMysqlDAO implements IProduccionDAO {
         String sql = "SELECT id, nombre, tipo, area_sembrada, estado_crecimiento, fecha_siembra, fecha_estim_cosecha FROM cultivos WHERE id = ?";
         
         try {
-            Connection conn = conexion.getConnection();
+            Connection conn = ConexionBD.getInstance().getConnection();
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setString(1, idCultivo);
             ResultSet rs = pst.executeQuery();
