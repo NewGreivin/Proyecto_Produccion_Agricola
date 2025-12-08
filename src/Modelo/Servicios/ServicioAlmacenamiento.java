@@ -5,6 +5,7 @@ import Modelo.Factory.DAOFactory;
 import Modelo.Interfaces.IAlmacenamientoDAO;
 import Modelo.Mappers.AlmacenamientoMapper;
 import Modelo.Objetos.Almacenamientos.Almacenamiento;
+import Modelo.Objetos.Cultivos.Cultivo;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -39,8 +40,8 @@ public class ServicioAlmacenamiento {
         return almacenamientoDao.productosSinSalida();
     }
     
-    public void crear(String producto, double cantidad, LocalDate fechaIngreso, LocalDate fechaSalida) throws Exception {
-        Almacenamiento almacenamiento = new Almacenamiento(producto, cantidad, fechaIngreso, fechaSalida);
+    public void crear(Cultivo cultivo, double cantidad, LocalDate fechaIngreso, LocalDate fechaSalida) throws Exception {
+        Almacenamiento almacenamiento = new Almacenamiento(cultivo, cantidad, fechaIngreso, fechaSalida);
         AlmacenamientoDTO adto = almacenamientoMapper.toDTO(almacenamiento);
         almacenamientoDao.crear(adto);
     }

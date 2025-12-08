@@ -4,28 +4,28 @@
 package Gui.Busquedas;
 
 import GUI.Utilidades.UtilGui;
-import Reservas.GestionReserva;
-import Reservas.Reserva;
+import Modelo.Dtos.AlmacenamientoDTO;
 import Utilidades.UtilDate;
+import java.util.List;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
 public class dlgBuscarAlmacenamiento extends javax.swing.JDialog {
-    private GestionReserva list;
-    private Reserva reserva;
+    private List<AlmacenamientoDTO> listaAlmacenamientos;
+    private AlmacenamientoDTO almacenamientoSeleccionado;
     
     private DefaultTableModel model;
     private TableRowSorter<DefaultTableModel> sorter;
     private RowFilter<DefaultTableModel, Object> rowFilter;
 
-    public void setList(GestionReserva list) {
-        this.list = list;
+    public void setListaAlmacenamientos(List<AlmacenamientoDTO> lista) {
+        this.listaAlmacenamientos = lista;
         loadTable();
     }
 
-    public Reserva getReserva() {
-        return reserva;
+    public AlmacenamientoDTO getAlmacenamientoSeleccionado() {
+        return almacenamientoSeleccionado;
     }
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(dlgBuscarAlmacenamiento.class.getName());
@@ -36,12 +36,24 @@ public class dlgBuscarAlmacenamiento extends javax.swing.JDialog {
         model = (DefaultTableModel) tblReservas.getModel();
         sorter = new TableRowSorter<>(model);
         tblReservas.setRowSorter(sorter);
+        almacenamientoSeleccionado = null;
     }
 
     private void loadTable() {
-        model.setRowCount(0); //Se borra toda la info de la JTable
-        for (Reserva reservas : list.getReservasPendientes()) {
-            Object[] data = {reservas.getCliente().getCedula(), reservas.getVehiculo().getPlaca(), UtilDate.toString(reservas.getFechaInicio()), UtilDate.toString(reservas.getFechaFin())};
+        model.setRowCount(0); // Limpiar tabla
+        
+        if (listaAlmacenamientos == null || listaAlmacenamientos.isEmpty()) {
+            return;
+        }
+        
+        for (AlmacenamientoDTO alm : listaAlmacenamientos) {
+            Object[] data = {
+                alm.getId(),
+                alm.getCultivo().getNombre(),
+                String.format("%.2f", alm.getCantidad()),
+                UtilDate.toString(alm.getFechaIngreso()),
+                UtilDate.toString(alm.getFechaSalida())
+            };
             model.addRow(data);
         }
     }
@@ -190,25 +202,21 @@ public class dlgBuscarAlmacenamiento extends javax.swing.JDialog {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        int row =tblReservas.getSelectedRow();
-        if (row ==- 1){
-            UtilGui.showErrorMessage(this, "Debe seleccionar una reserva", "Error");
+        int row = tblReservas.getSelectedRow();
+        if (row == -1) {
+            UtilGui.showErrorMessage(this, "Debe seleccionar un almacenamiento", "Error");
             return;
         }
-        String cedula = String.valueOf(tblReservas.getValueAt(row, 0));
-        String placa = String.valueOf(tblReservas.getValueAt(row, 1));
-        String fechaInicio = String.valueOf(tblReservas.getValueAt(row, 2));
-        String fechaFin = String.valueOf(tblReservas.getValueAt(row, 3));
-
-        for (Reserva r : list.getReservasPendientes()) {
-            if (r.getCliente().getCedula().equals(cedula) &&
-             r.getVehiculo().getPlaca().equals(placa) &&
-             UtilDate.toString(r.getFechaInicio()).equals(fechaInicio) &&
-             UtilDate.toString(r.getFechaFin()).equals(fechaFin)) {
-             reserva = r;
-             break;
+        
+        int idSeleccionado = (int) tblReservas.getValueAt(row, 0);
+        
+        for (AlmacenamientoDTO alm : listaAlmacenamientos) {
+            if (alm.getId() == idSeleccionado) {
+                almacenamientoSeleccionado = alm;
+                break;
+            }
         }
-    }
+        
         setVisible(false);
         this.dispose();
     }//GEN-LAST:event_btnAgregarActionPerformed

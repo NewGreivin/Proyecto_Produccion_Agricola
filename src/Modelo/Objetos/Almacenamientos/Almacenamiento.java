@@ -1,5 +1,6 @@
 package Modelo.Objetos.Almacenamientos;
 
+import Modelo.Objetos.Cultivos.Cultivo;
 import java.time.LocalDate;
 
 /**
@@ -9,7 +10,7 @@ import java.time.LocalDate;
 
 public class Almacenamiento {
     private int id;
-    private String producto;
+    private Cultivo cultivo;
     private double cantidad;
     private LocalDate fechaIngreso;
     private LocalDate fechaSalida;
@@ -18,8 +19,8 @@ public class Almacenamiento {
         return id;
     }
 
-    public String getProducto() {
-        return producto;
+    public Cultivo getCultivo() {
+        return cultivo;
     }
 
     public double getCantidad() {
@@ -41,20 +42,18 @@ public class Almacenamiento {
             throw new IllegalArgumentException("Fecha salida no puede ser null ni anterior a la fecha de ingreso");
         }
     }
-    
-    
-    //Actualizar cuando sea necesario.
+
     public boolean llevaMuchoTiempo(){
         return true;
     }
 
-    public Almacenamiento(int id, String producto, double cantidad, LocalDate fechaIngreso, LocalDate fechaSalida) {
+    public Almacenamiento(int id, Cultivo cultivo, double cantidad, LocalDate fechaIngreso, LocalDate fechaSalida) {
         this.id = id;
         
-        if (producto != null && !producto.isBlank()) {
-            this.producto = producto;
+        if (cultivo != null) {
+            this.cultivo = cultivo;
         } else {
-            throw new IllegalArgumentException("Producto no puede ser null");
+            throw new IllegalArgumentException("Cultivo no puede ser null");
         }
         
         if (cantidad > 0) {
@@ -76,11 +75,11 @@ public class Almacenamiento {
         }  
     }
     
-    public Almacenamiento(String producto, double cantidad, LocalDate fechaIngreso, LocalDate fechaSalida) {
-        if (producto != null && !producto.isBlank()) {
-            this.producto = producto;
+    public Almacenamiento(Cultivo cultivo, double cantidad, LocalDate fechaIngreso, LocalDate fechaSalida) {
+        if (cultivo != null) {
+            this.cultivo = cultivo;
         } else {
-            throw new IllegalArgumentException("Producto no puede ser null");
+            throw new IllegalArgumentException("Cultivo no puede ser null");
         }
         
         if (cantidad > 0) {

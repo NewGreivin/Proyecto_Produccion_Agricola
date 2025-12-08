@@ -10,12 +10,12 @@ import Modelo.Objetos.Almacenamientos.Almacenamiento;
 
 public class AlmacenamientoMapper {
     public AlmacenamientoDTO toDTO(Almacenamiento almacenamiento){
-        AlmacenamientoDTO almacenDTO = new AlmacenamientoDTO(almacenamiento.getId(), almacenamiento.getProducto(), almacenamiento.getCantidad(), almacenamiento.getFechaIngreso(), almacenamiento.getFechaSalida());
+        AlmacenamientoDTO almacenDTO = new AlmacenamientoDTO(almacenamiento.getId(), almacenamiento.getCultivo(), almacenamiento.getCantidad(), almacenamiento.getFechaIngreso(), almacenamiento.getFechaSalida());
         return almacenDTO;
     }
     
     public Almacenamiento toEntity(AlmacenamientoDTO almacenamientodto){
-        Almacenamiento almacenamiento = new Almacenamiento(almacenamientodto.getId(), almacenamientodto.getProducto(), almacenamientodto.getCantidad(), almacenamientodto.getFechaIngreso(), almacenamientodto.getFechaSalida());
+        Almacenamiento almacenamiento = new Almacenamiento(almacenamientodto.getId(), almacenamientodto.getCultivo(), almacenamientodto.getCantidad(), almacenamientodto.getFechaIngreso(), almacenamientodto.getFechaSalida());
         return almacenamiento;
     }
 }
