@@ -38,7 +38,7 @@ public class UsuarioMysqlDAO implements IUsuarioDAO{
             TrabajadorMapper trabmapper = new TrabajadorMapper();
             
             if (rs.next()) {
-                String trap = rs.getString(5);
+                int trap = rs.getInt(5);
                 TrabajadorDTO trabjdto = trabmysql.buscarPorCedula(trap);
                 Trabajador trabajador = trabmapper.toEntity(trabjdto);
                 
@@ -98,7 +98,7 @@ public class UsuarioMysqlDAO implements IUsuarioDAO{
             TrabajadorMapper trabmapper = new TrabajadorMapper();
             
             while(rs.next()) {
-                String idt = rs.getString(5);
+                int idt = rs.getInt(5);
                 TrabajadorDTO trabdto = trabmysql.buscarPorCedula(idt);
                 Trabajador trabajador = trabmapper.toEntity(trabdto);
                 
@@ -120,7 +120,7 @@ public class UsuarioMysqlDAO implements IUsuarioDAO{
             ps.setString(1, t.getUsername());
             ps.setString(2, t.getPasswordHash());
             ps.setString(3, t.getRol().name());
-            ps.setString(4, t.getIdTrabajador().getCedula());
+            ps.setInt(4, t.getIdTrabajador().getCedula());
             
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -141,7 +141,7 @@ public class UsuarioMysqlDAO implements IUsuarioDAO{
             TrabajadorMapper mapper = new TrabajadorMapper();
                 
             while (rs.next()) {
-                String idtrap = rs.getString(5);
+                int idtrap = rs.getInt(5);
                 TrabajadorDTO trabajadorDTO = trabDAO.buscarPorCedula(idtrap);
                 Trabajador trabajador = mapper.toEntity(trabajadorDTO);     
                 
