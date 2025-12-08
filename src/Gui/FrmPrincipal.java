@@ -118,7 +118,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         bntCultivos.setBackground(new java.awt.Color(0, 153, 153));
         bntCultivos.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        bntCultivos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Clientes.png"))); // NOI18N
+        bntCultivos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Cultivo.png"))); // NOI18N
         bntCultivos.setText("Cultivos");
         bntCultivos.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         bntCultivos.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -130,7 +130,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         btnTrabajadores.setBackground(new java.awt.Color(0, 153, 153));
         btnTrabajadores.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        btnTrabajadores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Reservas.png"))); // NOI18N
+        btnTrabajadores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Empleados.png"))); // NOI18N
         btnTrabajadores.setText("Trabajadores");
         btnTrabajadores.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnTrabajadores.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -142,7 +142,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         btnProduccion.setBackground(new java.awt.Color(0, 153, 153));
         btnProduccion.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        btnProduccion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Vehiculos.png"))); // NOI18N
+        btnProduccion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/produccion.png"))); // NOI18N
         btnProduccion.setText("Produccion");
         btnProduccion.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnProduccion.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -166,7 +166,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         btnUsuarios.setBackground(new java.awt.Color(0, 153, 153));
         btnUsuarios.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        btnUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Empleados.png"))); // NOI18N
+        btnUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/usuario.png"))); // NOI18N
         btnUsuarios.setText("Usuarios");
         btnUsuarios.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnUsuarios.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -193,7 +193,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         btnCerrarSeccion.setBackground(new java.awt.Color(102, 102, 102));
         btnCerrarSeccion.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         btnCerrarSeccion.setForeground(new java.awt.Color(255, 255, 255));
-        btnCerrarSeccion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Salir.png"))); // NOI18N
+        btnCerrarSeccion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cerrar_Seccion.png"))); // NOI18N
         btnCerrarSeccion.setText("Cerrar Sesion");
         btnCerrarSeccion.setBorderPainted(false);
         btnCerrarSeccion.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);

@@ -207,7 +207,7 @@
               <Font name="Arial" size="18" style="1"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Imagenes/Clientes.png"/>
+              <Image iconType="3" name="/Imagenes/Cultivo.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Cultivos"/>
             <Property name="horizontalAlignment" type="int" value="2"/>
@@ -226,7 +226,7 @@
               <Font name="Arial" size="18" style="1"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Imagenes/Reservas.png"/>
+              <Image iconType="3" name="/Imagenes/Empleados.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Trabajadores"/>
             <Property name="horizontalAlignment" type="int" value="2"/>
@@ -245,7 +245,7 @@
               <Font name="Arial" size="18" style="1"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Imagenes/Vehiculos.png"/>
+              <Image iconType="3" name="/Imagenes/produccion.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Produccion"/>
             <Property name="horizontalAlignment" type="int" value="2"/>
@@ -283,7 +283,7 @@
               <Font name="Arial" size="18" style="1"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Imagenes/Empleados.png"/>
+              <Image iconType="3" name="/Imagenes/usuario.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Usuarios"/>
             <Property name="horizontalAlignment" type="int" value="2"/>
@@ -328,7 +328,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Imagenes/Salir.png"/>
+              <Image iconType="3" name="/Imagenes/cerrar_Seccion.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Cerrar Sesion"/>
             <Property name="borderPainted" type="boolean" value="false"/>

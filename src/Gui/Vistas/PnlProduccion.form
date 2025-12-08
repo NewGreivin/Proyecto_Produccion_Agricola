@@ -358,7 +358,7 @@
                   <Font name="Arial" size="18" style="1"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Imagenes/Agregar_Usuario.png"/>
+                  <Image iconType="3" name="/Imagenes/page_add (4).png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Agregar  "/>
               </Properties>
@@ -372,7 +372,7 @@
                   <Font name="Arial" size="18" style="1"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Imagenes/Limpiar_Usuario.png"/>
+                  <Image iconType="3" name="/Imagenes/Page_clear.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Limpiar   "/>
               </Properties>
@@ -386,7 +386,7 @@
                   <Font name="Arial" size="18" style="1"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Imagenes/Remover_Usuario.png"/>
+                  <Image iconType="3" name="/Imagenes/page_remove (4).png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Eliminar  "/>
               </Properties>
@@ -400,7 +400,7 @@
                   <Font name="Arial" size="18" style="1"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Imagenes/Editar_Usuario.png"/>
+                  <Image iconType="3" name="/Imagenes/page_edit (4).png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Actualizar"/>
                 <Property name="horizontalAlignment" type="int" value="2"/>
@@ -416,7 +416,7 @@
                   <Font name="Arial" size="18" style="1"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Imagenes/Buscar_Usuario.png"/>
+                  <Image iconType="3" name="/Imagenes/page_search (4).png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Buscar     "/>
               </Properties>
