@@ -17,41 +17,28 @@ public class ConexionBD {
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
 
     private static ConexionBD instance;
-    private Connection connection;
-
+    
     private ConexionBD() {
         try {
             Class.forName(DRIVER);
-            this.connection = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (Exception e) {
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
     public static ConexionBD getInstance() {
-        try {
-            if (instance == null || instance.getConnection().isClosed()) {
-                instance = new ConexionBD();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (instance == null) {
+            instance = new ConexionBD();
         }
         return instance;
     }
 
     public Connection getConnection() {
         try {
-            if (connection == null || connection.isClosed()) {
-                try {
-                    Class.forName(DRIVER);
-                    this.connection = DriverManager.getConnection(URL, USER, PASSWORD);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
+            return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
-        return connection;
     }
 }
