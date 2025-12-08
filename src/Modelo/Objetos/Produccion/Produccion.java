@@ -8,7 +8,7 @@ import java.time.LocalDate;
  */
 
 public class Produccion {
-    private String id; //Se genera de forma Autocremental en DB
+    private int id; //Se genera de forma Autocremental en DB
     private LocalDate fecha;
     private double cantidadRecolectada;
     private CalidadProduccion calidad;
@@ -16,7 +16,7 @@ public class Produccion {
     private Cultivo idCultivo;
     private double porcentajeProductividad; //NO se almacena en la DB
 
-    public String getId() { return id; }
+    public int getId() { return id; }
     public LocalDate getFecha() { return fecha; }
     public double getCantidadRecolectada() { return cantidadRecolectada; }
     public CalidadProduccion getCalidad() { return calidad; }
@@ -25,7 +25,7 @@ public class Produccion {
     public double getPorcentajeProductividad() { return porcentajeProductividad; }
 
     public void setCalidad(CalidadProduccion calidad) throws Exception {
-        validarDestino(destino);
+        validarCalidad(calidad);
         this.calidad = calidad; 
     }
     public void setDestino(DestinoProduccion destino) throws Exception {
@@ -47,7 +47,7 @@ public class Produccion {
         this.porcentajeProductividad = 0.0;
     }
 
-    public Produccion(String id, LocalDate fecha, double cantidadRecolectada, CalidadProduccion calidad, DestinoProduccion destino, Cultivo idCultivo) throws Exception {
+    public Produccion(int id, LocalDate fecha, double cantidadRecolectada, CalidadProduccion calidad, DestinoProduccion destino, Cultivo idCultivo) throws Exception {
         validarFecha(fecha);
         validarCantidadRecolectada(cantidadRecolectada);
         validarCalidad(calidad);
@@ -103,10 +103,54 @@ public class Produccion {
             throw new Exception("Área sembrada del cultivo inválida");
         }
         
-        double porcentaje = (cantidadRecolectada / idCultivo.getAreaSembrada()) * 100;
+        // Rendimiento máximo esperado (kg/m²) según tipo de cultivo
+        double rendimientoMaximo = obtenerRendimientoMaximo();
+        
+        // Convertir hectáreas a m² (1 hectárea = 10,000 m²)
+        double areaEnMetrosCuadrados = idCultivo.getAreaSembrada() * 10000;
+        
+        // Cantidad máxima esperada para excelente productividad
+        double cantidadMaximaEsperada = areaEnMetrosCuadrados * rendimientoMaximo;
+        
+        // Calcular porcentaje respecto al máximo esperado
+        double porcentaje = (cantidadRecolectada / cantidadMaximaEsperada) * 100;
+        
+        // Limitar a 100% máximo
         if (porcentaje > 100) {
             porcentaje = 100;
         }
+        
+        // Redondear a 2 decimales
+        porcentaje = Math.round(porcentaje * 100.0) / 100.0;
+        
         return porcentaje;
+    }
+    
+    /**
+     * Obtiene el rendimiento máximo esperado según el tipo de cultivo (kg/m²)
+     */
+    private double obtenerRendimientoMaximo() {
+        if (idCultivo == null || idCultivo.getTipo() == null) {
+            return 0.5; // Valor por defecto
+        }
+        
+        switch (idCultivo.getTipo()) {
+            case VEGETAL:
+                return 0.6; // 0.6 kg/m² máximo
+            case FRUTAL:
+                return 0.4; // 0.4 kg/m² máximo
+            case CEREAL:
+                return 0.3; // 0.3 kg/m² máximo
+            case LEGUMINOSA:
+                return 0.25; // 0.25 kg/m² máximo
+            case TUBERCULO:
+                return 0.8; // 0.8 kg/m² máximo
+            case FLOR:
+                return 0.5; // 0.5 kg/m² máximo
+            case OTRO:
+                return 0.4; // 0.4 kg/m² por defecto
+            default:
+                return 0.4;
+        }
     }
 }

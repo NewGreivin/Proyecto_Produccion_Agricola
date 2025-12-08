@@ -56,11 +56,12 @@ public class ServicioProduccion {
         return produccionDAO.buscarPorCalidad(calidad.name());
     }
 
-    public void actualizar(String id, CalidadProduccion calidad, DestinoProduccion destino) throws Exception {
+    public void actualizar(String id, LocalDate fecha, double cantidad, CalidadProduccion calidad, DestinoProduccion destino) throws Exception {
+        int idInt = Integer.parseInt(id);
         List<ProduccionDTO> producciones = listar();
         ProduccionDTO produccionExistente = null;
         for (int i = 0; i < producciones.size(); i++) {
-            if (producciones.get(i).getId().equals(id)) {
+            if (producciones.get(i).getId() == idInt) {
                 produccionExistente = producciones.get(i);
                 break;
             }
