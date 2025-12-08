@@ -40,6 +40,18 @@ public class ConexionBD {
     }
 
     public Connection getConnection() {
+        try {
+            if (connection == null || connection.isClosed()) {
+                try {
+                    Class.forName(DRIVER);
+                    this.connection = DriverManager.getConnection(URL, USER, PASSWORD);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return connection;
     }
 }
