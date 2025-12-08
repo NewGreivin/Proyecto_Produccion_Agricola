@@ -60,13 +60,11 @@ public class Cultivo {
         this.fechaEstimCosecha = fechaEstimCosecha;
     }
     
-    public Cultivo(int id,String nombre,TipoCultivo tipo,double areaSembrada,EstadoCrecimiento estado,LocalDate fechaSiembra,LocalDate fechaEstimCosecha) throws Exception {
-        validarId(id);
+    public Cultivo(String nombre, TipoCultivo tipo, double areaSembrada, EstadoCrecimiento estado, LocalDate fechaSiembra, LocalDate fechaEstimCosecha) throws Exception {
         validarTextoObligatorio(nombre, "El nombre de cultivo es obligatorio");
         validarObjetoO(tipo, "El tipo de cultivo es obligatorio");
         validarFechaSiembra(fechaSiembra);
-        
-        this.id = id;
+
         this.nombre = nombre;
         this.tipo = tipo;
         this.areaSembrada = areaSembrada;
@@ -74,11 +72,19 @@ public class Cultivo {
         this.fechaSiembra = fechaSiembra;
         this.fechaEstimCosecha = fechaEstimCosecha;
     }
-    
-    private void validarId(int id)throws Exception{
-        if(id <= 0){
-            throw new Exception("El id debe ser un numero positivo");
-        }
+
+    public Cultivo(int id, String nombre, TipoCultivo tipo, double areaSembrada, EstadoCrecimiento estado, LocalDate fechaSiembra, LocalDate fechaEstimCosecha) throws Exception {
+        validarTextoObligatorio(nombre, "El nombre de cultivo es obligatorio");
+        validarObjetoO(tipo, "El tipo de cultivo es obligatorio");
+        validarFechaSiembra(fechaSiembra);
+
+        this.id = id;
+        this.nombre = nombre;
+        this.tipo = tipo;
+        this.areaSembrada = areaSembrada;
+        this.estado = estado;
+        this.fechaSiembra = fechaSiembra;
+        this.fechaEstimCosecha = fechaEstimCosecha;
     }
     
     private void validarTextoObligatorio(String valor, String msj)throws Exception{

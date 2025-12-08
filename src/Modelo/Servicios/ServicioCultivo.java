@@ -23,14 +23,14 @@ public class ServicioCultivo {
         this.mapper = new CultivoMapper();
     }
 
-    public void crear(int id, String nombre, TipoCultivo tipo, double area, EstadoCrecimiento estado, LocalDate siembra, LocalDate cosecha) throws Exception {
+    public void crear(String nombre, TipoCultivo tipo, double area, EstadoCrecimiento estado, LocalDate siembra, LocalDate cosecha) throws Exception {
         List<CultivoDTO> existentes = cultivoDAO.listar();
         for (CultivoDTO c : existentes) {
             if (c.getNombre().equalsIgnoreCase(nombre)) {
                 throw new Exception("Ya existe un cultivo con ese nombre");
             }
         }
-        Cultivo cultivo = new Cultivo(id, nombre, tipo, area, estado, siembra, cosecha);
+        Cultivo cultivo = new Cultivo(nombre, tipo, area, estado, siembra, cosecha);
         cultivoDAO.crear(mapper.toDTO(cultivo));
     }
 
@@ -58,4 +58,3 @@ public class ServicioCultivo {
         return cultivoDAO.buscarPorId(id);
     }
 }
-
