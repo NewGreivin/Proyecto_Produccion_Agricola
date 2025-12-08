@@ -3,16 +3,33 @@
  */
 package Gui.Vistas;
 
+import Controlador.ControladorAlmacenamiento;
+import Controlador.ControladorCultivo;
 import GUI.Utilidades.UtilGui;
+import Gui.Busquedas.dlgBuscarAlmacenamiento;
 import Gui.Interfaces.IGui;
+import Modelo.Dtos.AlmacenamientoDTO;
+import Modelo.Dtos.CultivoDTO;
+import Modelo.Objetos.Cultivos.Cultivo;
+import Utilidades.UtilDate;
+import java.time.LocalDate;
+import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 public class PnlAlmacenamiento extends javax.swing.JPanel implements IGui {
     
+    private final ControladorAlmacenamiento controlador;
+    private final ControladorCultivo controladorCultivo;
+    private AlmacenamientoDTO almacenamientoSeleccionado;
+    
     public PnlAlmacenamiento() {
         initComponents();
+        this.controlador = new ControladorAlmacenamiento();
+        this.controladorCultivo = new ControladorCultivo();
+        cargarCultivos();
     }
     
     @SuppressWarnings("unchecked")
@@ -326,34 +343,157 @@ public class PnlAlmacenamiento extends javax.swing.JPanel implements IGui {
     @Override
     public void save() {
         if (!validateRequiere()) {
-            UtilGui.showErrorMessage(this,"Faltan datos requeridos", "Error");
+            UtilGui.showErrorMessage(this, "Faltan datos requeridos", "Error");
             return;
         }
 
+        try {
+            String nombreCultivo = (String) txtProducto.getSelectedItem();
+            if (nombreCultivo == null || nombreCultivo.trim().isEmpty()) {
+                UtilGui.showErrorMessage(this, "Debe seleccionar un cultivo", "Error");
+                return;
+            }
+
+            List<CultivoDTO> cultivos = controladorCultivo.listar();
+            CultivoDTO cultivoDTO = cultivos.stream().filter(c -> c.getNombre().equals(nombreCultivo)).findFirst().orElse(null);
+            
+            if (cultivoDTO == null) {
+                UtilGui.showErrorMessage(this, "Cultivo no encontrado", "Error");
+                return;
+            }
+            
+            Cultivo cultivo = new Cultivo(
+                cultivoDTO.getId(),
+                cultivoDTO.getNombre(),
+                cultivoDTO.getTipo(),
+                cultivoDTO.getAreaSembrada(),
+                cultivoDTO.getEstado(),
+                cultivoDTO.getFechaSiembra(),
+                cultivoDTO.getFechaEstimCosecha()
+            );
+            
+            double cantidad = Double.parseDouble(txtCantidad.getText().replace(",", "."));
+            
+            LocalDate fechaIngreso = UtilDate.toLocalDate(txtFechaIngreso.getText());
+            LocalDate fechaSalida = UtilDate.toLocalDate(txtFechaSalida.getText());
+
+            if (fechaSalida.isBefore(fechaIngreso)) {
+                UtilGui.showErrorMessage(this, "La fecha de salida no puede ser anterior a la fecha de ingreso", "Error");
+                return;
+            }
+
+            boolean exito = controlador.crear(cultivo, cantidad, fechaIngreso, fechaSalida);
+            
+            if (exito) {
+                UtilGui.showMessage(this, "Almacenamiento registrado exitosamente", "Éxito");
+                clear();
+            }
+            
+        } catch (NumberFormatException e) {
+            UtilGui.showErrorMessage(this, "La cantidad debe ser un número válido", "Error");
+        } catch (Exception e) {
+            UtilGui.showErrorMessage(this, "Error al guardar: " + e.getMessage(), "Error");
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void clear() {
+        txtProducto.setSelectedIndex(-1);
+        txtCantidad.setText("");
+        txtFechaIngreso.setText("");
+        txtFechaSalida.setText("");
+        almacenamientoSeleccionado = null;
     }
 
     @Override
     public void delete() {
-        if (!validateRequiere()) {
-            UtilGui.showErrorMessage(this,"Faltan datos requeridos", "Error");
+        if (almacenamientoSeleccionado == null) {
+            UtilGui.showErrorMessage(this, "Debe buscar y seleccionar un almacenamiento para eliminar", "Error");
             return;
+        }
+        
+        try {
+            int confirmacion = JOptionPane.showConfirmDialog(
+                this,
+                "¿Está seguro de eliminar este registro de almacenamiento?",
+                "Confirmar eliminación",
+                JOptionPane.YES_NO_OPTION
+            );
+            
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                boolean exito = controlador.eliminar(almacenamientoSeleccionado.getId());
+                
+                if (exito) {
+                    UtilGui.showMessage(this, "Almacenamiento eliminado exitosamente", "Éxito");
+                    clear();
+                }
+            }
+        } catch (Exception e) {
+            UtilGui.showErrorMessage(this, "Error al eliminar: " + e.getMessage(), "Error");
+            e.printStackTrace();
         }
     }
 
     @Override
     public void update() {
-        if (!validateRequiere()) {
-            UtilGui.showErrorMessage(this,"Faltan datos requeridos", "Error");
+        if (almacenamientoSeleccionado == null) {
+            UtilGui.showErrorMessage(this, "Debe buscar y seleccionar un almacenamiento para actualizar", "Error");
             return;
+        }
+        
+        if (!validateRequiere()) {
+            UtilGui.showErrorMessage(this, "Faltan datos requeridos", "Error");
+            return;
+        }
+        
+        try {
+            LocalDate nuevaFechaSalida = UtilDate.toLocalDate(txtFechaSalida.getText());
+            
+            if (nuevaFechaSalida.isBefore(almacenamientoSeleccionado.getFechaIngreso())) {
+                UtilGui.showErrorMessage(this, "La fecha de salida no puede ser anterior a la fecha de ingreso", "Error");
+                return;
+            }
+            
+            boolean exito = controlador.actualizar(almacenamientoSeleccionado.getId(), nuevaFechaSalida);
+            
+            if (exito) {
+                UtilGui.showMessage(this, "Almacenamiento actualizado exitosamente", "Éxito");
+                clear();
+            }
+            
+        } catch (Exception e) {
+            UtilGui.showErrorMessage(this, "Error al actualizar: " + e.getMessage(), "Error");
+            e.printStackTrace();
         }
     }
 
     @Override
     public void search() {
+        try {
+            List<AlmacenamientoDTO> lista = controlador.listar();
+            
+            if (lista.isEmpty()) {
+                UtilGui.showMessage(this, "No hay almacenamientos registrados", "Información");
+                return;
+            }
+            
+            JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            dlgBuscarAlmacenamiento dialogo = new dlgBuscarAlmacenamiento(parentFrame, true);
+            dialogo.setListaAlmacenamientos(lista);
+            dialogo.setLocationRelativeTo(this);
+            dialogo.setVisible(true);
+            
+            almacenamientoSeleccionado = dialogo.getAlmacenamientoSeleccionado();
+            
+            if (almacenamientoSeleccionado != null) {
+                showdata();
+            }
+            
+        } catch (Exception e) {
+            UtilGui.showErrorMessage(this, "Error al buscar: " + e.getMessage(), "Error");
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -363,5 +503,32 @@ public class PnlAlmacenamiento extends javax.swing.JPanel implements IGui {
 
     @Override
     public void showdata() {
+        if (almacenamientoSeleccionado != null) {
+            String nombreCultivo = almacenamientoSeleccionado.getCultivo().getNombre();
+            txtProducto.setSelectedItem(nombreCultivo);
+
+            txtCantidad.setText(String.valueOf(almacenamientoSeleccionado.getCantidad()));
+
+            txtFechaIngreso.setText(UtilDate.toString(almacenamientoSeleccionado.getFechaIngreso()));
+            txtFechaSalida.setText(UtilDate.toString(almacenamientoSeleccionado.getFechaSalida()));
+        }
+    }
+
+    private void cargarCultivos() {
+        try {
+            List<CultivoDTO> cultivos = controladorCultivo.listar();
+            DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+            
+            for (CultivoDTO cultivo : cultivos) {
+                model.addElement(cultivo.getNombre());
+            }
+            
+            txtProducto.setModel(model);
+            txtProducto.setSelectedIndex(-1);
+            
+        } catch (Exception e) {
+            UtilGui.showErrorMessage(this, "Error al cargar cultivos: " + e.getMessage(), "Error");
+            e.printStackTrace();
+        }
     }
 }

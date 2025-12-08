@@ -1,5 +1,6 @@
 package Modelo.Dtos;
 
+import Modelo.Objetos.Cultivos.Cultivo;
 import java.time.LocalDate;
 
 /**
@@ -9,7 +10,7 @@ import java.time.LocalDate;
 
 public class AlmacenamientoDTO {
     private final Integer id;
-    private final String producto;
+    private final Cultivo cultivo;
     private final double cantidad;
     private final LocalDate fechaIngreso;
     private final LocalDate fechaSalida;
@@ -18,8 +19,8 @@ public class AlmacenamientoDTO {
         return id;
     }
 
-    public String getProducto() {
-        return producto;
+    public Cultivo getCultivo() {
+        return cultivo;
     }
 
     public double getCantidad() {
@@ -34,9 +35,9 @@ public class AlmacenamientoDTO {
         return fechaSalida;
     }
 
-    public AlmacenamientoDTO(Integer id, String producto, double cantidad, LocalDate fechaIngreso, LocalDate fechaSalida) {
+    public AlmacenamientoDTO(Integer id, Cultivo cultivo, double cantidad, LocalDate fechaIngreso, LocalDate fechaSalida) {
         this.id = id;
-        this.producto = producto;
+        this.cultivo = cultivo;
         this.cantidad = cantidad;
         this.fechaIngreso = fechaIngreso;
         this.fechaSalida = fechaSalida;

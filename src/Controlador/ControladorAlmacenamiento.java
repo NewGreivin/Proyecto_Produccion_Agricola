@@ -2,6 +2,7 @@ package Controlador;
 
 import Modelo.Dtos.AlmacenamientoDTO;
 import Modelo.Facade.ServicioFacade;
+import Modelo.Objetos.Cultivos.Cultivo;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class ControladorAlmacenamiento {
             return serviciofacade.getServicioAlmacenamiento().productosSinSalida();
     }
     
-    public boolean crear(String producto, double cantidad, LocalDate fechaIngreso, LocalDate fechaSalida) throws Exception {
+    public boolean crear(Cultivo producto, double cantidad, LocalDate fechaIngreso, LocalDate fechaSalida) throws Exception {
             serviciofacade.getServicioAlmacenamiento().crear(producto, cantidad, fechaIngreso, fechaSalida);
             return true;
     }

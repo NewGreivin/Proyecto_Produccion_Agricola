@@ -23,9 +23,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
         initComponents();
         pnlUsuarios = new PnlUsuarios();
         pnlTrabajadores = new PnlTrabajadores();
-        //pnlCultivos = new PnlCultivos();
+        pnlCultivos = new PnlCultivos();
         pnlProduccion = new PnlProduccion();
-        //pnlAlmacenamiento = new PnlAlmacenamiento();
+        pnlAlmacenamiento = new PnlAlmacenamiento();
 
     }
 
