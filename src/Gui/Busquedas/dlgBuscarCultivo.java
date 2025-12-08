@@ -1,8 +1,12 @@
 
 package Gui.Busquedas;
 
+import Controlador.ControladorCultivo;
 import GUI.Utilidades.UtilGui;
+import Modelo.Dtos.CultivoDTO;
+import Utilidades.UtilDate;
 import java.util.HashMap;
+import java.util.List;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -11,36 +15,47 @@ import javax.swing.table.TableRowSorter;
  * @author Marisol
  */
 public class dlgBuscarCultivo extends javax.swing.JDialog  {
-    private GestionVehiculo list;
-    private Vehiculo vehiculo;
+    private List<CultivoDTO> cultivos;
+    private CultivoDTO cultivoSelec;
+    private ControladorCultivo controladorCultivo;
     
     private DefaultTableModel model;
     private TableRowSorter<DefaultTableModel> sorter;
     private RowFilter<DefaultTableModel, Object> rowFilter;
-    
-    public void setList(GestionVehiculo list){
-        this.list = list;
-        loadTable();
-    }
-
-    public Vehiculo getVehiculo(){
-        return vehiculo;
-    }
  
     public dlgBuscarCultivo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        model=(DefaultTableModel) tblVehiculos.getModel();
+        controladorCultivo = new ControladorCultivo();
+        model=(DefaultTableModel) tblCultivos.getModel();
         sorter= new TableRowSorter<>(model);
-        tblVehiculos.setRowSorter(sorter);
+        tblCultivos.setRowSorter(sorter);
+    }
+    
+    public void setCultivos(List<CultivoDTO> cultivos){
+        this.cultivos = cultivos;
+        loadTable();
+    }
+    
+    public CultivoDTO getCultivo(){
+        return cultivoSelec;
     }
     
     private void loadTable(){
-        HashMap<String, Vehiculo> map = list.getMap();
         model.setRowCount(0);
-        for (Vehiculo vehiculo : map.values()) {
-            Object[] data = {vehiculo.getPlaca(), vehiculo.getMarca(), vehiculo.getModelo(), vehiculo.getAnio(), vehiculo.getTipo(), vehiculo.getEstado()};
-            model.addRow(data);
+        if (cultivos == null) 
+            return;
+        for (CultivoDTO c : cultivos) {
+            Object[] row = new Object[] {
+                c.getId(),
+                c.getNombre(),
+                c.getTipo() != null ? c.getTipo().name() : "",
+                String.format("%.2f", c.getAreaSembrada()),
+                c.getEstado() != null ? c.getEstado().name() : "",
+                c.getFechaSiembra() != null ? UtilDate.toString(c.getFechaSiembra()) : "",
+                c.getFechaEstimCosecha() != null ? UtilDate.toString(c.getFechaEstimCosecha()) : ""
+            };
+            model.addRow(row);
         }
     }   
 
@@ -56,7 +71,7 @@ public class dlgBuscarCultivo extends javax.swing.JDialog  {
         jLabel1 = new javax.swing.JLabel();
         txtFiltro = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblVehiculos = new javax.swing.JTable();
+        tblCultivos = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
@@ -74,7 +89,7 @@ public class dlgBuscarCultivo extends javax.swing.JDialog  {
             }
         });
 
-        tblVehiculos.setModel(new javax.swing.table.DefaultTableModel(
+        tblCultivos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -97,7 +112,7 @@ public class dlgBuscarCultivo extends javax.swing.JDialog  {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tblVehiculos);
+        jScrollPane1.setViewportView(tblCultivos);
 
         btnAceptar.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Aceptar.png"))); // NOI18N
@@ -181,15 +196,31 @@ public class dlgBuscarCultivo extends javax.swing.JDialog  {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        int row =tblVehiculos.getSelectedRow();
+        int row =tblCultivos.getSelectedRow();
         if (row==-1){
-            UtilGui.showErrorMessage(this, "Debe seleccionar un vehiculo", "Error");
+            UtilGui.showErrorMessage(this, "Debe seleccionar un cultivo", "Error");
             return;
         }
-        String placa=String.valueOf(tblVehiculos.getValueAt(row,0));
-        vehiculo=list.buscar(placa);
+        int modelRow = tblCultivos.convertRowIndexToModel(row);
+        Object idObj = model.getValueAt(modelRow, 0);
+        if(idObj == null){
+            UtilGui.showErrorMessage(this, "Id invalido", "Error");
+            return;
+        }
+        Integer id = (Integer) idObj;
+        cultivoSelec = null;
+        for (CultivoDTO c : cultivos) {
+            if(id != null && id.equals(c.getId())) {
+                cultivoSelec = c;
+                break;
+            }
+        }
+        if (cultivoSelec == null) {
+            UtilGui.showErrorMessage(this, "Cultivo no encontrado", "Error");
+            return;
+        }
         setVisible(false);
-        this.dispose();
+        dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void txtFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFiltroActionPerformed
@@ -246,7 +277,7 @@ public class dlgBuscarCultivo extends javax.swing.JDialog  {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblVehiculos;
+    private javax.swing.JTable tblCultivos;
     private javax.swing.JTextField txtFiltro;
     // End of variables declaration//GEN-END:variables
 }

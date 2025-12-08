@@ -5,22 +5,27 @@ package Gui.Vistas;
 
 import Controlador.ControladorCultivo;
 import GUI.Utilidades.UtilGui;
+import Gui.Busquedas.dlgBuscarCultivo;
 import java.time.LocalDate;
 import Gui.Interfaces.IGui;
 import Modelo.Dtos.CultivoDTO;
 import Modelo.Objetos.Cultivos.EstadoCrecimiento;
 import Modelo.Objetos.Cultivos.TipoCultivo;
+import Utilidades.UtilDate;
+import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 public class PnlCultivos extends javax.swing.JPanel implements IGui {
-    private ControladorCultivo controlador;
-    private CultivoDTO cultivoDTO;
+    private ControladorCultivo controladorCultivo;
+    private CultivoDTO cultivo;
     
     public PnlCultivos() {
-        this.controlador = new ControladorCultivo();
         initComponents();
+        controladorCultivo = new ControladorCultivo();
+        cargarDatos();
         
     }
 
@@ -35,17 +40,17 @@ public class PnlCultivos extends javax.swing.JPanel implements IGui {
         lblPlaca = new javax.swing.JLabel();
         lblFechaInicio = new javax.swing.JLabel();
         lblFechaFinalizacion = new javax.swing.JLabel();
-        txtFechaFin = new javax.swing.JFormattedTextField();
+        txtFechaCosecha = new javax.swing.JFormattedTextField();
         lblInfoFecha1 = new javax.swing.JLabel();
         lblEstadoContrato = new javax.swing.JLabel();
         lblMonto = new javax.swing.JLabel();
-        txtEstado = new javax.swing.JComboBox<>();
-        txtFechaFin1 = new javax.swing.JFormattedTextField();
+        comboEstado = new javax.swing.JComboBox<>();
+        txtFechaSiembra = new javax.swing.JFormattedTextField();
         lblInfoFecha3 = new javax.swing.JLabel();
-        txtCantidad = new javax.swing.JFormattedTextField();
+        txtArea = new javax.swing.JFormattedTextField();
         lblInfoTelefono1 = new javax.swing.JLabel();
-        txtEstado1 = new javax.swing.JComboBox<>();
-        txtCedula = new javax.swing.JTextField();
+        comboTipo = new javax.swing.JComboBox<>();
+        txtNombre = new javax.swing.JTextField();
         pnlBotones = new javax.swing.JPanel();
         btnAgregar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
@@ -73,7 +78,7 @@ public class PnlCultivos extends javax.swing.JPanel implements IGui {
         lblFechaFinalizacion.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
         lblFechaFinalizacion.setText("Estado crecimiento:");
 
-        txtFechaFin.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
+        txtFechaCosecha.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
 
         lblInfoFecha1.setText("Requiere formato: dd/MM/yyyy");
 
@@ -83,24 +88,24 @@ public class PnlCultivos extends javax.swing.JPanel implements IGui {
         lblMonto.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
         lblMonto.setText("Fecha de siembra:");
 
-        txtEstado.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        comboEstado.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
-        txtFechaFin1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
+        txtFechaSiembra.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
 
         lblInfoFecha3.setText("Requiere formato: dd/MM/yyyy");
 
-        txtCantidad.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+        txtArea.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
 
         lblInfoTelefono1.setText("Requiere formato: 00.0");
 
-        txtEstado1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txtEstado1.addActionListener(new java.awt.event.ActionListener() {
+        comboTipo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        comboTipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEstado1ActionPerformed(evt);
+                comboTipoActionPerformed(evt);
             }
         });
 
-        txtCedula.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtNombre.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout pnlDatosLayout = new javax.swing.GroupLayout(pnlDatos);
         pnlDatos.setLayout(pnlDatosLayout);
@@ -116,13 +121,13 @@ public class PnlCultivos extends javax.swing.JPanel implements IGui {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(txtEstado, javax.swing.GroupLayout.Alignment.LEADING, 0, 237, Short.MAX_VALUE)
+                                .addComponent(comboEstado, javax.swing.GroupLayout.Alignment.LEADING, 0, 237, Short.MAX_VALUE)
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlDatosLayout.createSequentialGroup()
                                     .addGap(6, 6, 6)
                                     .addComponent(lblInfoTelefono1))
-                                .addComponent(txtEstado1, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtCantidad, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtCedula, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(comboTipo, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtArea, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(52, 52, 52))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDatosLayout.createSequentialGroup()
                         .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -130,7 +135,7 @@ public class PnlCultivos extends javax.swing.JPanel implements IGui {
                             .addGroup(pnlDatosLayout.createSequentialGroup()
                                 .addGap(204, 204, 204)
                                 .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtFechaFin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtFechaCosecha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(pnlDatosLayout.createSequentialGroup()
                                         .addGap(6, 6, 6)
                                         .addComponent(lblInfoFecha1))))
@@ -141,7 +146,7 @@ public class PnlCultivos extends javax.swing.JPanel implements IGui {
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDatosLayout.createSequentialGroup()
                                         .addComponent(lblInfoFecha3)
                                         .addGap(17, 17, 17))
-                                    .addComponent(txtFechaFin1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(txtFechaSiembra, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(98, 98, 98))
                     .addGroup(pnlDatosLayout.createSequentialGroup()
                         .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -155,33 +160,33 @@ public class PnlCultivos extends javax.swing.JPanel implements IGui {
                 .addGap(15, 15, 15)
                 .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCedula)
-                    .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPlaca)
-                    .addComponent(txtEstado1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblFechaInicio)
                     .addGroup(pnlDatosLayout.createSequentialGroup()
-                        .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblInfoTelefono1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblFechaFinalizacion)
-                    .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblMonto)
-                        .addComponent(txtFechaFin1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtFechaSiembra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlDatosLayout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addComponent(lblInfoFecha3)))
                 .addGap(18, 18, 18)
                 .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblEstadoContrato)
-                    .addComponent(txtFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtFechaCosecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblInfoFecha1)
                 .addContainerGap(22, Short.MAX_VALUE))
@@ -348,9 +353,9 @@ public class PnlCultivos extends javax.swing.JPanel implements IGui {
         clear();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
-    private void txtEstado1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEstado1ActionPerformed
+    private void comboTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTipoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtEstado1ActionPerformed
+    }//GEN-LAST:event_comboTipoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -359,6 +364,8 @@ public class PnlCultivos extends javax.swing.JPanel implements IGui {
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnLimpiar;
+    private javax.swing.JComboBox<String> comboEstado;
+    private javax.swing.JComboBox<String> comboTipo;
     private javax.swing.JLabel lblCedula;
     private javax.swing.JLabel lblEstadoContrato;
     private javax.swing.JLabel lblFechaFinalizacion;
@@ -373,82 +380,209 @@ public class PnlCultivos extends javax.swing.JPanel implements IGui {
     private javax.swing.JPanel pnlContenedor;
     private javax.swing.JPanel pnlDatos;
     private javax.swing.JPanel pnlPrincipal;
-    private javax.swing.JFormattedTextField txtCantidad;
-    private javax.swing.JTextField txtCedula;
-    private javax.swing.JComboBox<String> txtEstado;
-    private javax.swing.JComboBox<String> txtEstado1;
-    private javax.swing.JFormattedTextField txtFechaFin;
-    private javax.swing.JFormattedTextField txtFechaFin1;
+    private javax.swing.JFormattedTextField txtArea;
+    private javax.swing.JFormattedTextField txtFechaCosecha;
+    private javax.swing.JFormattedTextField txtFechaSiembra;
+    private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void save() {
-        if (!validateRequiere()) {
-            UtilGui.showErrorMessage(this, "Faltan datos requeridos", "Error");
-            return;
-        }
+        validarCampos();
+        try {
+            String nombre = txtNombre.getText().trim();
+            String tipoNombre = (String) comboTipo.getSelectedItem();
+            TipoCultivo tipo = TipoCultivo.valueOf(tipoNombre);
+            String areaText = txtArea.getText().trim().replace(",", ".");
+            double area = Double.parseDouble(areaText);
+            String estadoNombre = (String) comboEstado.getSelectedItem();
+            EstadoCrecimiento estado = EstadoCrecimiento.valueOf(estadoNombre);
 
-          
+            LocalDate fechaSiembra = UtilDate.toLocalDate(txtFechaSiembra.getText());
+            LocalDate fechaCosecha = UtilDate.toLocalDate(txtFechaCosecha.getText());
+
+            if (fechaSiembra == null) {
+                UtilGui.showErrorMessage(this, "La fecha de siembra es obligatoria", "Error");
+                return;
+            }
+            if (fechaCosecha != null && fechaCosecha.isBefore(fechaSiembra)) {
+                UtilGui.showErrorMessage(this, "La fecha estimada de cosecha debe ser posterior a la fecha de siembra", "Error");
+                return;
+            }
+
+            int generatedId = (int) (System.currentTimeMillis() % Integer.MAX_VALUE);
+
+            boolean ok = controladorCultivo.crearCultivo(generatedId, nombre, tipo, area, estado, fechaSiembra, fechaCosecha);
+            if (ok) {
+                UtilGui.showMessage(this, "Cultivo agregado correctamente", "Exito");
+                clear();
+            } else {
+                UtilGui.showErrorMessage(this, "No se pudo agregar cultivo", "Error");
+            }
+        } catch (NumberFormatException e) {
+            UtilGui.showErrorMessage(this, "Error en el formato del area. Use 00.00", "Error");
+        } catch (Exception e) {
+            UtilGui.showErrorMessage(this, "Error al guardar: " + e.getMessage(), "Error");
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void clear() {
-        txtCedula.setText("");
-        txtEstado1.setSelectedIndex(-1);
-        txtCantidad.setValue(null);
-        txtEstado.setSelectedIndex(-1);
-        txtFechaFin1.setText("");
-        txtFechaFin.setText("");
-        cultivoDTO = null;
+        txtNombre.setText("");
+        comboTipo.setSelectedIndex(-1);
+        txtArea.setValue(null);
+        comboEstado.setSelectedIndex(-1);
+        txtFechaSiembra.setText("");
+        txtFechaCosecha.setText("");
+        cultivo = null;
     }
 
     @Override
     public void delete() {
-        if (cultivoDTO == null) {
-            UtilGui.showErrorMessage(this,"Cargue y busque el cultivo que desea eliminar", "Error");
-            return;
-        }
         try {
-            Integer id = cultivoDTO.getId();
-            if (id == null) {
-                UtilGui.showErrorMessage(this, "El cultivo cargado no tiene id valido", "Error");
+            if (cultivo == null) {
+                UtilGui.showErrorMessage(this, "Debe seleccionar un cultivo primero", "Error");
                 return;
             }
-            controlador.eliminar(id);
-            UtilGui.showMessage(this, "Cultivo eliminado", "Exito");
-            clear();
-        } catch (Exception ex) {
-            UtilGui.showErrorMessage(this, ex.getMessage(), "Error");
+
+            int confirm = JOptionPane.showConfirmDialog(this,
+                    "¿Esta seguro que desea eliminar el cultivo " + cultivo.getNombre() + " ?",
+                    "Confirmar eliminacion", JOptionPane.YES_NO_OPTION);
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                if (controladorCultivo.eliminar(cultivo.getId())) {
+                    UtilGui.showMessage(this, "Cultivo eliminado correctamente", "Exito");
+                    clear();
+                } else {
+                    UtilGui.showErrorMessage(this, "No se pudo eliminar el cultivo", "Error");
+                }
+            }
+        } catch (Exception e) {
+            UtilGui.showErrorMessage(this, "Error al eliminar: " + e.getMessage(), "Error");
+            e.printStackTrace();
         }
     }
 
     @Override
     public void update() {
-        if (cultivoDTO == null) {
-            UtilGui.showErrorMessage(this, "busque y cargue el cultivo que desea actualizar", "Error");
-            return;
-        }
-        if (!validateRequiere()) {
-            UtilGui.showErrorMessage(this, "Faltan datos requeridos", "Error");
-            return;
-        }
+        try {
+            if (cultivo == null) {
+                UtilGui.showErrorMessage(this, "Debe seleccionar un cultivo primero", "Error");
+                return;
+            }
+            if (!validateRequiere()) {
+                UtilGui.showErrorMessage(this, "Faltan datos requeridos", "Error");
+                return;
+            }
 
+            String nombre = txtNombre.getText().trim();
+            String tipoNombre = (String) comboTipo.getSelectedItem();
+            TipoCultivo tipo = TipoCultivo.valueOf(tipoNombre);
+            String areaText = txtArea.getText().trim().replace(",", ".");
+            double area = Double.parseDouble(areaText);
+            String estadoNombre = (String) comboEstado.getSelectedItem();
+            EstadoCrecimiento estado = EstadoCrecimiento.valueOf(estadoNombre);
+            LocalDate fechaSiembra = UtilDate.toLocalDate(txtFechaSiembra.getText());
+            LocalDate fechaCosecha = UtilDate.toLocalDate(txtFechaCosecha.getText());
+
+            if (fechaSiembra == null) {
+                UtilGui.showErrorMessage(this, "La fecha de siembra es obligatoria", "Error");
+                return;
+            }
+            if (fechaCosecha != null && fechaCosecha.isBefore(fechaSiembra)) {
+                UtilGui.showErrorMessage(this, "La fecha estimada de cosecha debe ser posterior a la fecha de siembra", "Error");
+                return;
+            }
+
+            CultivoDTO dto = new CultivoDTO(cultivo.getId(), nombre, tipo, area, estado, fechaSiembra, fechaCosecha);
+            if (controladorCultivo.actualizarCultivo(dto)) {
+                UtilGui.showMessage(this, "Cultivo actualizado correctamente", "Exito");
+                clear();
+            } else {
+                UtilGui.showErrorMessage(this, "No se pudo actualizar el cultivo", "Error");
+            }
+        } catch (NumberFormatException e) {
+            UtilGui.showErrorMessage(this, "Error en el formato del area. Use 00.00", "Error");
+        } catch (Exception e) {
+            UtilGui.showErrorMessage(this, "Error al actualizar: " + e.getMessage(), "Error");
+            e.printStackTrace();
+        }
     }
     
 
     @Override
     public void search() {
+        JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        dlgBuscarCultivo dlg = new dlgBuscarCultivo(parentFrame, true);
 
+        try {
+            List<CultivoDTO> cultivos = controladorCultivo.listar();
+            if (cultivos == null || cultivos.isEmpty()) {
+                UtilGui.showMessage(this, "No hay cultivos registrados", "Informacion");
+                return;
+            }
+            
+            dlg.setCultivos(cultivos);
+            dlg.setLocationRelativeTo(this);
+            dlg.setVisible(true);
+
+            cultivo = dlg.getCultivo();
+            if (cultivo != null) {
+                showdata();
+            }
+        } catch (Exception e) {
+            UtilGui.showErrorMessage(this, "Error al buscar: " + e.getMessage(), "Error");
+            e.printStackTrace();
+        }
     }
 
     @Override
     public boolean validateRequiere() {
-        return UtilGui.validateRequiere(txtCedula);
+        return UtilGui.validateRequiere(txtNombre, comboTipo, txtArea, comboEstado, txtFechaSiembra);
     }
 
     @Override
     public void showdata() {
-        
+        if (cultivo == null) return;
+
+        try {
+            txtNombre.setText(cultivo.getNombre());
+            comboTipo.setSelectedItem(cultivo.getTipo() != null ? cultivo.getTipo().name() : null);
+            txtArea.setValue(cultivo.getAreaSembrada());
+            comboEstado.setSelectedItem(cultivo.getEstado() != null ? cultivo.getEstado().name() : null);
+            txtFechaSiembra.setText(UtilDate.toString(cultivo.getFechaSiembra()));
+            txtFechaCosecha.setText(UtilDate.toString(cultivo.getFechaEstimCosecha()));
+        } catch (Exception e) {
+            UtilGui.showErrorMessage(this, "Error al mostrar cultivo: " + e.getMessage(), "Error");
+            e.printStackTrace();
+        }
     }
 
+    private void validarCampos() {
+        if (!validateRequiere()) {
+            UtilGui.showErrorMessage(this, "Faltan datos requeridos", "Error");
+        }
+    }
+    
+    private void cargarDatos() {
+        cargarTipos();
+        cargarEstados();
+    }
+    
+    private void cargarTipos() {
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        for (TipoCultivo t : TipoCultivo.values()) {
+            model.addElement(t.name());
+        }
+        comboTipo.setModel(model);
+    }
+    
+    private void cargarEstados() {
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        for (EstadoCrecimiento e : EstadoCrecimiento.values()) {
+            model.addElement(e.name());
+        }
+        comboEstado.setModel(model);
+    }
 }

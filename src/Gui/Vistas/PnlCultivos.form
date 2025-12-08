@@ -120,15 +120,15 @@
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="103" alignment="1" groupAlignment="1" max="-2" attributes="0">
-                                          <Component id="txtEstado" alignment="0" pref="237" max="32767" attributes="0"/>
+                                          <Component id="comboEstado" alignment="0" pref="237" max="32767" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
                                               <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                                               <Component id="lblInfoTelefono1" min="-2" max="-2" attributes="0"/>
                                           </Group>
-                                          <Component id="txtEstado1" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="txtCantidad" alignment="0" min="-2" pref="185" max="-2" attributes="0"/>
+                                          <Component id="comboTipo" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="txtArea" alignment="0" min="-2" pref="185" max="-2" attributes="0"/>
                                       </Group>
-                                      <Component id="txtCedula" alignment="1" min="-2" pref="237" max="-2" attributes="0"/>
+                                      <Component id="txtNombre" alignment="1" min="-2" pref="237" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                               </Group>
@@ -138,7 +138,7 @@
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace min="204" pref="204" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="txtFechaFin" alignment="1" min="-2" pref="191" max="-2" attributes="0"/>
+                                              <Component id="txtFechaCosecha" alignment="1" min="-2" pref="191" max="-2" attributes="0"/>
                                               <Group type="102" alignment="0" attributes="0">
                                                   <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                                                   <Component id="lblInfoFecha1" min="-2" max="-2" attributes="0"/>
@@ -153,7 +153,7 @@
                                                   <Component id="lblInfoFecha3" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                                               </Group>
-                                              <Component id="txtFechaFin1" alignment="1" min="-2" pref="191" max="-2" attributes="0"/>
+                                              <Component id="txtFechaSiembra" alignment="1" min="-2" pref="191" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
@@ -176,18 +176,18 @@
                           <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="lblCedula" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtCedula" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtNombre" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="lblPlaca" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtEstado1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="comboTipo" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="lblFechaInicio" min="-2" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="txtCantidad" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtArea" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="lblInfoTelefono1" min="-2" max="-2" attributes="0"/>
                               </Group>
@@ -195,12 +195,12 @@
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="lblFechaFinalizacion" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtEstado" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="comboEstado" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                                   <Component id="lblMonto" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtFechaFin1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtFechaSiembra" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
@@ -210,7 +210,7 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="lblEstadoContrato" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtFechaFin" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtFechaCosecha" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="lblInfoFecha1" min="-2" max="-2" attributes="0"/>
@@ -252,7 +252,7 @@
                     <Property name="text" type="java.lang.String" value="Estado crecimiento:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JFormattedTextField" name="txtFechaFin">
+                <Component class="javax.swing.JFormattedTextField" name="txtFechaCosecha">
                   <Properties>
                     <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
                       <Format format="dd/MM/yyyy" subtype="-1" type="1"/>
@@ -280,7 +280,7 @@
                     <Property name="text" type="java.lang.String" value="Fecha de siembra:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="txtEstado">
+                <Component class="javax.swing.JComboBox" name="comboEstado">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Arial" size="14" style="0"/>
@@ -293,7 +293,7 @@
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JFormattedTextField" name="txtFechaFin1">
+                <Component class="javax.swing.JFormattedTextField" name="txtFechaSiembra">
                   <Properties>
                     <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
                       <Format format="dd/MM/yyyy" subtype="-1" type="1"/>
@@ -305,7 +305,7 @@
                     <Property name="text" type="java.lang.String" value="Requiere formato: dd/MM/yyyy"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JFormattedTextField" name="txtCantidad">
+                <Component class="javax.swing.JFormattedTextField" name="txtArea">
                   <Properties>
                     <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
                       <Format format="#0.00" subtype="-1" type="0"/>
@@ -317,7 +317,7 @@
                     <Property name="text" type="java.lang.String" value="Requiere formato: 00.0"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="txtEstado1">
+                <Component class="javax.swing.JComboBox" name="comboTipo">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Arial" size="14" style="0"/>
@@ -327,13 +327,13 @@
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtEstado1ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboTipoActionPerformed"/>
                   </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtCedula">
+                <Component class="javax.swing.JTextField" name="txtNombre">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Arial" size="14" style="0"/>
