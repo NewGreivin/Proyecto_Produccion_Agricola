@@ -3,52 +3,49 @@
  */
 package Gui.Busquedas;
 
-import Contratos.Contrato;
-import Contratos.GestionContrato;
-import Utilidades.UtilDate;
-import Utilidades.UtilGui;
+import GUI.Utilidades.UtilGui;
+import Modelo.Dtos.UsuarioDTO;
+import java.util.List;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
 public class dlgBuscarUsuario extends javax.swing.JDialog {
-    private GestionContrato list;
-    private Contrato contrato;
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(dlgBuscarUsuario.class.getName());
+    private List<UsuarioDTO> usuario;
+    private UsuarioDTO usuarioSeleccionado;
     
     private DefaultTableModel model;
     private TableRowSorter<DefaultTableModel> sorter;
     private RowFilter<DefaultTableModel, Object> rowFilter;
 
-    public void setList(GestionContrato list) {
-        this.list = list;
+    public void setList(List<UsuarioDTO> usuario) {
+        this.usuario = usuario;
         loadTable();
     }
 
-    public Contrato getContrato() {
-        return contrato;
+    public UsuarioDTO getUsuario() {
+        return usuarioSeleccionado;
     }
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(dlgBuscarUsuario.class.getName());
 
     public dlgBuscarUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        model = (DefaultTableModel) tblContratos.getModel();
+        model = (DefaultTableModel) tblUsuario.getModel();
         sorter = new TableRowSorter<>(model);
-        tblContratos.setRowSorter(sorter);
+        tblUsuario.setRowSorter(sorter);
     }
 
     private void loadTable() {
     model.setRowCount(0); // Limpiar tabla
-    for (Contrato c : list.getContratos().values()) {
+        if (usuario == null) return;
+    for (UsuarioDTO u : usuario) {
         Object[] data = {
-            c.getNumContrato(),
-            c.getCliente().getCedula(),
-            c.getVehiculo().getPlaca(),
-            UtilDate.toString(c.getFechaInicio()),
-            UtilDate.toString(c.getFechaFin()),
-            c.getMonto(),
-            c.getEstado()
+            u.getId(),
+            u.getUsername(),
+            u.getPasswordHash(),
+            u.getRol(),
+            u.getIdTrabajador().getCedula()
         };
         model.addRow(data);
     }
@@ -60,7 +57,7 @@ public class dlgBuscarUsuario extends javax.swing.JDialog {
         lblTitulo = new javax.swing.JLabel();
         pnlIntroducir = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblContratos = new javax.swing.JTable();
+        tblUsuario = new javax.swing.JTable();
         txtFiltro = new javax.swing.JTextField();
         pnlBotones = new javax.swing.JPanel();
         btnEliminar = new javax.swing.JButton();
@@ -73,7 +70,7 @@ public class dlgBuscarUsuario extends javax.swing.JDialog {
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitulo.setText("Buscar Produccion");
 
-        tblContratos.setModel(new javax.swing.table.DefaultTableModel(
+        tblUsuario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -96,7 +93,7 @@ public class dlgBuscarUsuario extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tblContratos);
+        jScrollPane1.setViewportView(tblUsuario);
 
         txtFiltro.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         txtFiltro.setHorizontalAlignment(javax.swing.JTextField.LEFT);
@@ -198,22 +195,29 @@ public class dlgBuscarUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        int row =tblContratos.getSelectedRow();
+        int row =tblUsuario.getSelectedRow();
     if (row == -1) {
         UtilGui.showErrorMessage(this, "Debe seleccionar un contrato", "Error");
         return;
     }
     
-    int modelRow = tblContratos.convertRowIndexToModel(row);
-    String numContrato = String.valueOf(model.getValueAt(modelRow, 0));
-    contrato = list.buscar(numContrato);
-    if (contrato == null) {
-        UtilGui.showErrorMessage(this, "Contrato no encontrado", "Error");
-        return;
-    }
-
-    setVisible(false);
-    dispose();
+    int modelRow = tblUsuario.convertRowIndexToModel(row);
+    String idUsuario = String.valueOf(model.getValueAt(modelRow, 0));
+    
+        for (UsuarioDTO user : usuario) {
+            if (user.getId().equals(idUsuario)) {
+                usuarioSeleccionado = user;
+                break;
+            }
+        }
+        
+        if (usuarioSeleccionado == null) {
+            UtilGui.showErrorMessage(this, "Usuario no encontrada", "Error");
+            return;
+        }
+         
+        setVisible(false);
+        dispose();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void txtFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFiltroActionPerformed
@@ -260,7 +264,7 @@ public class dlgBuscarUsuario extends javax.swing.JDialog {
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JPanel pnlBotones;
     private javax.swing.JPanel pnlIntroducir;
-    private javax.swing.JTable tblContratos;
+    private javax.swing.JTable tblUsuario;
     private javax.swing.JTextField txtFiltro;
     // End of variables declaration//GEN-END:variables
 }
