@@ -19,8 +19,8 @@ public class ControladorCultivo {
         this.facade = ServicioFacade.getInstancia();
     }
 
-    public boolean crearCultivo(int id, String nombre, TipoCultivo tipo,double area, EstadoCrecimiento estado,LocalDate siembra, LocalDate cosecha) throws Exception {
-        facade.getServicioCultivo().crear(id, nombre, tipo, area, estado, siembra, cosecha);
+    public boolean crearCultivo(String nombre, TipoCultivo tipo,double area, EstadoCrecimiento estado,LocalDate siembra, LocalDate cosecha) throws Exception {
+        facade.getServicioCultivo().crear(nombre, tipo, area, estado, siembra, cosecha);
         return true;
     }
 

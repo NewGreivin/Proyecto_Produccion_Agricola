@@ -26,7 +26,6 @@ public class PnlCultivos extends javax.swing.JPanel implements IGui {
         initComponents();
         controladorCultivo = new ControladorCultivo();
         cargarDatos();
-        
     }
 
     @SuppressWarnings("unchecked")
@@ -44,12 +43,12 @@ public class PnlCultivos extends javax.swing.JPanel implements IGui {
         lblInfoFecha1 = new javax.swing.JLabel();
         lblEstadoContrato = new javax.swing.JLabel();
         lblMonto = new javax.swing.JLabel();
-        comboEstado = new javax.swing.JComboBox<>();
+        cmbEstado = new javax.swing.JComboBox<>();
         txtFechaSiembra = new javax.swing.JFormattedTextField();
         lblInfoFecha3 = new javax.swing.JLabel();
         txtArea = new javax.swing.JFormattedTextField();
         lblInfoTelefono1 = new javax.swing.JLabel();
-        comboTipo = new javax.swing.JComboBox<>();
+        cmbTipo = new javax.swing.JComboBox<>();
         txtNombre = new javax.swing.JTextField();
         pnlBotones = new javax.swing.JPanel();
         btnAgregar = new javax.swing.JButton();
@@ -88,7 +87,7 @@ public class PnlCultivos extends javax.swing.JPanel implements IGui {
         lblMonto.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
         lblMonto.setText("Fecha de siembra:");
 
-        comboEstado.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        cmbEstado.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         txtFechaSiembra.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
 
@@ -98,10 +97,10 @@ public class PnlCultivos extends javax.swing.JPanel implements IGui {
 
         lblInfoTelefono1.setText("Requiere formato: 00.0");
 
-        comboTipo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        comboTipo.addActionListener(new java.awt.event.ActionListener() {
+        cmbTipo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        cmbTipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboTipoActionPerformed(evt);
+                cmbTipoActionPerformed(evt);
             }
         });
 
@@ -121,11 +120,11 @@ public class PnlCultivos extends javax.swing.JPanel implements IGui {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(comboEstado, javax.swing.GroupLayout.Alignment.LEADING, 0, 237, Short.MAX_VALUE)
+                                .addComponent(cmbEstado, javax.swing.GroupLayout.Alignment.LEADING, 0, 237, Short.MAX_VALUE)
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlDatosLayout.createSequentialGroup()
                                     .addGap(6, 6, 6)
                                     .addComponent(lblInfoTelefono1))
-                                .addComponent(comboTipo, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cmbTipo, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txtArea, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(52, 52, 52))
@@ -164,7 +163,7 @@ public class PnlCultivos extends javax.swing.JPanel implements IGui {
                 .addGap(18, 18, 18)
                 .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPlaca)
-                    .addComponent(comboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblFechaInicio)
@@ -175,7 +174,7 @@ public class PnlCultivos extends javax.swing.JPanel implements IGui {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblFechaFinalizacion)
-                    .addComponent(comboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblMonto)
@@ -353,9 +352,9 @@ public class PnlCultivos extends javax.swing.JPanel implements IGui {
         clear();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
-    private void comboTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTipoActionPerformed
+    private void cmbTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTipoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_comboTipoActionPerformed
+    }//GEN-LAST:event_cmbTipoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -364,8 +363,8 @@ public class PnlCultivos extends javax.swing.JPanel implements IGui {
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnLimpiar;
-    private javax.swing.JComboBox<String> comboEstado;
-    private javax.swing.JComboBox<String> comboTipo;
+    private javax.swing.JComboBox<String> cmbEstado;
+    private javax.swing.JComboBox<String> cmbTipo;
     private javax.swing.JLabel lblCedula;
     private javax.swing.JLabel lblEstadoContrato;
     private javax.swing.JLabel lblFechaFinalizacion;
@@ -389,38 +388,47 @@ public class PnlCultivos extends javax.swing.JPanel implements IGui {
     @Override
     public void save() {
         validarCampos();
+
         try {
             String nombre = txtNombre.getText().trim();
-            String tipoNombre = (String) comboTipo.getSelectedItem();
-            TipoCultivo tipo = TipoCultivo.valueOf(tipoNombre);
+            if (nombre.isEmpty()) {
+                UtilGui.showErrorMessage(this, "El nombre no puede estar vacío", "Error");
+                return;
+            }
+            
+            String tipoNombre = (String) cmbTipo.getSelectedItem();
+            if (tipoNombre == null) {
+                UtilGui.showErrorMessage(this, "Debe seleccionar un tipo de cultivo", "Error");
+                return;
+            }
+            
+            String estadoNombre = (String) cmbEstado.getSelectedItem();
+            if (estadoNombre == null) {
+                UtilGui.showErrorMessage(this, "Debe seleccionar un estado", "Error");
+                return;
+            }
+            
+            TipoCultivo tipo = TipoCultivo.valueOf(obtenerTipoPorNombre(tipoNombre));
+            EstadoCrecimiento estado = EstadoCrecimiento.valueOf(obtenerEstadoPorNombre(estadoNombre));
+            
             String areaText = txtArea.getText().trim().replace(",", ".");
+            if (areaText.isEmpty()) {
+                UtilGui.showErrorMessage(this, "El área no puede estar vacía", "Error");
+                return;
+            }
+            
             double area = Double.parseDouble(areaText);
-            String estadoNombre = (String) comboEstado.getSelectedItem();
-            EstadoCrecimiento estado = EstadoCrecimiento.valueOf(estadoNombre);
-
             LocalDate fechaSiembra = UtilDate.toLocalDate(txtFechaSiembra.getText());
             LocalDate fechaCosecha = UtilDate.toLocalDate(txtFechaCosecha.getText());
 
-            if (fechaSiembra == null) {
-                UtilGui.showErrorMessage(this, "La fecha de siembra es obligatoria", "Error");
-                return;
-            }
-            if (fechaCosecha != null && fechaCosecha.isBefore(fechaSiembra)) {
-                UtilGui.showErrorMessage(this, "La fecha estimada de cosecha debe ser posterior a la fecha de siembra", "Error");
-                return;
-            }
-
-            int generatedId = (int) (System.currentTimeMillis() % Integer.MAX_VALUE);
-
-            boolean ok = controladorCultivo.crearCultivo(generatedId, nombre, tipo, area, estado, fechaSiembra, fechaCosecha);
-            if (ok) {
-                UtilGui.showMessage(this, "Cultivo agregado correctamente", "Exito");
+            if (controladorCultivo.crearCultivo(nombre, tipo, area, estado, fechaSiembra, fechaCosecha)) {
+                UtilGui.showMessage(this, "Cultivo agregado correctamente", "Éxito");
                 clear();
             } else {
-                UtilGui.showErrorMessage(this, "No se pudo agregar cultivo", "Error");
+                UtilGui.showErrorMessage(this, "No se pudo agregar el cultivo", "Error");
             }
         } catch (NumberFormatException e) {
-            UtilGui.showErrorMessage(this, "Error en el formato del area. Use 00.00", "Error");
+            UtilGui.showErrorMessage(this, "Error en el formato de área. Use formato: 00.0", "Error");
         } catch (Exception e) {
             UtilGui.showErrorMessage(this, "Error al guardar: " + e.getMessage(), "Error");
             e.printStackTrace();
@@ -430,12 +438,11 @@ public class PnlCultivos extends javax.swing.JPanel implements IGui {
     @Override
     public void clear() {
         txtNombre.setText("");
-        comboTipo.setSelectedIndex(-1);
-        txtArea.setValue(null);
-        comboEstado.setSelectedIndex(-1);
+        txtArea.setText("");
+        cmbTipo.setSelectedIndex(-1);
+        cmbEstado.setSelectedIndex(-1);
         txtFechaSiembra.setText("");
         txtFechaCosecha.setText("");
-        cultivo = null;
     }
 
     @Override
@@ -446,16 +453,22 @@ public class PnlCultivos extends javax.swing.JPanel implements IGui {
                 return;
             }
 
-            int confirm = JOptionPane.showConfirmDialog(this,
-                    "¿Esta seguro que desea eliminar el cultivo " + cultivo.getNombre() + " ?",
-                    "Confirmar eliminacion", JOptionPane.YES_NO_OPTION);
+            int confirmacion = JOptionPane.showConfirmDialog(this,
+                    "¿Está seguro de que desea eliminar el cultivo " + cultivo.getNombre() + "?", 
+                    "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
 
-            if (confirm == JOptionPane.YES_OPTION) {
-                if (controladorCultivo.eliminar(cultivo.getId())) {
-                    UtilGui.showMessage(this, "Cultivo eliminado correctamente", "Exito");
-                    clear();
-                } else {
-                    UtilGui.showErrorMessage(this, "No se pudo eliminar el cultivo", "Error");
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                try {
+                    if (controladorCultivo.eliminar(cultivo.getId())) {
+                        UtilGui.showMessage(this, "Cultivo eliminado correctamente", "Éxito");
+                        clear();
+                        cultivo = null;
+                    } else {
+                        UtilGui.showErrorMessage(this, "No se pudo eliminar el cultivo", "Error");
+                    }
+                } catch (Exception ex) {
+                    UtilGui.showErrorMessage(this, "Error al eliminar: " + ex.getMessage(), "Error");
+                    ex.printStackTrace();
                 }
             }
         } catch (Exception e) {
@@ -466,44 +479,64 @@ public class PnlCultivos extends javax.swing.JPanel implements IGui {
 
     @Override
     public void update() {
+        validarCampos();
+
         try {
             if (cultivo == null) {
                 UtilGui.showErrorMessage(this, "Debe seleccionar un cultivo primero", "Error");
                 return;
             }
-            if (!validateRequiere()) {
-                UtilGui.showErrorMessage(this, "Faltan datos requeridos", "Error");
-                return;
-            }
 
             String nombre = txtNombre.getText().trim();
-            String tipoNombre = (String) comboTipo.getSelectedItem();
-            TipoCultivo tipo = TipoCultivo.valueOf(tipoNombre);
+            if (nombre.isEmpty()) {
+                UtilGui.showErrorMessage(this, "El nombre no puede estar vacío", "Error");
+                return;
+            }
+            
+            String tipoNombre = (String) cmbTipo.getSelectedItem();
+            if (tipoNombre == null) {
+                UtilGui.showErrorMessage(this, "Debe seleccionar un tipo de cultivo", "Error");
+                return;
+            }
+            
+            String estadoNombre = (String) cmbEstado.getSelectedItem();
+            if (estadoNombre == null) {
+                UtilGui.showErrorMessage(this, "Debe seleccionar un estado", "Error");
+                return;
+            }
+            
+            TipoCultivo tipo = TipoCultivo.valueOf(obtenerTipoPorNombre(tipoNombre));
+            EstadoCrecimiento estado = EstadoCrecimiento.valueOf(obtenerEstadoPorNombre(estadoNombre));
+            
             String areaText = txtArea.getText().trim().replace(",", ".");
+            if (areaText.isEmpty()) {
+                UtilGui.showErrorMessage(this, "El área no puede estar vacía", "Error");
+                return;
+            }
+            
             double area = Double.parseDouble(areaText);
-            String estadoNombre = (String) comboEstado.getSelectedItem();
-            EstadoCrecimiento estado = EstadoCrecimiento.valueOf(estadoNombre);
             LocalDate fechaSiembra = UtilDate.toLocalDate(txtFechaSiembra.getText());
             LocalDate fechaCosecha = UtilDate.toLocalDate(txtFechaCosecha.getText());
 
-            if (fechaSiembra == null) {
-                UtilGui.showErrorMessage(this, "La fecha de siembra es obligatoria", "Error");
-                return;
-            }
-            if (fechaCosecha != null && fechaCosecha.isBefore(fechaSiembra)) {
-                UtilGui.showErrorMessage(this, "La fecha estimada de cosecha debe ser posterior a la fecha de siembra", "Error");
-                return;
-            }
+            CultivoDTO nuevoDTO = new CultivoDTO(
+                cultivo.getId(),
+                nombre,
+                tipo,
+                area,
+                estado,
+                fechaSiembra,
+                fechaCosecha
+            );
 
-            CultivoDTO dto = new CultivoDTO(cultivo.getId(), nombre, tipo, area, estado, fechaSiembra, fechaCosecha);
-            if (controladorCultivo.actualizarCultivo(dto)) {
-                UtilGui.showMessage(this, "Cultivo actualizado correctamente", "Exito");
+            if (controladorCultivo.actualizarCultivo(nuevoDTO)) {
+                UtilGui.showMessage(this, "Cultivo actualizado correctamente", "Éxito");
                 clear();
+                cultivo = null;
             } else {
                 UtilGui.showErrorMessage(this, "No se pudo actualizar el cultivo", "Error");
             }
         } catch (NumberFormatException e) {
-            UtilGui.showErrorMessage(this, "Error en el formato del area. Use 00.00", "Error");
+            UtilGui.showErrorMessage(this, "Error en el formato de área. Use formato: 00.0", "Error");
         } catch (Exception e) {
             UtilGui.showErrorMessage(this, "Error al actualizar: " + e.getMessage(), "Error");
             e.printStackTrace();
@@ -515,22 +548,31 @@ public class PnlCultivos extends javax.swing.JPanel implements IGui {
     public void search() {
         JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
         dlgBuscarCultivo dlg = new dlgBuscarCultivo(parentFrame, true);
-
+        
         try {
             List<CultivoDTO> cultivos = controladorCultivo.listar();
-            if (cultivos == null || cultivos.isEmpty()) {
-                UtilGui.showMessage(this, "No hay cultivos registrados", "Informacion");
+            
+            if (cultivos == null) {
+                UtilGui.showErrorMessage(this, "Error: controladorCultivo retornó null", "Error");
+                return;
+            }
+            
+            if (cultivos.isEmpty()) {
+                UtilGui.showMessage(this, "No hay cultivos registrados", "Información");
                 return;
             }
             
             dlg.setCultivos(cultivos);
             dlg.setLocationRelativeTo(this);
             dlg.setVisible(true);
-
+            
             cultivo = dlg.getCultivo();
             if (cultivo != null) {
                 showdata();
             }
+        } catch (NullPointerException e) {
+            UtilGui.showErrorMessage(this, "Error: NullPointerException - " + e.getMessage(), "Error");
+            e.printStackTrace();
         } catch (Exception e) {
             UtilGui.showErrorMessage(this, "Error al buscar: " + e.getMessage(), "Error");
             e.printStackTrace();
@@ -539,50 +581,70 @@ public class PnlCultivos extends javax.swing.JPanel implements IGui {
 
     @Override
     public boolean validateRequiere() {
-        return UtilGui.validateRequiere(txtNombre, comboTipo, txtArea, comboEstado, txtFechaSiembra);
+        return UtilGui.validateRequiere(txtNombre, txtArea, cmbTipo, cmbEstado, txtFechaSiembra, txtFechaCosecha);
     }
 
     @Override
     public void showdata() {
-        if (cultivo == null) return;
+        if (cultivo == null) {
+            return;
+        }
 
         try {
             txtNombre.setText(cultivo.getNombre());
-            comboTipo.setSelectedItem(cultivo.getTipo() != null ? cultivo.getTipo().name() : null);
-            txtArea.setValue(cultivo.getAreaSembrada());
-            comboEstado.setSelectedItem(cultivo.getEstado() != null ? cultivo.getEstado().name() : null);
+            cmbTipo.setSelectedItem(cultivo.getTipo().getDescripcion());
+            cmbEstado.setSelectedItem(cultivo.getEstado().getDescripcion());
+            txtArea.setText(String.format("%.2f", cultivo.getAreaSembrada()));
             txtFechaSiembra.setText(UtilDate.toString(cultivo.getFechaSiembra()));
             txtFechaCosecha.setText(UtilDate.toString(cultivo.getFechaEstimCosecha()));
         } catch (Exception e) {
             UtilGui.showErrorMessage(this, "Error al mostrar cultivo: " + e.getMessage(), "Error");
-            e.printStackTrace();
         }
     }
 
     private void validarCampos() {
         if (!validateRequiere()) {
             UtilGui.showErrorMessage(this, "Faltan datos requeridos", "Error");
+            return;
         }
     }
-    
+
+    private String obtenerTipoPorNombre(String nombre) {
+        for (TipoCultivo t : TipoCultivo.values()) {
+            if (t.getDescripcion().equalsIgnoreCase(nombre)) {
+                return t.name();
+            }
+        }
+        return "VEGETAL";
+    }
+
+    private String obtenerEstadoPorNombre(String nombre) {
+        for (EstadoCrecimiento e : EstadoCrecimiento.values()) {
+            if (e.getDescripcion().equalsIgnoreCase(nombre)) {
+                return e.name();
+            }
+        }
+        return "SEMBRADO";
+    }
+
     private void cargarDatos() {
         cargarTipos();
         cargarEstados();
     }
-    
+
     private void cargarTipos() {
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
-        for (TipoCultivo t : TipoCultivo.values()) {
-            model.addElement(t.name());
+        for (TipoCultivo tipo : TipoCultivo.values()) {
+            model.addElement(tipo.getDescripcion());
         }
-        comboTipo.setModel(model);
+        cmbTipo.setModel(model);
     }
-    
+
     private void cargarEstados() {
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
-        for (EstadoCrecimiento e : EstadoCrecimiento.values()) {
-            model.addElement(e.name());
+        for (EstadoCrecimiento estado : EstadoCrecimiento.values()) {
+            model.addElement(estado.getDescripcion());
         }
-        comboEstado.setModel(model);
+        cmbEstado.setModel(model);
     }
 }

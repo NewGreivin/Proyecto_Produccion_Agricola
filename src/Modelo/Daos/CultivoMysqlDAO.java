@@ -26,21 +26,21 @@ public class CultivoMysqlDAO implements ICultivoDAO{
         List<CultivoDTO> lista = new ArrayList<>();
         String sql = "SELECT * FROM cultivos WHERE tipo = ?";
 
-        try (Connection conn = conexion.getConnection();
-            PreparedStatement pst = conn.prepareStatement(sql)) {
+        try {
+            Connection conn = conexion.getConnection();
+            PreparedStatement pst = conn.prepareStatement(sql);
             pst.setString(1, tipo);
+            ResultSet rs = pst.executeQuery();
 
-            try (ResultSet rs = pst.executeQuery()) {
-                while (rs.next()) {
-                    lista.add(new CultivoDTO(
-                        rs.getInt("id"),
-                        rs.getString("nombre"),
-                        TipoCultivo.valueOf(rs.getString("tipo")),
-                        rs.getDouble("area_sembrada"),
-                        EstadoCrecimiento.valueOf(rs.getString("estado_crecimiento")),
-                        rs.getDate("fecha_siembra").toLocalDate(),
-                        rs.getDate("fecha_estim_cosecha").toLocalDate()));
-                }
+            while (rs.next()) {
+                lista.add(new CultivoDTO(
+                    rs.getInt("id"),
+                    rs.getString("nombre"),
+                    TipoCultivo.valueOf(rs.getString("tipo")),
+                    rs.getDouble("area_sembrada"),
+                    EstadoCrecimiento.valueOf(rs.getString("estado_crecimiento")),
+                    rs.getDate("fecha_siembra").toLocalDate(),
+                    rs.getDate("fecha_estim_cosecha").toLocalDate()));
             }
         } catch (SQLException e) {
             throw new IllegalArgumentException("Error en buscar por tipo", e);
@@ -53,21 +53,21 @@ public class CultivoMysqlDAO implements ICultivoDAO{
         List<CultivoDTO> lista = new ArrayList<>();
         String sql = "SELECT * FROM cultivos WHERE estado_crecimiento = ?";
 
-        try (Connection conn = conexion.getConnection();
-            PreparedStatement pst = conn.prepareStatement(sql)) {
+        try {
+            Connection conn = conexion.getConnection();
+            PreparedStatement pst = conn.prepareStatement(sql);
             pst.setString(1, estado);
+            ResultSet rs = pst.executeQuery();
 
-            try (ResultSet rs = pst.executeQuery()) {
-                while (rs.next()) {
-                    lista.add(new CultivoDTO(
-                        rs.getInt("id"),
-                        rs.getString("nombre"),
-                        TipoCultivo.valueOf(rs.getString("tipo")),
-                        rs.getDouble("area_sembrada"),
-                        EstadoCrecimiento.valueOf(rs.getString("estado_crecimiento")),
-                        rs.getDate("fecha_siembra").toLocalDate(),
-                        rs.getDate("fecha_estim_cosecha").toLocalDate()));
-                }
+            while (rs.next()) {
+                lista.add(new CultivoDTO(
+                    rs.getInt("id"),
+                    rs.getString("nombre"),
+                    TipoCultivo.valueOf(rs.getString("tipo")),
+                    rs.getDouble("area_sembrada"),
+                    EstadoCrecimiento.valueOf(rs.getString("estado_crecimiento")),
+                    rs.getDate("fecha_siembra").toLocalDate(),
+                    rs.getDate("fecha_estim_cosecha").toLocalDate()));
             }
         } catch (SQLException e) {
             throw new IllegalArgumentException("Error en buscar por estado", e);
@@ -80,21 +80,21 @@ public class CultivoMysqlDAO implements ICultivoDAO{
         List<CultivoDTO> lista = new ArrayList<>();
         String sql = "SELECT * FROM cultivos WHERE nombre LIKE ?";
 
-        try (Connection conn = conexion.getConnection();
-            PreparedStatement pst = conn.prepareStatement(sql)) {
+        try {
+            Connection conn = conexion.getConnection();
+            PreparedStatement pst = conn.prepareStatement(sql);
             pst.setString(1, "%" + nombre + "%");
+            ResultSet rs = pst.executeQuery();
 
-            try (ResultSet rs = pst.executeQuery()) {
-                while (rs.next()) {
-                    lista.add(new CultivoDTO(
-                        rs.getInt("id"),
-                        rs.getString("nombre"),
-                        TipoCultivo.valueOf(rs.getString("tipo")),
-                        rs.getDouble("area_sembrada"),
-                        EstadoCrecimiento.valueOf(rs.getString("estado_crecimiento")),
-                        rs.getDate("fecha_siembra").toLocalDate(),
-                        rs.getDate("fecha_estim_cosecha").toLocalDate()));
-                }
+            while (rs.next()) {
+                lista.add(new CultivoDTO(
+                    rs.getInt("id"),
+                    rs.getString("nombre"),
+                    TipoCultivo.valueOf(rs.getString("tipo")),
+                    rs.getDouble("area_sembrada"),
+                    EstadoCrecimiento.valueOf(rs.getString("estado_crecimiento")),
+                    rs.getDate("fecha_siembra").toLocalDate(),
+                    rs.getDate("fecha_estim_cosecha").toLocalDate()));
             }
         } catch (SQLException e) {
             throw new IllegalArgumentException("Error en buscar por nombre", e);
@@ -112,24 +112,23 @@ public class CultivoMysqlDAO implements ICultivoDAO{
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setString(1, fecha);
             ResultSet rs = pst.executeQuery();
+            
             while (rs.next()) {
-                    Integer id = rs.getInt("id");
-                    String nombre = rs.getString("nombre");
-                    TipoCultivo tipo = TipoCultivo.valueOf(rs.getString("tipo"));
-                    double areaSembrada = rs.getDouble("area_sembrada");
-                    EstadoCrecimiento estado = EstadoCrecimiento.valueOf(rs.getString("estado_crecimiento"));
-                    LocalDate fechaSiembra = rs.getDate("fecha_siembra").toLocalDate();
-                    LocalDate fechaEstimCosecha = rs.getDate("fecha_estim_cosecha").toLocalDate();
+                Integer id = rs.getInt("id");
+                String nombre = rs.getString("nombre");
+                TipoCultivo tipo = TipoCultivo.valueOf(rs.getString("tipo"));
+                double areaSembrada = rs.getDouble("area_sembrada");
+                EstadoCrecimiento estado = EstadoCrecimiento.valueOf(rs.getString("estado_crecimiento"));
+                LocalDate fechaSiembra = rs.getDate("fecha_siembra").toLocalDate();
+                LocalDate fechaEstimCosecha = rs.getDate("fecha_estim_cosecha").toLocalDate();
 
-                    CultivoDTO dto = new CultivoDTO(id, nombre, tipo, areaSembrada, estado, fechaSiembra, fechaEstimCosecha);
-
-                    lista.add(dto);
-
-                }
-            }catch (Exception e) {
+                CultivoDTO dto = new CultivoDTO(id, nombre, tipo, areaSembrada, estado, fechaSiembra, fechaEstimCosecha);
+                lista.add(dto);
+            }
+        } catch (Exception e) {
             throw new IllegalArgumentException("Error en buscar por fechaSiembra", e);
         }
-            return lista;
+        return lista;
         }
 
     @Override
@@ -137,21 +136,20 @@ public class CultivoMysqlDAO implements ICultivoDAO{
         List<CultivoDTO> lista = new ArrayList<>();
         String sql = "SELECT * FROM cultivos WHERE fecha_estim_cosecha <= DATE_ADD(CURDATE(), INTERVAL 7 DAY) ORDER BY fecha_estim_cosecha ASC";
 
-        try (Connection conn = conexion.getConnection();
-            PreparedStatement pst = conn.prepareStatement(sql)) {
-            
+        try {
+            Connection conn = conexion.getConnection();
+            PreparedStatement pst = conn.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
 
-            try (ResultSet rs = pst.executeQuery()) {
-                while (rs.next()) {
-                    lista.add(new CultivoDTO(
-                        rs.getInt("id"),
-                        rs.getString("nombre"),
-                        TipoCultivo.valueOf(rs.getString("tipo")),
-                        rs.getDouble("area_sembrada"),
-                        EstadoCrecimiento.valueOf(rs.getString("estado_crecimiento")),
-                        rs.getDate("fecha_siembra").toLocalDate(),
-                        rs.getDate("fecha_estim_cosecha").toLocalDate()));
-                }
+            while (rs.next()) {
+                lista.add(new CultivoDTO(
+                    rs.getInt("id"),
+                    rs.getString("nombre"),
+                    TipoCultivo.valueOf(rs.getString("tipo")),
+                    rs.getDouble("area_sembrada"),
+                    EstadoCrecimiento.valueOf(rs.getString("estado_crecimiento")),
+                    rs.getDate("fecha_siembra").toLocalDate(),
+                    rs.getDate("fecha_estim_cosecha").toLocalDate()));
             }
         } catch (SQLException e) {
             throw new IllegalArgumentException("Error en Cultivos proximos a cosechar", e);
@@ -161,20 +159,18 @@ public class CultivoMysqlDAO implements ICultivoDAO{
 
     @Override
     public void crear(CultivoDTO t) {
-        String sql = "INSERT INTO cultivos (id, nombre, tipo, area_sembrada, estado_crecimiento, fecha_siembra, fecha_estim_cosecha) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO cultivos (nombre, tipo, area_sembrada, estado_crecimiento, fecha_siembra, fecha_estim_cosecha) VALUES (?, ?, ?, ?, ?, ?)";
         
-        try (Connection conn = conexion.getConnection();
-             PreparedStatement pst = conn.prepareStatement(sql)) {
-           
-           pst.setInt(1, t.getId());
-           pst.setString(2, t.getNombre());
-           pst.setString(3, t.getTipo().name());
-           pst.setDouble(4, t.getAreaSembrada());
-           pst.setString(5, t.getEstado().name());
-           pst.setString(6, t.getFechaSiembra().toString());
-           pst.setString(7, t.getFechaEstimCosecha().toString());
-           
-           pst.executeUpdate();
+        try {
+            Connection conn = conexion.getConnection();
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, t.getNombre());
+            pst.setString(2, t.getTipo().name());
+            pst.setDouble(3, t.getAreaSembrada());
+            pst.setString(4, t.getEstado().name());
+            pst.setString(5, t.getFechaSiembra().toString());
+            pst.setString(6, t.getFechaEstimCosecha().toString());
+            pst.executeUpdate();
         } catch (SQLException e) {
             throw new IllegalArgumentException("No se pudo registrar el cultivo", e);
         }
@@ -185,23 +181,24 @@ public class CultivoMysqlDAO implements ICultivoDAO{
         List<CultivoDTO> lista = new ArrayList<>();
         String sql = "SELECT * FROM cultivos";
         
-        try (Connection conn = conexion.getConnection();
-             PreparedStatement pst = conn.prepareStatement(sql);
-             ResultSet rs = pst.executeQuery()) {
-           
-           while(rs.next()){
-               Integer id = rs.getInt("id");
-               String nombre = rs.getString("nombre");
-               TipoCultivo tipo = TipoCultivo.valueOf(rs.getString("tipo"));
-               double area = rs.getDouble("area_sembrada");
-               EstadoCrecimiento estado = EstadoCrecimiento.valueOf(rs.getString("estado_crecimiento"));
-               LocalDate fechaSiembra = rs.getDate("fecha_siembra").toLocalDate();
-               LocalDate fechaEstim = rs.getDate("fecha_estim_cosecha").toLocalDate();
+        try {
+            Connection conn = conexion.getConnection();
+            PreparedStatement pst = conn.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            
+            while(rs.next()){
+                Integer id = rs.getInt("id");
+                String nombre = rs.getString("nombre");
+                TipoCultivo tipo = TipoCultivo.valueOf(rs.getString("tipo"));
+                double area = rs.getDouble("area_sembrada");
+                EstadoCrecimiento estado = EstadoCrecimiento.valueOf(rs.getString("estado_crecimiento"));
+                LocalDate fechaSiembra = rs.getDate("fecha_siembra").toLocalDate();
+                LocalDate fechaEstim = rs.getDate("fecha_estim_cosecha").toLocalDate();
 
-               CultivoDTO dto = new CultivoDTO(id, nombre, tipo, area, estado, fechaSiembra, fechaEstim);
-               lista.add(dto);
-           }
-        }catch(SQLException e){
+                CultivoDTO dto = new CultivoDTO(id, nombre, tipo, area, estado, fechaSiembra, fechaEstim);
+                lista.add(dto);
+            }
+        } catch(SQLException e){
             throw new IllegalArgumentException("No se pudo listar el cultivo", e);
         }
         return lista;
@@ -211,19 +208,18 @@ public class CultivoMysqlDAO implements ICultivoDAO{
     public void actualizar(CultivoDTO t) {
         String sql = "UPDATE cultivos SET nombre=?, tipo=?, area_sembrada=?, estado_crecimiento=?, fecha_siembra=?, fecha_estim_cosecha=? WHERE id=?";
         
-        try (Connection conn = conexion.getConnection();
-             PreparedStatement pst = conn.prepareStatement(sql)) {
-           
-           pst.setString(1, t.getNombre());
-           pst.setString(2, t.getTipo().name());
-           pst.setDouble(3, t.getAreaSembrada());
-           pst.setString(4, t.getEstado().name());
-           pst.setString(5, t.getFechaSiembra().toString());
-           pst.setString(6, t.getFechaEstimCosecha().toString());
-           pst.setInt(7, t.getId());
-           
-           pst.executeUpdate();
-        }catch(SQLException e){
+        try {
+            Connection conn = conexion.getConnection();
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, t.getNombre());
+            pst.setString(2, t.getTipo().name());
+            pst.setDouble(3, t.getAreaSembrada());
+            pst.setString(4, t.getEstado().name());
+            pst.setString(5, t.getFechaSiembra().toString());
+            pst.setString(6, t.getFechaEstimCosecha().toString());
+            pst.setInt(7, t.getId());
+            pst.executeUpdate();
+        } catch(SQLException e){
             throw new IllegalArgumentException("No se pudo actualizar el cultivo", e);
         }
     }
@@ -232,43 +228,45 @@ public class CultivoMysqlDAO implements ICultivoDAO{
     public void eliminar(int id) {
         String sql = "DELETE FROM cultivos WHERE id=?";
         
-        try (Connection conn = conexion.getConnection();
-             PreparedStatement pst = conn.prepareStatement(sql)) {
-           
-           pst.setInt(1, id);
-           pst.executeUpdate();
-        }catch(SQLException e){
-            throw new IllegalArgumentException("No se pudo elminar el cultivo", e);
+        try {
+            Connection conn = conexion.getConnection();
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setInt(1, id);
+            int filasAfectadas = pst.executeUpdate();
+            pst.close();
+            
+            if (filasAfectadas == 0) {
+                throw new IllegalArgumentException("No se encontró cultivo con ID: " + id);
+            }
+        } catch(SQLException e){
+            throw new IllegalArgumentException("No se pudo eliminar el cultivo: " + e.getMessage(), e);
         }
-    }   
+    } 
 
     @Override
     public CultivoDTO buscarPorId(Integer id) {
         String sql = "SELECT * FROM cultivos WHERE id = ?";
 
-    try (Connection conn = conexion.getConnection();
-         PreparedStatement pst = conn.prepareStatement(sql)) {
+        try {
+            Connection conn = conexion.getConnection();
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setInt(1, id);
+            ResultSet rs = pst.executeQuery();
 
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-
-        if (rs.next()) {
-
-            return new CultivoDTO(
-                rs.getInt("id"),
-                rs.getString("nombre"),
-                TipoCultivo.valueOf(rs.getString("tipo")),
-                rs.getDouble("areaSembrada"),
-                EstadoCrecimiento.valueOf(rs.getString("estadoCrecimiento")),
-                rs.getDate("fechaSiembra").toLocalDate(),
-                rs.getDate("fechaEstimCosecha").toLocalDate()
-            );
+            if (rs.next()) {
+                return new CultivoDTO(
+                    rs.getInt("id"),
+                    rs.getString("nombre"),
+                    TipoCultivo.valueOf(rs.getString("tipo")),
+                    rs.getDouble("area_sembrada"),
+                    EstadoCrecimiento.valueOf(rs.getString("estado_crecimiento")),
+                    rs.getDate("fecha_siembra").toLocalDate(),
+                    rs.getDate("fecha_estim_cosecha").toLocalDate()
+                );
+            }
+        } catch (SQLException e) {
+            throw new IllegalArgumentException("Error buscando cultivo por ID", e);
         }
-
-    } catch (SQLException e) {
-        throw new IllegalArgumentException("Error buscando cultivo por ID", e);
-    }
-    return null; 
+        return null; 
     }
 }
-
