@@ -92,7 +92,7 @@ public class dlgBuscarProduccion extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Id", "Fecha", "Cantidad Recolectada", "Calidad", "Destino", "Cultivo", "Porcentaje de productividad"
+                "Id", "Fecha", "Cantidad Recolectada (kg)", "Calidad", "Destino", "Cultivo", "Porcentaje de productividad"
             }
         ) {
             Class[] types = new Class [] {
