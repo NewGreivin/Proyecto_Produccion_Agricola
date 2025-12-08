@@ -24,7 +24,7 @@ public class TrabajadorMysqlDAO implements ITrabajadorDAO {
 
     @Override
     public TrabajadorDTO buscarPorCedula(int cedulaABuscar) {
-        String sql = "SELECT cedula, nombre, telefono, correo, puesto, horario, salario FROM trabajador WHERE cedula = ?";
+        String sql = "SELECT cedula, nombre, telefono, correo, puesto, horario, salario FROM trabajadores WHERE cedula = ?";
 
         try (Connection conn = conexion.getConnection();
              PreparedStatement pst = conn.prepareStatement(sql)) {
@@ -52,7 +52,7 @@ public class TrabajadorMysqlDAO implements ITrabajadorDAO {
 
     @Override
     public boolean existeCedula(int cedula) {
-        String sql = "SELECT COUNT(*) FROM trabajador WHERE cedula = ?";
+        String sql = "SELECT COUNT(*) FROM trabajadores WHERE cedula = ?";
 
         try (Connection conn = conexion.getConnection();
              PreparedStatement pst = conn.prepareStatement(sql)) {
@@ -74,7 +74,7 @@ public class TrabajadorMysqlDAO implements ITrabajadorDAO {
     @Override
     public List<TrabajadorDTO> buscarPorNombre(String nombre) {
         List<TrabajadorDTO> lista = new ArrayList<>();
-        String sql = "SELECT cedula, nombre, telefono, correo, puesto, horario, salario FROM trabajador WHERE nombre LIKE ?";
+        String sql = "SELECT cedula, nombre, telefono, correo, puesto, horario, salario FROM trabajador WHERE nombre = ?";
 
         try (Connection conn = conexion.getConnection();
              PreparedStatement pst = conn.prepareStatement(sql)) {
@@ -101,7 +101,7 @@ public class TrabajadorMysqlDAO implements ITrabajadorDAO {
     @Override
     public List<TrabajadorDTO> buscarPorPuesto(String puesto) {
         List<TrabajadorDTO> lista = new ArrayList<>();
-        String sql = "SELECT cedula, nombre, telefono, correo, puesto, horario, salario FROM trabajador WHERE puesto LIKE ?";
+        String sql = "SELECT cedula, nombre, telefono, correo, puesto, horario, salario FROM trabajadores WHERE puesto = ?";
 
         try (Connection conn = conexion.getConnection();
              PreparedStatement pst = conn.prepareStatement(sql)) {
@@ -127,7 +127,7 @@ public class TrabajadorMysqlDAO implements ITrabajadorDAO {
 
     @Override
     public void crear(TrabajadorDTO t) {
-        String sql = "INSERT INTO trabajador (cedula,nombre,telefono,correo,puesto,horario,salario) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO trabajadores (cedula,nombre,telefono,correo,puesto,horario,salario) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = conexion.getConnection();
              PreparedStatement pst = conn.prepareStatement(sql)) {
@@ -175,18 +175,17 @@ public class TrabajadorMysqlDAO implements ITrabajadorDAO {
 
     @Override
     public void actualizar(TrabajadorDTO t) {
-        String sql = "UPDATE trabajador SET nombre=?, telefono=?, correo=?, puesto=?, horario=?, salario=? WHERE cedula = ?";
+        String sql = "UPDATE trabajadores SET telefono=?, correo=?, puesto=?, horario=?, salario=? WHERE cedula = ?";
 
         try (Connection conn = conexion.getConnection();
             PreparedStatement pst = conn.prepareStatement(sql)) {
-
-            pst.setString(1, t.getNombre());
-            pst.setString(2, t.getTelefono());
-            pst.setString(3, t.getCorreo());
-            pst.setString(4, t.getPuesto());
-            pst.setString(5, t.getHorario());
-            pst.setDouble(6, t.getSalario());
-            pst.setInt(7, t.getCedula());
+            
+            pst.setString(1, t.getTelefono());
+            pst.setString(2, t.getCorreo());
+            pst.setString(3, t.getPuesto());
+            pst.setString(4, t.getHorario());
+            pst.setDouble(5, t.getSalario());
+            pst.setInt(6, t.getCedula());
 
             pst.executeUpdate();
         } catch (SQLException e) {
@@ -196,7 +195,7 @@ public class TrabajadorMysqlDAO implements ITrabajadorDAO {
 
     @Override
     public void eliminar(int cedula) {
-        String sql = "DELETE FROM trabajador WHERE cedula = ?";
+        String sql = "DELETE FROM trabajadores WHERE cedula = ?";
 
         try (Connection conn = conexion.getConnection();
             PreparedStatement pst = conn.prepareStatement(sql)) {

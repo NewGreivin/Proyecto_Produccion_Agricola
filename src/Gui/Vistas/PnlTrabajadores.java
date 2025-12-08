@@ -12,6 +12,7 @@ import Modelo.Objetos.Trabajadores.Puesto;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 public class PnlTrabajadores extends javax.swing.JPanel implements IGui {
@@ -363,7 +364,7 @@ public class PnlTrabajadores extends javax.swing.JPanel implements IGui {
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtHorario;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JComboBox<String> txtPuesto;
+    private javax.swing.JComboBox<Puesto> txtPuesto;
     private javax.swing.JFormattedTextField txtSalario;
     private javax.swing.JFormattedTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
@@ -372,6 +373,7 @@ public class PnlTrabajadores extends javax.swing.JPanel implements IGui {
     public void save() {
         if (!validateRequiere()) {
             UtilGui.showErrorMessage(this, "Faltan datos requeridos", "Error");
+            return;
         }
         
         try {
@@ -379,7 +381,13 @@ public class PnlTrabajadores extends javax.swing.JPanel implements IGui {
         String nombre = txtNombre.getText();
         String telefono = txtTelefono.getText();
         String correo = txtCorreo.getText();
-        String puesto = (String) txtPuesto.getSelectedItem();
+        Object sel = txtPuesto.getSelectedItem();
+            String puesto = null;
+            if (sel instanceof Puesto) {
+                puesto = ((Puesto) sel).getPuesto();
+            } else if (sel instanceof String) {
+                puesto = (String) sel;
+            }
         String horario = txtHorario.getText();
         double salario = Double.parseDouble(txtSalario.getText());
         
@@ -387,8 +395,10 @@ public class PnlTrabajadores extends javax.swing.JPanel implements IGui {
             UtilGui.showMessage(this, "Se agrego correctamente", "Exito");
         }
         } catch (NumberFormatException e) {
+            e.printStackTrace();
             UtilGui.showErrorMessage(this, "Error en el formato de los datos", "Error");
         } catch (Exception e) {
+            e.printStackTrace();
             UtilGui.showErrorMessage(this, "Error al guardar: " + e.getMessage(), "Error");
         }
     }
@@ -411,11 +421,101 @@ public class PnlTrabajadores extends javax.swing.JPanel implements IGui {
 
     @Override
     public void delete() {
+        try {
+            if (trabajadordto == null) {
+                UtilGui.showErrorMessage(this, "Debe seleccionar una producción primero", "Error");
+                return;
+            }
 
+            int confirmacion = JOptionPane.showConfirmDialog(this, "¿Está seguro de que quieres eliminar " + "?", 
+                    "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                try {
+                    if (controlador.eliminarTrabajador(trabajadordto.getCedula())) {
+                        UtilGui.showMessage(this, "Trabajador eliminado correctamente", "Éxito");
+                        clear();
+                        trabajadordto = null;
+                    } else {
+                        UtilGui.showErrorMessage(this, "No se pudo eliminar el trabajador", "Error");
+                    }
+                } catch (Exception ex) {
+                    UtilGui.showErrorMessage(this, "Error al eliminar: " + ex.getMessage(), "Error");
+                    ex.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            UtilGui.showErrorMessage(this, "Error al eliminar: " + e.getMessage(), "Error");
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void update() {
+        if (!validateRequiere()) {
+            UtilGui.showErrorMessage(this, "Faltan datos requeridos", "Error");
+            return;
+        }
+
+        try {
+            if (trabajadordto == null) {
+                UtilGui.showErrorMessage(this, "Debe seleccionar un usuario primero", "Error");
+                return;
+            }
+            
+            String telefono = txtTelefono.getText();
+            if (telefono == null || telefono.trim().isEmpty()) {
+                UtilGui.showErrorMessage(this, "Debe ingresar un telefono", "Error");
+            }
+            
+            String correo = txtCorreo.getText();
+            if (correo == null || correo.trim().isEmpty()) {
+                UtilGui.showErrorMessage(this, "Debe ingresar un correo", "Error");
+            }
+            
+            Object pues = txtPuesto.getSelectedItem();
+            Puesto puesto = null;
+            if (pues instanceof Puesto) {
+                puesto = (Puesto) pues;
+            } else if (pues instanceof String) {
+                String puestoTexto = ((String) pues).trim();
+                if (puestoTexto.isEmpty()) {
+                    UtilGui.showErrorMessage(this, "Debe seleccionar un puesto", "Error");
+                    return;
+                }
+                puesto = Puesto.valueOf(puestoTexto);
+            } else {
+                UtilGui.showErrorMessage(this, "Debe seleccionar un Puesto", "Error");
+                return;
+            }
+            
+            String horario = txtHorario.getText();
+            if (horario == null || horario.trim().isEmpty()) {
+                UtilGui.showErrorMessage(this, "Debe seleccionar horario", "Error");
+            }
+            
+            double salario = Double.parseDouble(txtSalario.getText());
+            if (salario <= 0) {
+                UtilGui.showErrorMessage(this, "El salario debe ser mayor a 0", "Error");
+            }
+
+            boolean actualizado = controlador.actualizarTrabajador(trabajadordto);
+        
+
+            if (actualizado) {
+                UtilGui.showMessage(this, "Usuario actualizado correctamente", "Éxito");
+                clear();
+                trabajadordto = null;
+            } else {
+                UtilGui.showErrorMessage(this, "No se pudo actualizar el usuario", "Error");
+            }
+
+        } catch (IllegalArgumentException e) {
+            UtilGui.showErrorMessage(this, "Usuario inválido: " + e.getMessage(), "Error");
+        } catch (Exception e) {
+            UtilGui.showErrorMessage(this, "Error al actualizar: " + e.getMessage(), "Error");
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -464,6 +564,23 @@ public class PnlTrabajadores extends javax.swing.JPanel implements IGui {
             txtNombre.setText(trabajadordto.getNombre());
             txtTelefono.setText(trabajadordto.getTelefono());
             txtCorreo.setText(trabajadordto.getCorreo());
+            String puestoStr = trabajadordto.getPuesto();
+            if (puestoStr != null) {
+                Puesto match = null;
+                for (Puesto p : Puesto.values()) {
+                    if (p.getPuesto().equalsIgnoreCase(puestoStr) || p.name().equalsIgnoreCase(puestoStr)) {
+                        match = p;
+                        break;
+                    }
+                }
+                if (match != null) {
+                    txtPuesto.setSelectedItem(match);
+                } else {
+                    txtPuesto.setSelectedItem(null);
+                }
+            } else {
+                txtPuesto.setSelectedItem(null);
+            }
             txtPuesto.setSelectedItem(trabajadordto.getPuesto());
             txtHorario.setText(trabajadordto.getHorario());
             txtSalario.setText(String.valueOf(trabajadordto.getSalario()));
@@ -473,7 +590,7 @@ public class PnlTrabajadores extends javax.swing.JPanel implements IGui {
     }
     
     private void showPuesto() {
-        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        DefaultComboBoxModel<Puesto> model = new DefaultComboBoxModel<>();
         for (Puesto rol : Puesto.values()) {
             model.addElement(rol);
         }
