@@ -1,6 +1,3 @@
-/**
- * @author Greivin
- */
 package Gui.Vistas;
 
 import Controlador.ControladorTrabajador;
@@ -12,6 +9,7 @@ import Modelo.Dtos.TrabajadorDTO;
 import Modelo.Dtos.UsuarioDTO;
 import Modelo.Objetos.Trabajadores.Trabajador;
 import Modelo.Objetos.Usuarios.Rol;
+import Modelo.Mappers.TrabajadorMapper;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
@@ -33,7 +31,6 @@ public class PnlUsuarios extends javax.swing.JPanel implements IGui {
         showRol();
         cargarTrabajadores();
     }
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -302,9 +299,9 @@ public class PnlUsuarios extends javax.swing.JPanel implements IGui {
     private javax.swing.JPanel pnlContenedor;
     private javax.swing.JPanel pnlDatos;
     private javax.swing.JPanel pnlPrincipal;
-    private javax.swing.JComboBox<String> txtCedula;
+    private javax.swing.JComboBox<TrabajadorDTO> txtCedula;
     private javax.swing.JTextField txtContraseña;
-    private javax.swing.JComboBox<String> txtRol;
+    private javax.swing.JComboBox<Rol> txtRol;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 
@@ -316,15 +313,20 @@ public class PnlUsuarios extends javax.swing.JPanel implements IGui {
         }
 
         try {
-        Trabajador trabajador = (Trabajador) txtCedula.getSelectedItem(); 
-        String usuario = txtUsuario.getText();
-        String contraseña = txtContraseña.getText();
-        Rol rol = (Rol) txtRol.getSelectedItem();
+            TrabajadorDTO seleccionado = (TrabajadorDTO) txtCedula.getSelectedItem();
+            if (seleccionado == null) {
+                UtilGui.showErrorMessage(this, "Debe seleccionar un trabajador", "Error");
+                return;
+            }
+            Trabajador trabajador = new TrabajadorMapper().toEntity(seleccionado);
+            String usuario = txtUsuario.getText();
+            String contraseña = txtContraseña.getText();
+            Rol rol = (Rol) txtRol.getSelectedItem();
 
-        if (controladorusuario.crear(usuario, contraseña, rol, trabajador)) {
-            UtilGui.showMessage(this, "Se agregó correctamente", "Éxito");
-            clear();
-        }
+            if (controladorusuario.crear(usuario, contraseña, rol, trabajador)) {
+                UtilGui.showMessage(this, "Se agregó correctamente", "Éxito");
+                clear();
+            }
 
         } catch (NumberFormatException e) {
             UtilGui.showErrorMessage(this, "Error en el formato de los datos", "Error");
@@ -421,7 +423,17 @@ public class PnlUsuarios extends javax.swing.JPanel implements IGui {
         }
         
         try {
-            txtCedula.setSelectedIndex(userdto.getIdTrabajador().getCedula());
+            Trabajador idTrab = userdto.getIdTrabajador();
+            if (idTrab != null) {
+                DefaultComboBoxModel<TrabajadorDTO> model = (DefaultComboBoxModel<TrabajadorDTO>) txtCedula.getModel();
+                for (int i = 0; i < model.getSize(); i++) {
+                    TrabajadorDTO dto = model.getElementAt(i);
+                    if (dto != null && dto.getCedula().equals(idTrab.getCedula())) {
+                        txtCedula.setSelectedIndex(i);
+                        break;
+                    }
+                }
+            }
             txtUsuario.setText(userdto.getUsername());
             txtContraseña.setText(userdto.getPasswordHash());
             txtRol.setSelectedItem(userdto.getRol());
@@ -446,19 +458,38 @@ public class PnlUsuarios extends javax.swing.JPanel implements IGui {
     }
     
     private void cargarTrabajadores() {
-        try {
-            List<TrabajadorDTO> trabajadores = controladortrabajador.obtenerTodosTrabajadores();
-            DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+    try {
+        List<TrabajadorDTO> trabajadores = controladortrabajador.obtenerTodosTrabajadores();
+        DefaultComboBoxModel<TrabajadorDTO> model = new DefaultComboBoxModel<>();
 
+        if (trabajadores != null) {
             for (TrabajadorDTO trabajador : trabajadores) {
-                model.addElement(String.valueOf(trabajador.getCedula()));
+                model.addElement(trabajador);
             }
-
-            txtCedula.setModel(model);
-
-        } catch (Exception e) {
-            UtilGui.showErrorMessage(this, "Error al cargar trabajadores: " + e.getMessage(), "Error");
         }
+
+        txtCedula.setModel(model);
+        
+        txtCedula.setRenderer(new javax.swing.DefaultListCellRenderer() {
+            @Override
+            public java.awt.Component getListCellRendererComponent(javax.swing.JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (value instanceof TrabajadorDTO) {
+                    TrabajadorDTO dto = (TrabajadorDTO) value;
+                    setText(String.format("%s - %s", dto.getCedula(), dto.getNombre()));
+                } else {
+                    setText(value == null ? "" : value.toString());
+                }
+                return this;
+            }
+        });
+
+        
+        txtCedula.setSelectedIndex(-1);
+
+    } catch (Exception e) {
+        UtilGui.showErrorMessage(this, "Error al cargar trabajadores: " + e.getMessage(), "Error");
     }
+}
 
 }
